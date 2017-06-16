@@ -1,0 +1,40 @@
+@charset "utf-8";
+//sass 函数声明
+@import "cf-varia.scss";
+@function remToPx($rem){
+  @if($env!="weex"){
+    @return $rem;
+  }@else{
+    @return $rem/1rem * 20px;
+  }
+}
+
+//前缀语法
+@mixin prefix($property,$value...){
+  -webkit-#{$property}:$value;
+  -moz-#{$property}:$value;
+  -o-#{$property}:$value;
+  -ms-#{$property}: $value;
+  #{$property}: $value;
+}
+@mixin valfix($property,$val){
+  $property:-webkit-#{$val};
+  $property:-moz-#{$val};
+  $property:-o-#{$val};
+  $property:-ms-#{$val};
+  $property:#{$val};
+}
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}

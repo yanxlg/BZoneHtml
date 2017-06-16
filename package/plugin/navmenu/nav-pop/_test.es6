@@ -1,0 +1,64 @@
+/**
+ * Created by Administrator on 2017/6/7 0007.
+ */
+import LeftMenu from './nav-pop.es6';
+setTimeout(()=>{
+    new LeftMenu([{
+        name:"菜单一",
+        data:"",
+        childMenus:[{
+            groupName:"分组一",
+            menus:[{
+                name:"菜单一分组一",
+                data:"",
+                childMenus:[{
+                    groupName:"分组一1",
+                    menus:[{
+                        name:"1",
+                        data:"",
+                    },{
+                        name:"2",
+                        data:"",
+                    }]
+                }]
+            },{
+                name:"菜单2分组一",
+                data:"",
+            }]
+        },{
+            groupName:"分组2",
+            menus:[{
+                name:"菜单一分组一",
+                data:"",
+            },{
+                name:"菜单2分组一",
+                data:"",
+            }]
+        }]
+    },{
+        name:"菜单2",
+        data:"",
+        childMenus:[{
+            menus:[{
+                name:"菜单一分组一",
+                data:"",
+            },{
+                name:"菜单2分组一",
+                data:"",
+            }]
+        },{
+            menus:[{
+                name:"菜单一分组一",
+                data:"",
+            },{
+                name:"菜单2分组一",
+                data:"",
+            }]
+        }]
+    },{
+        name:"菜单3",
+        data:"",
+    }]).then((data)=>{
+        alert(data);
+    })
+},0);

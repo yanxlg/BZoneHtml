@@ -1,0 +1,107 @@
+.font {
+  font-size: 0.7rem;
+}
+
+.font-size-10px {
+  font-size: 0.5rem;
+}
+
+.font-size-12px {
+  font-size: 0.6rem;
+}
+
+.font-size-16px {
+  font-size: 0.8rem;
+}
+
+.font-size-18px {
+  font-size: 0.9rem;
+}
+
+.font-size-20px {
+  font-size: 1rem;
+}
+
+.font-color-success {
+  color: #13CE66;
+}
+
+.font-color-warning {
+  color: #F7BA2A;
+}
+
+.font-color-danger {
+  color: #FF4949;
+}
+
+.font-color-info {
+  color: #03B8CF;
+}
+
+.font-color-important {
+  color: #BD7B46;
+}
+
+.font-color-special {
+  color: #8666B8;
+}
+
+.font-color-black {
+  color: #1F2D3D;
+}
+
+.font-color-white {
+  color: #fff;
+}
+
+.font-color-dark {
+  color: #353535;
+}
+
+.font-color-gray {
+  color: #808080;
+}
+
+.font-color-gray-light {
+  color: #DDDDDD;
+}
+
+.font-color-gray-lighter {
+  color: #E5E5E5;
+}
+
+.font-color-gray-pale {
+  color: #F1F1F1;
+}
+
+.font-color-gray-dark {
+  color: #333333;
+}
+
+.font-color-gray-darker {
+  color: #222222;
+}
+
+.font-color-silver {
+  color: #8492A6;
+}
+
+.font-color-light-silver {
+  color: #99A9BF;
+}
+
+.font-color-light-black {
+  color: #324057;
+}
+
+.font-color-light-blue {
+  color: #58B7FF;
+}
+
+.font-color-blue {
+  color: #20A0FF;
+}
+
+.font-color-dark-blue {
+  color: #1D8CE0;
+}

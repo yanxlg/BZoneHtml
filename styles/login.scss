@@ -1,0 +1,160 @@
+@charset "utf-8";
+@import "../package/ui/cf-ui-base.scss";
+@import "../package/ui/cf-func.scss";
+@import "../package/ui/cf-flex.scss";
+@import "../package/ui/cf-varia.scss";
+@import "../package/ui/cf-button.scss";
+$IMGURL: '../images/loading';
+.loading{
+  @include prefix(animation,loading 1s infinite linear);
+  width:remToPx(2.5rem);
+  height:remToPx(2.5rem);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  margin-right:remToPx(1rem);
+}
+
+@include keyframes(loading){
+  @for $i from 0 through 24 {
+    #{$i*4%}{
+      background-image: url(#{$IMGURL}/loading_white_#{$i+1}@2x.png);
+    }
+  }
+  100%{
+    background-image: url(#{$IMGURL}/loading_white_25@2x.png);
+  }
+}
+.login-card{
+  background: rgba(21,21,21,0.5);
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 150, from(rgba(36,36,36,0.5)), to(rgba(9,9,9,9.5)));
+  background:radial-gradient(circle,rgba(36,36,36,0.5),rgba(9,9,9,9.5));
+  background:-ms-radial-gradient(circle,rgba(36,36,36,0.5),rgba(9,9,9,9.5));
+  background:-moz-radial-gradient(circle,rgba(36,36,36,0.5),rgba(9,9,9,9.5));
+  background:-o-radial-gradient(circle,rgba(36,36,36,0.5),rgba(9,9,9,9.5));
+  background:-webkit-radial-gradient(circle,rgba(36,36,36,0.5),rgba(9,9,9,9.5));
+  @include prefix(border-radius,remToPx(0.25rem));
+  @include prefix(box-shadow,0px 0px remToPx(0.7rem) rgba(255,255,255,.2));
+  .header{
+    padding: remToPx(1rem) 0;
+    color: map_get($baseColor,white);
+    font-size: remToPx(1.75rem);
+    font-weight:bold;
+    border-bottom: 1px solid $borderColor;
+  }
+  .input-box{
+    margin-top:remToPx(1.25rem);
+    input{
+      width: 100%;
+      background: rgba(17,17,17,0.2);
+      padding: 0 remToPx(1rem) 0 remToPx(2.25rem);
+      border-radius:remToPx(1rem);
+      border:none;
+      transition: all 0.3s ease 0s;
+      font-size: remToPx(0.7rem);
+      line-height: 1.42857143;
+      color: #555;
+      height: remToPx(2rem);
+      @include prefix(box-sizing,border-box);
+      &:focus{
+        background: rgba(17,17,17,0.5);
+      }
+    }
+    .main-checkbox{
+      width:remToPx(1rem);
+      height: remToPx(1rem);
+      background: #11a3fc;
+      border-radius: 50%;
+      position: relative;
+      margin: 0 0 0 remToPx(0.25rem);
+      border: 1px solid #11a3fc;
+      label{
+        width: remToPx(1rem);
+        height: remToPx(1rem);
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        &:after{
+          content: "";
+          width: remToPx(0.5rem);
+          height: remToPx(0.25rem);
+          position: absolute;
+          top: remToPx(0.25rem);
+          left:remToPx(0.2rem);
+          border: remToPx(0.15rem) solid #fff;
+          border-top: none;
+          border-right: none;
+          background: transparent;
+          opacity: 0;
+          -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+        }
+      }
+      input[type=checkbox]{
+        visibility: hidden;
+        &:checked + label:after{
+          opacity: 1;
+        }
+      }
+    }
+    .save-text{
+      color: map_get($baseColor,white);
+      font-size: remToPx(0.8rem);
+      margin-left: remToPx(0.2rem);
+    }
+    .btn-info{
+      background: #00b4ef;
+      border-radius: remToPx(1.5rem);
+      padding: remToPx(0.5rem) remToPx(1.25rem);
+      border: none;
+      text-transform: capitalize;
+      transition: all 0.5s ease 0s;
+    }
+  }
+  .login-form{
+    padding:0 remToPx(1rem);
+  }
+  width:remToPx(20rem);
+  height:remToPx(15rem);
+  position: absolute;
+  top:50%;
+  margin-top:remToPx(-10rem);
+  left:50%;
+  margin-left:remToPx(-10rem);
+  &.focus{
+    @include prefix(animation,colors 20s infinite linear);
+  }
+}
+
+@include keyframes(colors){
+  0% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #F246C9);
+  }
+  17% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #4453F2);
+  }
+  34% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #44F262);
+  }
+  51% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #F257D4);
+  }
+  68% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #EDF255);
+  }
+  85% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #F20006);
+  }
+  100% {
+    @include prefix(box-shadow,0px 0px remToPx(0.7rem) #39f);
+  }
+}
+
+@media only screen and (max-width:remToPx(24rem)){
+  .login-card{
+    width:remToPx(16rem);
+    height:remToPx(15rem);
+    margin-left:remToPx(-8rem);
+  }
+}
