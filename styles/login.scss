@@ -6,23 +6,42 @@
 @import "../package/ui/cf-button.scss";
 $IMGURL: '../images/loading';
 .loading{
-  @include prefix(animation,loading 1s infinite linear);
   width:remToPx(2.5rem);
   height:remToPx(2.5rem);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center center;
   margin-right:remToPx(1rem);
+  position: relative;
+}
+@for $i from 0 through 24 {
+  .loading_#{$i}{
+    position: absolute;
+    width:100%;
+    height:100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center center;
+    margin-right:remToPx(1rem);
+    background-image: url(#{$IMGURL}/loading_white_#{$i+1}@2x.png);
+    visibility: hidden;
+    @include prefix(animation,loading 2s infinite linear);
+    @include prefix(animation-delay, #{80*$i}ms);
+  }
+}
+.loading_0{
+  visibility: hidden;
 }
 
 @include keyframes(loading){
-  @for $i from 0 through 24 {
-    #{$i*4%}{
-      background-image: url(#{$IMGURL}/loading_white_#{$i+1}@2x.png);
-    }
+  0%{
+    visibility: hidden;
+  }
+  4%{
+    visibility: visible;
+  }
+  8%{
+    visibility: hidden;
   }
   100%{
-    background-image: url(#{$IMGURL}/loading_white_25@2x.png);
+    visibility: hidden;
   }
 }
 .login-card{
