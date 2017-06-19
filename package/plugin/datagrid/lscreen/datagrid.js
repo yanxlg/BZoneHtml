@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,6 +106,40 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
+/***/ 19:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, $escape = $imports.$escape, height = $data.height;
+    $$out += '<div class="data-grid-group">\r\n    <div class="data-grid-wrap grid-header">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += $escape(title.width);
+        $$out += 'px;">\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
+        $$out += $escape(title.title);
+        $$out += '\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class="data-grid-wrap grid-data" style="height: ';
+    $$out += $escape(height);
+    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += $escape(title.width);
+        $$out += 'px;">\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -116,36 +150,9 @@ module.exports = __webpack_require__(2);
 
 var detectNode = __webpack_require__(3);
 var runtime = Object.create(detectNode ? global : window);
-var ESCAPE_REG = /["&'<>]/;
-
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-runtime.$escape = function (content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-runtime.$each = function (data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
 
 // 将目标转成字符
-function toString(value) {
+var toString = function toString(value) {
     if (typeof value !== 'string') {
         if (value === undefined || value === null) {
             value = '';
@@ -160,7 +167,8 @@ function toString(value) {
 };
 
 // 编码 HTML 内容
-function xmlEscape(content) {
+var ESCAPE_REG = /["&'<>]/;
+var xmlEscape = function xmlEscape(content) {
     var html = '' + content;
     var regexResult = ESCAPE_REG.exec(html);
     if (!regexResult) {
@@ -208,46 +216,41 @@ function xmlEscape(content) {
     }
 };
 
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+var escape = function escape(content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+var each = function each(data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i, data);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
+
+runtime.$each = each;
+runtime.$escape = escape;
+
 module.exports = runtime;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
 /***/ 20:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, $escape = $imports.$escape, height = $data.height;
-    $$out += '<div class="data-grid-group">\r\n    <div class="data-grid-wrap grid-header">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
-        $$out += $escape(title.width);
-        $$out += 'px;">\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
-        $$out += $escape(title.title);
-        $$out += '\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class="data-grid-wrap grid-data" style="height: ';
-    $$out += $escape(height);
-    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
-        $$out += $escape(title.width);
-        $$out += 'px;">\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -275,7 +278,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 28:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -299,11 +302,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _datagrid = __webpack_require__(20);
+var _datagrid = __webpack_require__(19);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _rows = __webpack_require__(21);
+var _rows = __webpack_require__(20);
 
 var _rows2 = _interopRequireDefault(_rows);
 

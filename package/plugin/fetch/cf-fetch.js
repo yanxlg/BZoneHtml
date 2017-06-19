@@ -96,7 +96,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 15:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -455,11 +455,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : undefined);
 var Promise = typeof self !== 'undefined' ? self.Promise : undefined.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 16:
+/***/ 15:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -660,7 +660,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(15);
+var _Promise = __webpack_require__(14);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -881,9 +881,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
                 this._bodyText = body.toString();
             } else if (support.arrayBuffer && support.blob && isDataView(body)) {
-                this._bodyArrayBuffer = bufferClone(body.buffer
+                this._bodyArrayBuffer = bufferClone(body.buffer);
                 // IE 10-11 can't handle a DataView body.
-                );this._bodyInit = new Blob([this._bodyArrayBuffer]);
+                this._bodyInit = new Blob([this._bodyArrayBuffer]);
             } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
                 this._bodyArrayBuffer = bufferClone(body);
             } else {

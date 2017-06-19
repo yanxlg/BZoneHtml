@@ -5,6 +5,7 @@
 @import "../package/ui/cf-varia.scss";
 @import "../package/ui/cf-button.scss";
 @import "../package/ui/cf-iconfont.scss";
+@import "../package/plugin/dialog/dialog.scss";
 $IMGURL: '../images/loading';
 .loading{
   width:remToPx(2.5rem);

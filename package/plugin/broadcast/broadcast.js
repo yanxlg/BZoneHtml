@@ -68,7 +68,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 32:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -148,7 +148,7 @@ var Store = function () {
             var $data = store.getItem($key);
             return !$data ? function () {
                 return null;
-            } : function () {
+            }() : function () {
                 $data = decode($data);
                 $data = JSON.parse($data);
                 if (_this.isOverduce($data)) {
@@ -157,7 +157,7 @@ var Store = function () {
                 } else {
                     return $data._val;
                 }
-            };
+            }();
         }
     }, {
         key: "isOverduce",
@@ -251,7 +251,7 @@ var Session = function () {
             var $data = session.getItem($key);
             return !$data ? function () {
                 return null;
-            } : function () {
+            }() : function () {
                 $data = decode($data);
                 $data = JSON.parse($data);
                 if (_this2.isOverduce($data)) {
@@ -260,7 +260,7 @@ var Session = function () {
                 } else {
                     return $data._val;
                 }
-            };
+            }();
         }
     }, {
         key: "isOverduce",
@@ -352,7 +352,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(32);
+var _store = __webpack_require__(31);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
