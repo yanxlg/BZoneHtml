@@ -68,7 +68,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 32:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -452,7 +452,7 @@ exports.default = Star;
 "use strict";
 
 
-var _starEffect = __webpack_require__(32);
+var _starEffect = __webpack_require__(14);
 
 var _starEffect2 = _interopRequireDefault(_starEffect);
 

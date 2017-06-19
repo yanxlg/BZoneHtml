@@ -477,9 +477,11 @@ var Login = function () {
             _starEffect2.default.instance(); //for background
             $("body").on("focus", "input", function () {
                 $(".login-card").addClass("focus");
+                $(this).parent(".input-box").addClass("focus");
             });
             $("body").on("blur", "input", function () {
                 $(".login-card").removeClass("focus");
+                $(this).parent(".input-box").removeClass("focus");
             });
         }
     }, {

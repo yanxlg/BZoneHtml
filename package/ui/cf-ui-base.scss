@@ -59,12 +59,11 @@
     color: map_get($messageColor,danger);
     display: block;
   }
-
-
 }@else{
   .hidden{
     visibility: hidden;
   }
 }
+
 
 

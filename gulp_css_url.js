@@ -24,7 +24,7 @@ module.exports=function (distPath) {
         if(matches instanceof Array) {
             matches.forEach(match => {
                 let url = match[1];
-                if(url.toString().substr(0, 8) !== "/styles") {
+                if(url.toString().substr(0, 8) !== "/package") {
                     return
                 }
                 let file = __dirname+url.replace("'", "").replace('"', "");

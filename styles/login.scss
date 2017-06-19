@@ -4,6 +4,7 @@
 @import "../package/ui/cf-flex.scss";
 @import "../package/ui/cf-varia.scss";
 @import "../package/ui/cf-button.scss";
+@import "../package/ui/cf-iconfont.scss";
 $IMGURL: '../images/loading';
 .loading{
   width:remToPx(2.5rem);
@@ -63,6 +64,24 @@ $IMGURL: '../images/loading';
   }
   .input-box{
     margin-top:remToPx(1.25rem);
+    &:before{
+      position: absolute;
+      color: map_get($baseColor,white);
+      margin-top: remToPx(0.6rem);
+      margin-left: remToPx(0.5rem);
+      @extend .icon;
+    }
+    &.user-name{
+      @extend .icon-user-name;
+    }
+    &.password{
+      @extend .icon-password;
+    }
+    &.focus{
+      &:before{
+        color: map_get($messageColor,important);
+      }
+    }
     input{
       width: 100%;
       background: rgba(17,17,17,0.2);
@@ -76,7 +95,7 @@ $IMGURL: '../images/loading';
       height: remToPx(2rem);
       @include prefix(box-sizing,border-box);
       &:focus{
-        background: rgba(17,17,17,0.5);
+        background: rgba(17,17,17,0.8);
       }
     }
     .main-checkbox{
@@ -176,4 +195,9 @@ $IMGURL: '../images/loading';
     height:remToPx(15rem);
     margin-left:remToPx(-8rem);
   }
+}
+
+.package-name{
+  margin:0 remToPx(0.05rem);
+  text-shadow: 0 0 1px currentColor, 2px 0 1px #083058, 0 2px 1px #98c0e8, 2px 1px 1px #083058, 1px 2px 1px #98c0e8, 2px 2px 1px #487098, 3px 1px 1px #083058, 1px 3px 1px #98c0e8, 3px 2px 1px #083058, 2px 3px 1px #98c0e8, 3px 3px 1px #487098, 4px 2px 1px #083058, 2px 4px 1px #98c0e8;
 }

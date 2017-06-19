@@ -7,7 +7,6 @@ const sass = require('gulp-sass');
 const scss = require('gulp-scss');//ruby 需要安装bundler
 const minify=require("gulp-minify");
 const cleanCSS = require('gulp-clean-css');
-const gulpWebpack=require("gulp-webpack");
 const base64=require('gulp-base64');
 
 const AssetsRelativePath=require("./gulp_css_url");

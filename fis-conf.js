@@ -16,7 +16,12 @@ fis.set('project.ignore', [
     'LICENSE',
     'README.md',
     'webpack.config.js',
-    '.gitignore'
+    '.gitignore',
+    'gulp_css_url.js',
+    'gulpfile.js',
+    '.modifyStreamContent.js',
+    '**/*.es6',
+    '**/*.scss'
 ]);
 fis.match('::package', {
     postpackager: fis.plugin('loader', {})
