@@ -1,0 +1,522 @@
+{
+  "Token": "7b85e943-be01-47ca-b822-3f2b1c716d13",
+  "User": {
+    "UserID": 3,
+    "UserName": "user",
+    "DepartmentID": 1,
+    "PositionID": null,
+    "PositionName": null,
+    "Password": "123456",
+    "EmpCode": "3",
+    "ApproveLevel": 0,
+    "Tel": null,
+    "email": null,
+    "addr": null,
+    "is_usable": true,
+    "password_hint": "0",
+    "account_enabled": true,
+    "account_expired": false,
+    "account_locked": false,
+    "password_error_times": 0,
+    "last_login_tim": "2017-04-17T16:48: 48.827",
+    "Sex": 1,
+    "Avatar": null,
+    "IsDeleted": false,
+    "CreateTime": "2017-04-17T16: 48: 48.827",
+    "CreateUser": 1,
+    "UpdateTime": "2017-04-17T16: 48: 48.827",
+    "UpdateUser": 1,
+    "UserID1": "31d4dfdf-93d2-4f1c-986a-5fd8a894be4e"
+  },
+  "ModuleInfo": [
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "1",
+          "ModuleName": "欢迎页面",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "1",
+            "MenuName": "欢迎页面",
+            "NavigateUrl": "welcome",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "2",
+          "ModuleName": "会员管理",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "2",
+            "MenuName": "注册会员",
+            "NavigateUrl": "CustomerManage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "3",
+            "MenuName": "认证会员",
+            "NavigateUrl": "IdentificationCustomer",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "4",
+            "MenuName": "爱心用户",
+            "NavigateUrl": "LoveCustomer",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "3",
+          "ModuleName": "活动圈子",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "8",
+            "MenuName": "发现活动管理",
+            "NavigateUrl": "CustomerActivity",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "50",
+            "MenuName": "群聊管理",
+            "NavigateUrl": "group_chart.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "4",
+          "ModuleName": "发现配置",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "9",
+            "MenuName": "娱乐",
+            "NavigateUrl": "BusinessEntertainment",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "13",
+            "MenuName": "礼品",
+            "NavigateUrl": "BusinessGift",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "47",
+            "MenuName": "专题活动",
+            "NavigateUrl": "thematic-activities.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "48",
+            "MenuName": "夜生活",
+            "NavigateUrl": "BusinessNightLife",
+            "IsVisble": true,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "49",
+            "MenuName": "私宴",
+            "NavigateUrl": "BusinessPrivateBanquet",
+            "IsVisble": true,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "5",
+          "ModuleName": "推荐管理",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "42",
+            "MenuName": "活动推荐",
+            "NavigateUrl": "activity-manage.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "43",
+            "MenuName": "娱乐推荐",
+            "NavigateUrl": "entertainment-manage.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "44",
+            "MenuName": "夜生活推荐",
+            "NavigateUrl": "nightlife-manage.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "45",
+            "MenuName": "私宴推荐",
+            "NavigateUrl": "privatebanquet-manage.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "46",
+            "MenuName": "礼品推荐",
+            "NavigateUrl": "gift-manage.html",
+            "IsVisble": true,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "6",
+          "ModuleName": "订单管理",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "19",
+            "MenuName": "债权融资",
+            "NavigateUrl": "CreditorFinancing",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "20",
+            "MenuName": "股权融资",
+            "NavigateUrl": "StockFinancing",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "21",
+            "MenuName": "挂牌上市",
+            "NavigateUrl": "HangtagMarket",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "22",
+            "MenuName": "圈子活动",
+            "NavigateUrl": "RegistrationActivitySatistics",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "23",
+            "MenuName": "发现活动",
+            "NavigateUrl": "",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "24",
+            "MenuName": "商务接待",
+            "NavigateUrl": "",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "25",
+            "MenuName": "商务礼品",
+            "NavigateUrl": "",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "7",
+          "ModuleName": "数据管理",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "26",
+            "MenuName": "消息数据",
+            "NavigateUrl": "MessageData",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "27",
+            "MenuName": "推送数据",
+            "NavigateUrl": "PushData",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "28",
+            "MenuName": "发现活动用户数据",
+            "NavigateUrl": "CustomerActivityRecored",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "8",
+          "ModuleName": "动态管理",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "29",
+            "MenuName": "懂小秘",
+            "NavigateUrl": "BusinessSecretary",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "30",
+            "MenuName": "自管账号",
+            "NavigateUrl": "ManageSelfAccount",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "9",
+          "ModuleName": "消息推送",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "31",
+            "MenuName": "消息管理",
+            "NavigateUrl": "ManageMessage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "32",
+            "MenuName": "推送管理",
+            "NavigateUrl": "ManagePushMessage",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "10",
+          "ModuleName": "意见反馈",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "33",
+            "MenuName": "意见反馈",
+            "NavigateUrl": "sysSuggest",
+            "IsVisble": false,
+            "IsDeleted": false
+          }
+        ]
+      }
+    },
+    {
+      "ModuleInfo": {
+        "Module": {
+          "ModuleID": "11",
+          "ModuleName": "系统管理",
+          "IsVisble": false,
+          "IsDeleted": false
+        },
+        "Menu": [
+          {
+            "MenuID": "5",
+            "MenuName": "圈子管理",
+            "NavigateUrl": "ZoneManage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "6",
+            "MenuName": "活动库",
+            "NavigateUrl": "GroupActivity",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "7",
+            "MenuName": "圈子活动管理",
+            "NavigateUrl": "PublishActivityStatistics",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "10",
+            "MenuName": "讲师管理",
+            "NavigateUrl": "Teacher",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "11",
+            "MenuName": "课程管理",
+            "NavigateUrl": "Course",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "12",
+            "MenuName": "图标管理",
+            "NavigateUrl": "ManageSysIcon",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "14",
+            "MenuName": "banner",
+            "NavigateUrl": "GroupAdvertisement",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "15",
+            "MenuName": "四格广告",
+            "NavigateUrl": "ServiceFeature",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "16",
+            "MenuName": "服务首页",
+            "NavigateUrl": "ServiceAdvertisementManage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "17",
+            "MenuName": "商务接待首页",
+            "NavigateUrl": "ReceptionAdvertisementManage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "18",
+            "MenuName": "商务礼品首页",
+            "NavigateUrl": "",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "34",
+            "MenuName": "服务配置管理",
+            "NavigateUrl": "ServiceConfigManage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "35",
+            "MenuName": "通知管理",
+            "NavigateUrl": "NoticeInfoManage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "36",
+            "MenuName": "企业名录",
+            "NavigateUrl": "ChamberCommerce",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "37",
+            "MenuName": "未进驻商会",
+            "NavigateUrl": "StationedChamberCommerce",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "38",
+            "MenuName": "注册推荐",
+            "NavigateUrl": "CustomerRecommend",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "39",
+            "MenuName": "版本设置",
+            "NavigateUrl": "AppVersion",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "40",
+            "MenuName": "入驻申请统计",
+            "NavigateUrl": "PreGroupInfoApplyLog",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "41",
+            "MenuName": "H5页面配置",
+            "NavigateUrl": "HtmlPage",
+            "IsVisble": false,
+            "IsDeleted": false
+          },
+          {
+            "MenuID": "51",
+            "MenuName": "异常日志",
+            "NavigateUrl": "ExceptionLog",
+            "IsVisble": true,
+            "IsDeleted": false
+          }
+        ]
+      }
+    }
+  ]
+}

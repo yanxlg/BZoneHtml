@@ -15,7 +15,8 @@
     "local": "fis3 release",
     "release": "fis3 release -wL",
     "server": "fis3 server start",
-    "open":"fis3 server open"
+    "open":"fis3 server open",
+    "prod":"fis3 release prod"
   },
   "//": "node-sass安装：set SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install node-sass  环境变量设置",
   "///": "node-gyp 安装 node-sass 需要C编译环境",

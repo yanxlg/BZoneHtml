@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 52);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 32:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -446,13 +446,13 @@ exports.default = Star;
 
 /***/ }),
 
-/***/ 48:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _starEffect = __webpack_require__(32);
+var _starEffect = __webpack_require__(20);
 
 var _starEffect2 = _interopRequireDefault(_starEffect);
 

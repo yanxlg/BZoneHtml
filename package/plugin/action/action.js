@@ -63,11 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports) {
 
 var g;
@@ -94,7 +95,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103,7 +105,8 @@ module.exports = g;
 module.exports = __webpack_require__(2);
 
 /***/ }),
-/* 2 */
+
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113,9 +116,36 @@ module.exports = __webpack_require__(2);
 
 var detectNode = __webpack_require__(3);
 var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
 
 // 将目标转成字符
-var toString = function toString(value) {
+function toString(value) {
     if (typeof value !== 'string') {
         if (value === undefined || value === null) {
             value = '';
@@ -130,8 +160,7 @@ var toString = function toString(value) {
 };
 
 // 编码 HTML 内容
-var ESCAPE_REG = /["&'<>]/;
-var xmlEscape = function xmlEscape(content) {
+function xmlEscape(content) {
     var html = '' + content;
     var regexResult = ESCAPE_REG.exec(html);
     if (!regexResult) {
@@ -179,144 +208,12 @@ var xmlEscape = function xmlEscape(content) {
     }
 };
 
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-var escape = function escape(content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-var each = function each(data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i, data);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-runtime.$each = each;
-runtime.$escape = escape;
-
 module.exports = runtime;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */,
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
-};
-
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
-        }
-    }
-}();
-
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
-
-/***/ }),
-/* 6 */,
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -351,7 +248,8 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 17 */
+
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -372,14 +270,22 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -399,19 +305,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _action = __webpack_require__(16);
+var _action = __webpack_require__(23);
 
 var _action2 = _interopRequireDefault(_action);
 
-var _action_btn = __webpack_require__(17);
+var _action_btn = __webpack_require__(24);
 
 var _action_btn2 = _interopRequireDefault(_action_btn);
 
-var _cfIdGenerator = __webpack_require__(7);
+var _cfIdGenerator = __webpack_require__(6);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -521,5 +427,89 @@ var action = function action(options) {
 
 exports.default = action;
 
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
+
+/***/ 6:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
 /***/ })
-/******/ ]);
+
+/******/ });

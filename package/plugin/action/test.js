@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,64 +106,6 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 16:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', size = $data.size, $escape = $imports.$escape, id = $data.id, content = $data.content, height = $data.height, backdrop = $data.backdrop;
-    if (size) {
-        $$out += '\r\n    <div class="action fade ';
-        $$out += $escape(size);
-        $$out += '" data-action-id="';
-        $$out += $escape(id);
-        $$out += '">\r\n        ';
-        $$out += content;
-        $$out += '\r\n    </div>\r\n';
-    } else {
-        $$out += '\r\n<div class="action fade" style="';
-        $$out += $escape('height:' + height + 'px;');
-        $$out += '" data-action-id="';
-        $$out += $escape(id);
-        $$out += '">\r\n    ';
-        $$out += content;
-        $$out += '\r\n</div>\r\n';
-    }
-    $$out += '\r\n';
-    if (backdrop) {
-        $$out += '\r\n<div class="modal-backdrop fade" data-for="action_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 17:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, actionList = $data.actionList, action = $data.action, i = $data.i, $escape = $imports.$escape;
-    $$out += '<div class="action-btn-group">\r\n    <div class="action-btn-list">\r\n        ';
-    $each(actionList, function (action, i) {
-        $$out += '\r\n            <div class="action-btn" data-action-index="';
-        $$out += $escape(i);
-        $$out += '">\r\n                ';
-        $$out += $escape(action);
-        $$out += '\r\n            </div>\r\n        ';
-    });
-    $$out += '\r\n    </div>\r\n    <div class="action-btn action-cancel">\r\n        取消\r\n    </div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -174,9 +116,36 @@ module.exports = function ($data) {
 
 var detectNode = __webpack_require__(3);
 var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
 
 // 将目标转成字符
-var toString = function toString(value) {
+function toString(value) {
     if (typeof value !== 'string') {
         if (value === undefined || value === null) {
             value = '';
@@ -191,8 +160,7 @@ var toString = function toString(value) {
 };
 
 // 编码 HTML 内容
-var ESCAPE_REG = /["&'<>]/;
-var xmlEscape = function xmlEscape(content) {
+function xmlEscape(content) {
     var html = '' + content;
     var regexResult = ESCAPE_REG.exec(html);
     if (!regexResult) {
@@ -240,41 +208,84 @@ var xmlEscape = function xmlEscape(content) {
     }
 };
 
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-var escape = function escape(content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-var each = function each(data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i, data);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-runtime.$each = each;
-runtime.$escape = escape;
-
 module.exports = runtime;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 25:
+/***/ 23:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', size = $data.size, $escape = $imports.$escape, id = $data.id, content = $data.content, height = $data.height, backdrop = $data.backdrop;
+    if (size) {
+        $$out += '\r\n    <div class="action fade ';
+        $$out += $escape(size);
+        $$out += '" data-action-id="';
+        $$out += $escape(id);
+        $$out += '">\r\n        ';
+        $$out += content;
+        $$out += '\r\n    </div>\r\n';
+    } else {
+        $$out += '\r\n<div class="action fade" style="';
+        $$out += $escape('height:' + height + 'px;');
+        $$out += '" data-action-id="';
+        $$out += $escape(id);
+        $$out += '">\r\n    ';
+        $$out += content;
+        $$out += '\r\n</div>\r\n';
+    }
+    $$out += '\r\n';
+    if (backdrop) {
+        $$out += '\r\n<div class="modal-backdrop fade" data-for="action_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $each = $imports.$each, actionList = $data.actionList, action = $data.action, i = $data.i, $escape = $imports.$escape;
+    $$out += '<div class="action-btn-group">\r\n    <div class="action-btn-list">\r\n        ';
+    $each(actionList, function (action, i) {
+        $$out += '\r\n            <div class="action-btn" data-action-index="';
+        $$out += $escape(i);
+        $$out += '">\r\n                ';
+        $$out += $escape(action);
+        $$out += '\r\n            </div>\r\n        ';
+    });
+    $$out += '\r\n    </div>\r\n    <div class="action-btn action-cancel">\r\n        取消\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -294,19 +305,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _action = __webpack_require__(16);
+var _action = __webpack_require__(23);
 
 var _action2 = _interopRequireDefault(_action);
 
-var _action_btn = __webpack_require__(17);
+var _action_btn = __webpack_require__(24);
 
 var _action_btn2 = _interopRequireDefault(_action_btn);
 
-var _cfIdGenerator = __webpack_require__(7);
+var _cfIdGenerator = __webpack_require__(6);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -418,46 +429,7 @@ exports.default = action;
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 35:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _action = __webpack_require__(25);
-
-var _action2 = _interopRequireDefault(_action);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ac = (0, _action2.default)({
-    actionList: ["测试", "测试"],
-    height: "fit"
-}).then(function (res) {}); /**
-                             * Created by Administrator on 2017/6/2 0002.
-                             */
-
-setTimeout(function () {
-    ac.show();
-}, 1000);
-
-/***/ }),
-
-/***/ 5:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -501,7 +473,32 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 
-/***/ 7:
+/***/ 40:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _action = __webpack_require__(32);
+
+var _action2 = _interopRequireDefault(_action);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ac = (0, _action2.default)({
+    actionList: ["测试", "测试"],
+    height: "fit"
+}).then(function (res) {}); /**
+                             * Created by Administrator on 2017/6/2 0002.
+                             */
+
+setTimeout(function () {
+    ac.show();
+}, 1000);
+
+/***/ }),
+
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

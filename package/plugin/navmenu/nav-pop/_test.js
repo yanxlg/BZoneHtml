@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 49);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -109,344 +109,6 @@ module.exports = __webpack_require__(2);
 /***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
-    $$out += $escape(left ? 'left' : '');
-    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
-    $each(menus, function (menu, $index) {
-        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
-        $$out += $escape(menu.data);
-        $$out += '">';
-        $$out += $escape(menu.name);
-        $$out += '</div>\r\n            ';
-        if (menu.childMenus && menu.childMenus.length > 0) {
-            $$out += '\r\n            <ul class="slide">\r\n                ';
-            $each(menu.childMenus, function (childMenu, $index) {
-                $$out += '\r\n                ';
-                if (childMenu.groupName) {
-                    $$out += '\r\n                <div class="nav-group">';
-                    $$out += $escape(childMenu.groupName);
-                    $$out += '</div>\r\n                ';
-                }
-                $$out += '\r\n                ';
-                $each(childMenu.menus, function (subMenu, $index) {
-                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
-                    $$out += $escape(subMenu.data);
-                    $$out += '">';
-                    $$out += $escape(subMenu.name);
-                    $$out += '</div>\r\n                    ';
-                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
-                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
-                        $each(subMenu.childMenus, function (lastMenu, $index) {
-                            $$out += '\r\n                        ';
-                            if (lastMenu.groupName) {
-                                $$out += '\r\n                        <div class="nav-group">';
-                                $$out += $escape(lastMenu.groupName);
-                                $$out += '</div>\r\n                        ';
-                            }
-                            $$out += '\r\n                        ';
-                            $each(lastMenu.menus, function (item, $index) {
-                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
-                                $$out += $escape(item.data);
-                                $$out += '">';
-                                $$out += $escape(item.name);
-                                $$out += '</div>\r\n                        </li>\r\n                        ';
-                            });
-                            $$out += '\r\n                        ';
-                        });
-                        $$out += '\r\n                    </ul>\r\n                    ';
-                    }
-                    $$out += '\r\n                </li>\r\n                ';
-                });
-                $$out += '\r\n                ';
-            });
-            $$out += '\r\n            </ul>\r\n            ';
-        }
-        $$out += '\r\n        </li>\r\n        ';
-    });
-    $$out += '\r\n    </ul>\r\n</div>\r\n';
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-/*! art-template@runtime | https://github.com/aui/art-template */
-
-var detectNode = __webpack_require__(3);
-var runtime = Object.create(detectNode ? global : window);
-
-// 将目标转成字符
-var toString = function toString(value) {
-    if (typeof value !== 'string') {
-        if (value === undefined || value === null) {
-            value = '';
-        } else if (typeof value === 'function') {
-            value = toString(value.call(value));
-        } else {
-            value = JSON.stringify(value);
-        }
-    }
-
-    return value;
-};
-
-// 编码 HTML 内容
-var ESCAPE_REG = /["&'<>]/;
-var xmlEscape = function xmlEscape(content) {
-    var html = '' + content;
-    var regexResult = ESCAPE_REG.exec(html);
-    if (!regexResult) {
-        return content;
-    }
-
-    var result = '';
-    var i = void 0,
-        lastIndex = void 0,
-        char = void 0;
-    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-
-        switch (html.charCodeAt(i)) {
-            case 34:
-                char = '&#34;';
-                break;
-            case 38:
-                char = '&#38;';
-                break;
-            case 39:
-                char = '&#39;';
-                break;
-            case 60:
-                char = '&#60;';
-                break;
-            case 62:
-                char = '&#62;';
-                break;
-            default:
-                continue;
-        }
-
-        if (lastIndex !== i) {
-            result += html.substring(lastIndex, i);
-        }
-
-        lastIndex = i + 1;
-        result += char;
-    }
-
-    if (lastIndex !== i) {
-        return result + html.substring(lastIndex, i);
-    } else {
-        return result;
-    }
-};
-
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-var escape = function escape(content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-var each = function each(data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i, data);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-runtime.$each = each;
-runtime.$escape = escape;
-
-module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/6/5 0005.
- * slide插件
- * 需要动态计算展开的大小
- */
-var Slide = function () {
-    function Slide() {
-        _classCallCheck(this, Slide);
-    }
-
-    _createClass(Slide, null, [{
-        key: "slideDown",
-        value: function slideDown(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: offH + "px"
-            });
-            return offH;
-        }
-    }, {
-        key: "slide",
-        value: function slide(el, delY) {
-            //增量处理
-            var offH = el[0].offsetHeight;
-            el.css({
-                height: offH + delY + "px"
-            });
-            return offH + delY;
-        }
-    }, {
-        key: "slideUp",
-        value: function slideUp(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: 0
-            });
-            return offH;
-        }
-    }]);
-
-    return Slide;
-}();
-
-exports.default = Slide;
-
-/***/ }),
-
-/***/ 45:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _navPop = __webpack_require__(9);
-
-var _navPop2 = _interopRequireDefault(_navPop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-setTimeout(function () {
-    new _navPop2.default([{
-        name: "菜单一",
-        data: "",
-        childMenus: [{
-            groupName: "分组一",
-            menus: [{
-                name: "菜单一分组一",
-                data: "",
-                childMenus: [{
-                    groupName: "分组一1",
-                    menus: [{
-                        name: "1",
-                        data: ""
-                    }, {
-                        name: "2",
-                        data: ""
-                    }]
-                }]
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }, {
-            groupName: "分组2",
-            menus: [{
-                name: "菜单一分组一",
-                data: ""
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }]
-    }, {
-        name: "菜单2",
-        data: "",
-        childMenus: [{
-            menus: [{
-                name: "菜单一分组一",
-                data: ""
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }, {
-            menus: [{
-                name: "菜单一分组一",
-                data: ""
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }]
-    }, {
-        name: "菜单3",
-        data: ""
-    }]).then(function (data) {
-        alert(data);
-    });
-}, 0); /**
-        * Created by Administrator on 2017/6/7 0007.
-        */
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -483,11 +145,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(12);
+var _navPop = __webpack_require__(16);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(4);
+var _slide = __webpack_require__(5);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -615,6 +277,341 @@ var PopMenu = function () {
 }();
 
 exports.default = PopMenu;
+
+/***/ }),
+
+/***/ 16:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
+    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += $escape(left ? 'left' : '');
+    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
+    $each(menus, function (menu, $index) {
+        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
+        $$out += $escape(menu.data);
+        $$out += '">';
+        $$out += $escape(menu.name);
+        $$out += '</div>\r\n            ';
+        if (menu.childMenus && menu.childMenus.length > 0) {
+            $$out += '\r\n            <ul class="slide">\r\n                ';
+            $each(menu.childMenus, function (childMenu, $index) {
+                $$out += '\r\n                ';
+                if (childMenu.groupName) {
+                    $$out += '\r\n                <div class="nav-group">';
+                    $$out += $escape(childMenu.groupName);
+                    $$out += '</div>\r\n                ';
+                }
+                $$out += '\r\n                ';
+                $each(childMenu.menus, function (subMenu, $index) {
+                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
+                    $$out += $escape(subMenu.data);
+                    $$out += '">';
+                    $$out += $escape(subMenu.name);
+                    $$out += '</div>\r\n                    ';
+                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
+                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
+                        $each(subMenu.childMenus, function (lastMenu, $index) {
+                            $$out += '\r\n                        ';
+                            if (lastMenu.groupName) {
+                                $$out += '\r\n                        <div class="nav-group">';
+                                $$out += $escape(lastMenu.groupName);
+                                $$out += '</div>\r\n                        ';
+                            }
+                            $$out += '\r\n                        ';
+                            $each(lastMenu.menus, function (item, $index) {
+                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
+                                $$out += $escape(item.data);
+                                $$out += '">';
+                                $$out += $escape(item.name);
+                                $$out += '</div>\r\n                        </li>\r\n                        ';
+                            });
+                            $$out += '\r\n                        ';
+                        });
+                        $$out += '\r\n                    </ul>\r\n                    ';
+                    }
+                    $$out += '\r\n                </li>\r\n                ';
+                });
+                $$out += '\r\n                ';
+            });
+            $$out += '\r\n            </ul>\r\n            ';
+        }
+        $$out += '\r\n        </li>\r\n        ';
+    });
+    $$out += '\r\n    </ul>\r\n</div>\r\n';
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+/*! art-template@runtime | https://github.com/aui/art-template */
+
+var detectNode = __webpack_require__(3);
+var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
+
+// 将目标转成字符
+function toString(value) {
+    if (typeof value !== 'string') {
+        if (value === undefined || value === null) {
+            value = '';
+        } else if (typeof value === 'function') {
+            value = toString(value.call(value));
+        } else {
+            value = JSON.stringify(value);
+        }
+    }
+
+    return value;
+};
+
+// 编码 HTML 内容
+function xmlEscape(content) {
+    var html = '' + content;
+    var regexResult = ESCAPE_REG.exec(html);
+    if (!regexResult) {
+        return content;
+    }
+
+    var result = '';
+    var i = void 0,
+        lastIndex = void 0,
+        char = void 0;
+    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+
+        switch (html.charCodeAt(i)) {
+            case 34:
+                char = '&#34;';
+                break;
+            case 38:
+                char = '&#38;';
+                break;
+            case 39:
+                char = '&#39;';
+                break;
+            case 60:
+                char = '&#60;';
+                break;
+            case 62:
+                char = '&#62;';
+                break;
+            default:
+                continue;
+        }
+
+        if (lastIndex !== i) {
+            result += html.substring(lastIndex, i);
+        }
+
+        lastIndex = i + 1;
+        result += char;
+    }
+
+    if (lastIndex !== i) {
+        return result + html.substring(lastIndex, i);
+    } else {
+        return result;
+    }
+};
+
+module.exports = runtime;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 49:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _navPop = __webpack_require__(12);
+
+var _navPop2 = _interopRequireDefault(_navPop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+setTimeout(function () {
+    new _navPop2.default([{
+        name: "菜单一",
+        data: "",
+        childMenus: [{
+            groupName: "分组一",
+            menus: [{
+                name: "菜单一分组一",
+                data: "",
+                childMenus: [{
+                    groupName: "分组一1",
+                    menus: [{
+                        name: "1",
+                        data: ""
+                    }, {
+                        name: "2",
+                        data: ""
+                    }]
+                }]
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }, {
+            groupName: "分组2",
+            menus: [{
+                name: "菜单一分组一",
+                data: ""
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }]
+    }, {
+        name: "菜单2",
+        data: "",
+        childMenus: [{
+            menus: [{
+                name: "菜单一分组一",
+                data: ""
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }, {
+            menus: [{
+                name: "菜单一分组一",
+                data: ""
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }]
+    }, {
+        name: "菜单3",
+        data: ""
+    }]).then(function (data) {
+        alert(data);
+    });
+}, 0); /**
+        * Created by Administrator on 2017/6/7 0007.
+        */
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/5 0005.
+ * slide插件
+ * 需要动态计算展开的大小
+ */
+var Slide = function () {
+    function Slide() {
+        _classCallCheck(this, Slide);
+    }
+
+    _createClass(Slide, null, [{
+        key: "slideDown",
+        value: function slideDown(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: offH + "px"
+            });
+            return offH;
+        }
+    }, {
+        key: "slide",
+        value: function slide(el, delY) {
+            //增量处理
+            var offH = el[0].offsetHeight;
+            el.css({
+                height: offH + delY + "px"
+            });
+            return offH + delY;
+        }
+    }, {
+        key: "slideUp",
+        value: function slideUp(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: 0
+            });
+            return offH;
+        }
+    }]);
+
+    return Slide;
+}();
+
+exports.default = Slide;
 
 /***/ })
 

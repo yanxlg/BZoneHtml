@@ -27,23 +27,14 @@ fis.match('::package', {
     postpackager: fis.plugin('loader', {})
 });
 
-
-/*fis.match('*.es6', {
-    rExt: '.js',
-    parser: fis.plugin('babel-5.x'),
-    // parser: fis.plugin('typescript'),
-    useHash: true
-});*/
-
-fis.match('*.js', {
-  optimizer: fis.plugin('uglify-js'),
+//开发环境
+fis.match('**.js', {
 });
 
-fis.match('*.css', {
-    optimizer: fis.plugin('clean-css'),
+fis.match('**.css', {
 });
 
-fis.match('*.png', {
+fis.match('**.png', {
     optimizer: fis.plugin('png-compressor'),
 });
 
@@ -52,6 +43,19 @@ fis.match('*', {
 });
 
 
+
+//发布环境
+fis.media('prod')
+    .match('**.js', {
+        optimizer: fis.plugin('uglify-js'),
+    })
+    .match('**.css', {
+        optimizer: fis.plugin('clean-css'),
+    }).match('*.png', {
+        optimizer: fis.plugin('png-compressor'),
+    }).match('*', {
+        useHash: false
+    });
 
 
 // 压缩 index.html 内联的 js
@@ -72,28 +76,6 @@ fis.match('index.html:css', {
 // 压缩 index.tpl 内联的 css
 fis.match('index.tpl:css', {
     optimizer: fis.plugin('clean-css')
-})
-
-
-//不同状态发布，通过media来实现  发布 fis3  release <media>
-fis.media('prod')
-    .match('**.js', {
-        optimizer: fis.plugin('uglify-js')
-    })
-    .match('**.css', {
-        optimizer: fis.plugin('clean-css')
-    });
-
-
-
-// 压缩 index.html 内联的 js
-fis.match('index.html:js', {
-    optimizer: fis.plugin('uglify-js')
-});
-
-// 压缩 index.tpl 内联的 js
-fis.match('index.tpl:js', {
-    optimizer: fis.plugin('uglify-js')
 })
 
 

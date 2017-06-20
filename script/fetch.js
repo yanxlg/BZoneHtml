@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2114,30 +2114,113 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 22 */,
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomain": "http://10.40.5.30:8081",
+	"successCode": 0,
+	"errorCode": -1,
+	"userLocalKey": "_user"
+};
+
+/***/ }),
 /* 23 */,
 /* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */,
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '';
+    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in flex align-center justify-center">\r\n        <div class="loading-container flex align-center">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
 /* 30 */,
 /* 31 */,
 /* 32 */,
 /* 33 */,
 /* 34 */,
-/* 35 */,
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/19 0019.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 获取container的overflow属性，关闭后自动设置回去
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用modal进行处理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _loading = __webpack_require__(29);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Loading = function () {
+    function Loading() {
+        _classCallCheck(this, Loading);
+
+        this.renderEle = $((0, _loading2.default)({}));
+        return this;
+    }
+
+    _createClass(Loading, [{
+        key: "show",
+        value: function show() {
+            $("body").append(this.renderEle);
+            return this;
+        }
+    }, {
+        key: "close",
+        value: function close() {
+            this.renderEle.remove();
+            return this;
+        }
+    }], [{
+        key: "show",
+        value: function show() {
+            this.close();
+            return new Loading().show();
+        }
+    }, {
+        key: "close",
+        value: function close() {
+            $(".loading-plugin").remove();
+        }
+    }]);
+
+    return Loading;
+}();
+
+exports.default = Loading;
+
+/***/ }),
 /* 36 */,
 /* 37 */,
 /* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2163,20 +2246,28 @@ var _cfDialog = __webpack_require__(19);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
+var _static = __webpack_require__(22);
+
+var _static2 = _interopRequireDefault(_static);
+
+var _loading = __webpack_require__(35);
+
+var _loading2 = _interopRequireDefault(_loading);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /*const HttpSuccessStaatus=/^2\d{2}$/;
-let checkStatus=(response)=>{
-    if (HttpSuccessStaatus.test(response.status)) {
-        return response;
-    } else {
-        let error = new Error(response.statusText);
-        error.response = response;
-        throw error;
-    }
-};*/
+ let checkStatus=(response)=>{
+ if (HttpSuccessStaatus.test(response.status)) {
+ return response;
+ } else {
+ let error = new Error(response.statusText);
+ error.response = response;
+ throw error;
+ }
+ };*/
 
 var THENCLASS = function () {
     function THENCLASS() {
@@ -2216,7 +2307,8 @@ var fetch = function fetch(url, data, login) {
             });
             return new THENCLASS();
         }
-        return (0, _fetch2.default)(url, {
+        _loading2.default.show();
+        return (0, _fetch2.default)(_static2.default.webApiDomain + url, {
             method: 'POST',
             headers: {
                 token: token,
@@ -2225,24 +2317,56 @@ var fetch = function fetch(url, data, login) {
             body: JSON.stringify({
                 Content: data,
                 Head: {
-                    "AppType": 4, "ApiType": "1",
-                    "AppVersion": "1.3.4",
-                    "ApiVersion": "1.3.4",
+                    "AppType": _static2.default.AppType,
+                    "ApiType": _static2.default.ApiType,
+                    "AppVersion": _static2.default.AppVersion,
+                    "ApiVersion": _static2.default.ApiVersion,
                     "Token": token
                 }
             })
         }).then(function (response) {
+            _loading2.default.close();
             return response.json();
+        }).then(function (json) {
+            if (json.Head.Ret === _static2.default.errorCode) {
+                return {
+                    ok: false,
+                    msg: json.Head.Msg
+                };
+            }
+            if (json.Head.Ret === _static2.default.successCode) {
+                return {
+                    ok: true,
+                    data: json.Content
+                };
+            }
+            return null;
         });
     } else {
         //get 方法
-        return (0, _fetch2.default)(url, {
+        _loading2.default.show();
+        return (0, _fetch2.default)(_static2.default.webApiDomain + url, {
             method: 'GET',
             headers: {
                 token: token
             }
         }).then(function (response) {
+            _loading2.default.close();
             return response.json();
+        }).then(function (json) {
+            if (json.Head.Ret === _static2.default.errorCode) {
+                return {
+                    ok: false,
+                    msg: json.Head.Msg
+                };
+            }
+            if (json.Head.Ret === _static2.default.successCode) {
+                return {
+                    ok: true,
+                    data: json.Content
+                };
+            }
+            return null;
         });
     }
 };

@@ -63,12 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ (function(module, exports) {
 
 var g;
@@ -95,8 +94,7 @@ module.exports = g;
 
 
 /***/ }),
-
-/***/ 1:
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -105,8 +103,7 @@ module.exports = g;
 module.exports = __webpack_require__(2);
 
 /***/ }),
-
-/***/ 2:
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -212,8 +209,113 @@ module.exports = runtime;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 25:
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
+/* 5 */,
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -404,85 +506,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 34:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
-    $$out += '<div class="modal fade" data-dialog-id="';
-    $$out += $escape(id);
-    $$out += '">\r\n    <div class="dialog ';
-    $$out += $escape(size);
-    $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : 'auto');
-    $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
-    $$out += ';">\r\n        ';
-    if (showHeader) {
-        $$out += '\r\n            <div class="dialog-header ';
-        $$out += $escape(moveable ? 'dialog-moveable' : '');
-        $$out += '">\r\n                ';
-        if (icon) {
-            $$out += '\r\n                    <div class="dialog-icon ';
-            $$out += $escape(icon);
-            $$out += '"></div>\r\n                ';
-        }
-        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
-        $$out += $escape(title);
-        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        <div class="dialog-content">\r\n            ';
-    $$out += content;
-    $$out += '\r\n        </div>\r\n        ';
-    if (showFooter) {
-        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
-        if (!footerBtn) {
-            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
-        } else {
-            $$out += '\r\n                    ';
-            $each(footerBtn, function (btn, i) {
-                $$out += '\r\n                        <button data-operation="cusBtn';
-                $$out += $escape(i);
-                $$out += '" class="btn ';
-                $$out += $escape(btn.themeCss);
-                $$out += '">';
-                $$out += $escape(btn.text);
-                $$out += '</button>\r\n                    ';
-            });
-            $$out += '\r\n                ';
-        }
-        $$out += '\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n    </div>\r\n</div>\r\n';
-    if (backdrop) {
-        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 40:
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -515,17 +539,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(34);
+var _dialog = __webpack_require__(21);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(7);
+var _cfIdGenerator = __webpack_require__(6);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(4);
 
-var _cfDrag = __webpack_require__(25);
+var _cfDrag = __webpack_require__(18);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -716,91 +740,80 @@ var dialog = function dialog(options) {
     return new Dialog(options);
 };
 
+window.alert = function (msg, title) {
+    title = title || "懂老板";
+    return dialog({
+        title: title,
+        content: msg,
+        modal: false
+    }).then(function () {
+        this.close();
+    });
+};
 exports.default = dialog;
 
 /***/ }),
-
-/***/ 5:
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
-};
-
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += '" style="width:';
+    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += ';height:';
+    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
         }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
     }
-}();
-
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
         }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
 
 /***/ })
-
-/******/ });
+/******/ ]);

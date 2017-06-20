@@ -63,11 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports) {
 
 var g;
@@ -94,7 +95,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103,7 +105,8 @@ module.exports = g;
 module.exports = __webpack_require__(2);
 
 /***/ }),
-/* 2 */
+
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -209,7 +212,22 @@ module.exports = runtime;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '';
+    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in flex align-center justify-center">\r\n        <div class="loading-container flex align-center">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
@@ -222,16 +240,8 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
+
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -242,149 +252,58 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/5 0005.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 顶部菜单
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/19 0019.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 获取container的overflow属性，关闭后自动设置回去
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用modal进行处理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navTop = __webpack_require__(17);
+var _loading = __webpack_require__(29);
 
-var _navTop2 = _interopRequireDefault(_navTop);
+var _loading2 = _interopRequireDefault(_loading);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var TopMenu = function () {
-    function TopMenu(menus) {
-        _classCallCheck(this, TopMenu);
+var Loading = function () {
+    function Loading() {
+        _classCallCheck(this, Loading);
 
-        this.menus = menus;
-        this.create();
-        this.initLife();
+        this.renderEle = $((0, _loading2.default)({}));
+        return this;
     }
 
-    _createClass(TopMenu, [{
-        key: "getType",
-        value: function getType() {
-            return "TopMenu";
+    _createClass(Loading, [{
+        key: "show",
+        value: function show() {
+            $("body").append(this.renderEle);
+            return this;
         }
     }, {
-        key: "create",
-        value: function create() {
-            this.menusRender = $((0, _navTop2.default)({
-                menus: this.menus
-            }));
-            $("body").addClass("width-nav-top").append(this.menusRender);
-            this.updateBg();
+        key: "close",
+        value: function close() {
+            this.renderEle.remove();
+            return this;
+        }
+    }], [{
+        key: "show",
+        value: function show() {
+            this.close();
+            return new Loading().show();
         }
     }, {
-        key: "initLife",
-        value: function initLife() {
-            var $this = this;
-            this.menusRender.on("mouseover", ".nav-right > li", function () {
-                $(this).children(".nav-menu").addClass("hover");
-            });
-            this.menusRender.on("mouseout", ".nav-right > li", function () {
-                $(this).children(".nav-menu").removeClass("hover");
-            });
-            this.menusRender.on("click", ".nav-menu", function () {
-                //如果有子菜单项则不执行
-                if ($(this).next().length > 0) {
-                    return;
-                }
-                $this.menusRender.find(".active").removeClass("active");
-                $(this).addClass("active").parents().prev(".nav-menu").addClass("active");
-                var data = $(this).attr("data-data");
-                $this.callback && $this.callback.call($this, data);
-            });
-            //滚动监听，当滚动到一定程度的时候背景设置为透明
-            $(window).on("scroll", function () {
-                //500像素透明
-                $this.updateBg();
-            });
-        }
-    }, {
-        key: "updateBg",
-        value: function updateBg() {
-            if (!this.bg) {
-                var bgColor = this.menusRender.css("background-color");
-                //正则解析出三段int值
-                this.bg = bgColor.match(/\d+/g);
-            }
-            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
-            var opacity = 1 - Math.round(scrolltop / 100) / 10; //背景调整
-            this.menusRender.css({
-                "background-color": "rgba(" + this.bg[0] + "," + this.bg[1] + "," + this.bg[2] + "," + opacity + ")"
-            });
-        }
-    }, {
-        key: "then",
-        value: function then(callback) {
-            this.callback = callback;
+        key: "close",
+        value: function close() {
+            $(".loading-plugin").remove();
         }
     }]);
 
-    return TopMenu;
+    return Loading;
 }();
 
-exports.default = TopMenu;
-
-/***/ }),
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, $escape = $imports.$escape, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav nav-top">\r\n    <ul class="nav-right">\r\n        ';
-    $each(menus, function (menu, $index) {
-        $$out += '\r\n            <li>\r\n                <div class="nav-menu" data-data="';
-        $$out += $escape(menu.data);
-        $$out += '">';
-        $$out += $escape(menu.name);
-        $$out += '</div>\r\n                ';
-        if (menu.childMenus && menu.childMenus.length > 0) {
-            $$out += '\r\n                    <ul>\r\n                        ';
-            $each(menu.childMenus, function (childMenu, $index) {
-                $$out += '\r\n                            ';
-                $each(childMenu.menus, function (subMenu, $index) {
-                    $$out += '\r\n                                <li>\r\n                                    <div class="nav-menu" data-data="';
-                    $$out += $escape(subMenu.data);
-                    $$out += '">';
-                    $$out += $escape(subMenu.name);
-                    $$out += '</div>\r\n                                    ';
-                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
-                        $$out += '\r\n                                        <ul>\r\n                                            ';
-                        $each(subMenu.childMenus, function (lastMenu, $index) {
-                            $$out += '\r\n                                                ';
-                            $each(lastMenu.menus, function (item, $index) {
-                                $$out += '\r\n                                                    <li>\r\n                                                        <div class="nav-menu" data-data="';
-                                $$out += $escape(item.data);
-                                $$out += '">';
-                                $$out += $escape(item.name);
-                                $$out += '</div>\r\n                                                    </li>\r\n                                                ';
-                            });
-                            $$out += '\r\n                                            ';
-                        });
-                        $$out += '\r\n                                        </ul>\r\n                                    ';
-                    }
-                    $$out += '\r\n                                </li>\r\n                            ';
-                });
-                $$out += '\r\n                        ';
-            });
-            $$out += '\r\n                    </ul>\r\n                ';
-        }
-        $$out += '\r\n            </li>\r\n        ';
-    });
-    $$out += '\r\n    </ul>\r\n</div>';
-    return $$out;
-};
+exports.default = Loading;
 
 /***/ })
-/******/ ]);
+
+/******/ });

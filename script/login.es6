@@ -3,11 +3,15 @@
  * 登入页面脚本,缓存
  */
 import Star from '../package/widget/star/star-effect.es6';
-import {store} from '../package/plugin/store/store.es6';
 import dialog from '../package/plugin/dialog/cf-dialog.es6';
+import fetch from './fetch.es6';
+import user from './user.es6';
 class Login{
     static build(){
-        Star.instance();//for background
+        if(!navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/i)){
+            Star.instance();//for PC background
+        }
+        FastClick.attach(document.body);
         $("body").on("focus","input",function () {
             $(".login-card").addClass("focus");
             $(this).parent(".input-box").addClass("focus");
@@ -21,7 +25,6 @@ class Login{
             let password=$("#password").val();
             if(!userName){
                 dialog({
-                    width:"200",
                     title:"输入提示",
                     content:"请输入用户名",
                     modal:false
@@ -30,22 +33,31 @@ class Login{
                 });
             }else if(!password){
                 dialog({
-                    width:"200",
                     title:"输入提示",
                     content:"请输入密码",
                     modal:false
                 }).then(function(){
                     this.close();
                 });
+            }else{
+                fetch("/api/LoginApi/Login",{
+                    UserName:userName,
+                    Password:password
+                }).then(res=>{
+                    if(!res.ok){
+                        alert(res.msg);
+                    }else{
+                        user.setInfo(res.data);
+                    }
+                });
             }
         })
     }
     static getUserInfo(){
-        let user=store.get("_user");
-        if(user){
-            user=JSON.parse(user);
-            $("#userName").val(user.userName);
-            $("#password").val(user.password);
+        let _user=user.getInfo();
+        if(_user){
+            $("#userName").val(_user.User.UserName);
+            $("#password").val(_user.User.Password);
         }
     }
     static instance(){
