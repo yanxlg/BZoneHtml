@@ -446,7 +446,7 @@ var PopMenu = function () {
                 menus: this.menus,
                 left: this.left
             }));
-            $("body").addClass("width-nav-left").append(this.menusRender);
+            $("body").addClass("width-nav-pop").append(this.menusRender);
         }
     }, {
         key: 'initLife',
@@ -545,7 +545,7 @@ var PopMenu = function () {
         key: 'destroy',
         value: function destroy() {
             this.menusRender.remove();
-            $("body").removeClass("width-nav-left");
+            $("body").removeClass("width-nav-pop");
             $(window).off("scroll.pop");
         }
     }]);
