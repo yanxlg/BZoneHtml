@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 49);
+/******/ 	return __webpack_require__(__webpack_require__.s = 50);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 12:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -145,7 +145,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(16);
+var _navPop = __webpack_require__(20);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -280,74 +280,6 @@ exports.default = PopMenu;
 
 /***/ }),
 
-/***/ 16:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
-    $$out += $escape(left ? 'left' : '');
-    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
-    $each(menus, function (menu, $index) {
-        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
-        $$out += $escape(menu.data);
-        $$out += '">';
-        $$out += $escape(menu.name);
-        $$out += '</div>\r\n            ';
-        if (menu.childMenus && menu.childMenus.length > 0) {
-            $$out += '\r\n            <ul class="slide">\r\n                ';
-            $each(menu.childMenus, function (childMenu, $index) {
-                $$out += '\r\n                ';
-                if (childMenu.groupName) {
-                    $$out += '\r\n                <div class="nav-group">';
-                    $$out += $escape(childMenu.groupName);
-                    $$out += '</div>\r\n                ';
-                }
-                $$out += '\r\n                ';
-                $each(childMenu.menus, function (subMenu, $index) {
-                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
-                    $$out += $escape(subMenu.data);
-                    $$out += '">';
-                    $$out += $escape(subMenu.name);
-                    $$out += '</div>\r\n                    ';
-                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
-                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
-                        $each(subMenu.childMenus, function (lastMenu, $index) {
-                            $$out += '\r\n                        ';
-                            if (lastMenu.groupName) {
-                                $$out += '\r\n                        <div class="nav-group">';
-                                $$out += $escape(lastMenu.groupName);
-                                $$out += '</div>\r\n                        ';
-                            }
-                            $$out += '\r\n                        ';
-                            $each(lastMenu.menus, function (item, $index) {
-                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
-                                $$out += $escape(item.data);
-                                $$out += '">';
-                                $$out += $escape(item.name);
-                                $$out += '</div>\r\n                        </li>\r\n                        ';
-                            });
-                            $$out += '\r\n                        ';
-                        });
-                        $$out += '\r\n                    </ul>\r\n                    ';
-                    }
-                    $$out += '\r\n                </li>\r\n                ';
-                });
-                $$out += '\r\n                ';
-            });
-            $$out += '\r\n            </ul>\r\n            ';
-        }
-        $$out += '\r\n        </li>\r\n        ';
-    });
-    $$out += '\r\n    </ul>\r\n</div>\r\n';
-    return $$out;
-};
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -455,6 +387,74 @@ module.exports = runtime;
 
 /***/ }),
 
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
+    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += $escape(left ? 'left' : '');
+    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
+    $each(menus, function (menu, $index) {
+        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
+        $$out += $escape(menu.data);
+        $$out += '">';
+        $$out += $escape(menu.name);
+        $$out += '</div>\r\n            ';
+        if (menu.childMenus && menu.childMenus.length > 0) {
+            $$out += '\r\n            <ul class="slide">\r\n                ';
+            $each(menu.childMenus, function (childMenu, $index) {
+                $$out += '\r\n                ';
+                if (childMenu.groupName) {
+                    $$out += '\r\n                <div class="nav-group">';
+                    $$out += $escape(childMenu.groupName);
+                    $$out += '</div>\r\n                ';
+                }
+                $$out += '\r\n                ';
+                $each(childMenu.menus, function (subMenu, $index) {
+                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
+                    $$out += $escape(subMenu.data);
+                    $$out += '">';
+                    $$out += $escape(subMenu.name);
+                    $$out += '</div>\r\n                    ';
+                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
+                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
+                        $each(subMenu.childMenus, function (lastMenu, $index) {
+                            $$out += '\r\n                        ';
+                            if (lastMenu.groupName) {
+                                $$out += '\r\n                        <div class="nav-group">';
+                                $$out += $escape(lastMenu.groupName);
+                                $$out += '</div>\r\n                        ';
+                            }
+                            $$out += '\r\n                        ';
+                            $each(lastMenu.menus, function (item, $index) {
+                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
+                                $$out += $escape(item.data);
+                                $$out += '">';
+                                $$out += $escape(item.name);
+                                $$out += '</div>\r\n                        </li>\r\n                        ';
+                            });
+                            $$out += '\r\n                        ';
+                        });
+                        $$out += '\r\n                    </ul>\r\n                    ';
+                    }
+                    $$out += '\r\n                </li>\r\n                ';
+                });
+                $$out += '\r\n                ';
+            });
+            $$out += '\r\n            </ul>\r\n            ';
+        }
+        $$out += '\r\n        </li>\r\n        ';
+    });
+    $$out += '\r\n    </ul>\r\n</div>\r\n';
+    return $$out;
+};
+
+/***/ }),
+
 /***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -466,83 +466,6 @@ try {
 } catch(e) {}
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 49:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _navPop = __webpack_require__(12);
-
-var _navPop2 = _interopRequireDefault(_navPop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-setTimeout(function () {
-    new _navPop2.default([{
-        name: "菜单一",
-        data: "",
-        childMenus: [{
-            groupName: "分组一",
-            menus: [{
-                name: "菜单一分组一",
-                data: "",
-                childMenus: [{
-                    groupName: "分组一1",
-                    menus: [{
-                        name: "1",
-                        data: ""
-                    }, {
-                        name: "2",
-                        data: ""
-                    }]
-                }]
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }, {
-            groupName: "分组2",
-            menus: [{
-                name: "菜单一分组一",
-                data: ""
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }]
-    }, {
-        name: "菜单2",
-        data: "",
-        childMenus: [{
-            menus: [{
-                name: "菜单一分组一",
-                data: ""
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }, {
-            menus: [{
-                name: "菜单一分组一",
-                data: ""
-            }, {
-                name: "菜单2分组一",
-                data: ""
-            }]
-        }]
-    }, {
-        name: "菜单3",
-        data: ""
-    }]).then(function (data) {
-        alert(data);
-    });
-}, 0); /**
-        * Created by Administrator on 2017/6/7 0007.
-        */
 
 /***/ }),
 
@@ -612,6 +535,83 @@ var Slide = function () {
 }();
 
 exports.default = Slide;
+
+/***/ }),
+
+/***/ 50:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _navPop = __webpack_require__(15);
+
+var _navPop2 = _interopRequireDefault(_navPop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+setTimeout(function () {
+    new _navPop2.default([{
+        name: "菜单一",
+        data: "",
+        childMenus: [{
+            groupName: "分组一",
+            menus: [{
+                name: "菜单一分组一",
+                data: "",
+                childMenus: [{
+                    groupName: "分组一1",
+                    menus: [{
+                        name: "1",
+                        data: ""
+                    }, {
+                        name: "2",
+                        data: ""
+                    }]
+                }]
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }, {
+            groupName: "分组2",
+            menus: [{
+                name: "菜单一分组一",
+                data: ""
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }]
+    }, {
+        name: "菜单2",
+        data: "",
+        childMenus: [{
+            menus: [{
+                name: "菜单一分组一",
+                data: ""
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }, {
+            menus: [{
+                name: "菜单一分组一",
+                data: ""
+            }, {
+                name: "菜单2分组一",
+                data: ""
+            }]
+        }]
+    }, {
+        name: "菜单3",
+        data: ""
+    }]).then(function (data) {
+        alert(data);
+    });
+}, 0); /**
+        * Created by Administrator on 2017/6/7 0007.
+        */
 
 /***/ })
 

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -266,7 +266,8 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -304,209 +305,8 @@ var IDGenerator = function () {
 exports.default = IDGenerator;
 
 /***/ }),
-/* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/27 0027.
- * drag 拖动
- */
-
-var DRAG_DEFAULT = {
-    container: 'body',
-    move: true
-};
-var idIncrementer = 0;
-
-var Drag = function () {
-    function Drag(element, options) {
-        _classCallCheck(this, Drag);
-
-        this.options = {
-            container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move
-        };
-        this.id = idIncrementer++;
-        this.$ = $(element);
-        this.init();
-    }
-
-    _createClass(Drag, [{
-        key: 'init',
-        value: function init() {
-            var _this = this;
-
-            var that = this,
-                $root = that.$,
-                BEFORE = 'before',
-                DRAG = 'drag',
-                FINISH = 'finish',
-                eventSuffix = '.' + that.id,
-                mouseDownEvent = 'mousedown' + eventSuffix,
-                mouseUpEvent = 'mouseup' + eventSuffix,
-                mouseMoveEvent = 'mousemove' + eventSuffix,
-                setting = that.options,
-                selector = setting.selector,
-                handle = setting.handle,
-                $ele = $root,
-                startPos = void 0,
-                cPos = void 0,
-                startOffset = void 0,
-                mousePos = void 0,
-                moved = void 0;
-
-            var mouseMove = function mouseMove(event) {
-                var mX = event.pageX,
-                    mY = event.pageY;
-                moved = true;
-                var dragPos = {
-                    left: mX - startOffset.x,
-                    top: mY - startOffset.y,
-                    position: "absolute",
-                    "margin-top": 0
-                };
-                $ele.removeClass('drag-ready').addClass('dragging');
-                if (setting.move) {
-                    $ele.css(dragPos);
-                }
-                setting[DRAG] && setting[DRAG]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: dragPos,
-                    offset: {
-                        x: mX - startPos.x,
-                        y: mY - startPos.y
-                    },
-                    smallOffset: {
-                        x: mX - mousePos.x,
-                        y: mY - mousePos.y
-                    }
-                });
-                mousePos.x = mX;
-                mousePos.y = mY;
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseUp = function mouseUp(event) {
-                $(document).off(eventSuffix);
-                if (!moved) {
-                    $ele.removeClass('drag-ready');
-                    return;
-                }
-                var endPos = {
-                    left: event.pageX - startOffset.x,
-                    top: event.pageY - startOffset.y
-                };
-                $ele.removeClass('drag-ready dragging');
-                if (setting.move) {
-                    $ele.css(endPos);
-                }
-                setting[FINISH] && setting[FINISH]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: endPos,
-                    offset: {
-                        x: event.pageX - startPos.x,
-                        y: event.pageY - startPos.y
-                    },
-                    smallOffset: {
-                        x: event.pageX - mousePos.x,
-                        y: event.pageY - mousePos.y
-                    }
-                });
-                event.preventDefault();
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseDown = function mouseDown(event) {
-                var $mouseDownEle = $(_this);
-                if (selector) {
-                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
-                }
-                if (setting[BEFORE]) {
-                    var isSure = setting[BEFORE]({
-                        event: event,
-                        element: $ele
-                    });
-                    if (isSure === false) return;
-                }
-
-                var $container = $(setting.container),
-                    pos = $ele.offset();
-                cPos = $container.offset();
-                startPos = {
-                    x: event.pageX,
-                    y: event.pageY
-                };
-                startOffset = {
-                    x: event.pageX - pos.left + cPos.left,
-                    y: event.pageY - pos.top + cPos.top
-                };
-                mousePos = $.extend({}, startPos);
-                moved = false;
-
-                $ele.addClass('drag-ready');
-                event.preventDefault();
-
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-
-                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
-            };
-
-            if (handle) {
-                $root.on(mouseDownEvent, handle, mouseDown);
-            } else if (selector) {
-                $root.on(mouseDownEvent, selector, mouseDown);
-            } else {
-                $root.on(mouseDownEvent, mouseDown);
-            }
-        }
-    }, {
-        key: 'destroy',
-        value: function destroy() {
-            var eventSuffix = '.' + this.id;
-            this.$.off(eventSuffix);
-            $(document).off(eventSuffix);
-        }
-    }]);
-
-    return Drag;
-}();
-
-exports.default = Drag;
-
-/***/ }),
-/* 19 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -539,17 +339,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(21);
+var _dialog = __webpack_require__(18);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(6);
+var _cfIdGenerator = __webpack_require__(7);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(4);
 
-var _cfDrag = __webpack_require__(18);
+var _cfDrag = __webpack_require__(10);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -753,8 +553,205 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 20 */,
-/* 21 */
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/27 0027.
+ * drag 拖动
+ */
+
+var DRAG_DEFAULT = {
+    container: 'body',
+    move: true
+};
+var idIncrementer = 0;
+
+var Drag = function () {
+    function Drag(element, options) {
+        _classCallCheck(this, Drag);
+
+        this.options = {
+            container: options.container || DRAG_DEFAULT.container,
+            move: options.move || DRAG_DEFAULT.move
+        };
+        this.id = idIncrementer++;
+        this.$ = $(element);
+        this.init();
+    }
+
+    _createClass(Drag, [{
+        key: 'init',
+        value: function init() {
+            var _this = this;
+
+            var that = this,
+                $root = that.$,
+                BEFORE = 'before',
+                DRAG = 'drag',
+                FINISH = 'finish',
+                eventSuffix = '.' + that.id,
+                mouseDownEvent = 'mousedown' + eventSuffix,
+                mouseUpEvent = 'mouseup' + eventSuffix,
+                mouseMoveEvent = 'mousemove' + eventSuffix,
+                setting = that.options,
+                selector = setting.selector,
+                handle = setting.handle,
+                $ele = $root,
+                startPos = void 0,
+                cPos = void 0,
+                startOffset = void 0,
+                mousePos = void 0,
+                moved = void 0;
+
+            var mouseMove = function mouseMove(event) {
+                var mX = event.pageX,
+                    mY = event.pageY;
+                moved = true;
+                var dragPos = {
+                    left: mX - startOffset.x,
+                    top: mY - startOffset.y,
+                    position: "absolute",
+                    "margin-top": 0
+                };
+                $ele.removeClass('drag-ready').addClass('dragging');
+                if (setting.move) {
+                    $ele.css(dragPos);
+                }
+                setting[DRAG] && setting[DRAG]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: dragPos,
+                    offset: {
+                        x: mX - startPos.x,
+                        y: mY - startPos.y
+                    },
+                    smallOffset: {
+                        x: mX - mousePos.x,
+                        y: mY - mousePos.y
+                    }
+                });
+                mousePos.x = mX;
+                mousePos.y = mY;
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseUp = function mouseUp(event) {
+                $(document).off(eventSuffix);
+                if (!moved) {
+                    $ele.removeClass('drag-ready');
+                    return;
+                }
+                var endPos = {
+                    left: event.pageX - startOffset.x,
+                    top: event.pageY - startOffset.y
+                };
+                $ele.removeClass('drag-ready dragging');
+                if (setting.move) {
+                    $ele.css(endPos);
+                }
+                setting[FINISH] && setting[FINISH]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: endPos,
+                    offset: {
+                        x: event.pageX - startPos.x,
+                        y: event.pageY - startPos.y
+                    },
+                    smallOffset: {
+                        x: event.pageX - mousePos.x,
+                        y: event.pageY - mousePos.y
+                    }
+                });
+                event.preventDefault();
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseDown = function mouseDown(event) {
+                var $mouseDownEle = $(_this);
+                if (selector) {
+                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
+                }
+                if (setting[BEFORE]) {
+                    var isSure = setting[BEFORE]({
+                        event: event,
+                        element: $ele
+                    });
+                    if (isSure === false) return;
+                }
+
+                var $container = $(setting.container),
+                    pos = $ele.offset();
+                cPos = $container.offset();
+                startPos = {
+                    x: event.pageX,
+                    y: event.pageY
+                };
+                startOffset = {
+                    x: event.pageX - pos.left + cPos.left,
+                    y: event.pageY - pos.top + cPos.top
+                };
+                mousePos = $.extend({}, startPos);
+                moved = false;
+
+                $ele.addClass('drag-ready');
+                event.preventDefault();
+
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+
+                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
+            };
+
+            if (handle) {
+                $root.on(mouseDownEvent, handle, mouseDown);
+            } else if (selector) {
+                $root.on(mouseDownEvent, selector, mouseDown);
+            } else {
+                $root.on(mouseDownEvent, mouseDown);
+            }
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            var eventSuffix = '.' + this.id;
+            this.$.off(eventSuffix);
+            $(document).off(eventSuffix);
+        }
+    }]);
+
+    return Drag;
+}();
+
+exports.default = Drag;
+
+/***/ }),
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);

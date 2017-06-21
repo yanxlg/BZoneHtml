@@ -40,6 +40,11 @@ class Login{
                     this.close();
                 });
             }else{
+                if($("#saveUser")[0].checked){
+                    user.cacheLogin();
+                }else{
+                    user.removeCache();
+                }
                 fetch("/api/LoginApi/Login",{
                     UserName:userName,
                     Password:password
@@ -55,7 +60,7 @@ class Login{
     }
     static getUserInfo(){
         let _user=user.getInfo();
-        if(_user){
+        if(_user&&user.isCached()){
             $("#userName").val(_user.User.UserName);
             $("#password").val(_user.User.Password);
         }

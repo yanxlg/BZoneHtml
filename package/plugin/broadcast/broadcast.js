@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85,7 +85,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(6);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -137,7 +137,7 @@ exports.default = Broadcast;
 
 /***/ }),
 
-/***/ 8:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -173,24 +173,46 @@ var decode = function decode(text) {
  * 保存体构造器
  */
 
-var Data = function Data(val, time) {
-    _classCallCheck(this, Data);
+var Data = function () {
+    function Data(val, time) {
+        _classCallCheck(this, Data);
 
-    return JSON.stringify({
-        _val: val,
-        _create: new Date().getTime() / 1000,
-        _save: time ? time : -1
-    });
-};
+        this._data = JSON.stringify({
+            _val: val,
+            _create: new Date().getTime() / 1000,
+            _save: time ? time : -1
+        });
+    }
 
-var Key = function Key(key) {
-    _classCallCheck(this, Key);
+    _createClass(Data, [{
+        key: "getString",
+        value: function getString() {
+            return this._data;
+        }
+    }]);
 
-    return JSON.stringify({
-        _key: key,
-        _url: location.pathname
-    });
-};
+    return Data;
+}();
+
+var Key = function () {
+    function Key(key) {
+        _classCallCheck(this, Key);
+
+        this._data = JSON.stringify({
+            _key: key,
+            _url: location.pathname
+        });
+    }
+
+    _createClass(Key, [{
+        key: "getString",
+        value: function getString() {
+            return this._data;
+        }
+    }]);
+
+    return Key;
+}();
 
 var Store = function () {
     function Store() {
@@ -203,8 +225,8 @@ var Store = function () {
             //检查是否过去，页面单实例处理
             //通过url来区别不容的页面
             //time 保存时间，以s为单位
-            var $key = encode(new Key(key));
-            var $val = encode(new Data(val, time));
+            var $key = encode(new Key(key).getString());
+            var $val = encode(new Data(val, time).getString());
             storage.setItem($key, $val);
         }
     }, {
@@ -213,7 +235,7 @@ var Store = function () {
             var _this = this;
 
             //获取当前页面的值
-            var $key = encode(new Key(key));
+            var $key = encode(new Key(key).getString());
             var $data = storage.getItem($key);
             return !$data ? function () {
                 return null;
@@ -240,7 +262,7 @@ var Store = function () {
     }, {
         key: "remove",
         value: function remove(key) {
-            var $key = encode(new Key(key));
+            var $key = encode(new Key(key).getString());
             storage.removeItem($key);
         }
     }, {
@@ -306,8 +328,8 @@ var Session = function () {
             //检查是否过去，页面单实例处理
             //通过url来区别不容的页面
             //time 保存时间，以s为单位
-            var $key = encode(new Key(key));
-            var $val = encode(new Data(val, time));
+            var $key = encode(new Key(key).getString());
+            var $val = encode(new Data(val, time).getString());
             sessionCache.setItem($key, $val);
         }
     }, {
@@ -316,7 +338,7 @@ var Session = function () {
             var _this2 = this;
 
             //获取当前页面的值
-            var $key = encode(new Key(key));
+            var $key = encode(new Key(key).getString());
             var $data = sessionCache.getItem($key);
             return !$data ? function () {
                 return null;
@@ -343,7 +365,7 @@ var Session = function () {
     }, {
         key: "remove",
         value: function remove(key) {
-            var $key = encode(new Key(key));
+            var $key = encode(new Key(key).getString());
             sessionCache.removeItem($key);
         }
     }, {

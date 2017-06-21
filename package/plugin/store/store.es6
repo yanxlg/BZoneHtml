@@ -21,20 +21,26 @@ let decode=(text)=>{
  */
 class Data{
     constructor(val,time){
-        return JSON.stringify({
+        this._data=JSON.stringify({
             _val:val,
             _create:new Date().getTime()/1000,
             _save:time?time:-1
         });
     }
+    getString(){
+        return this._data;
+    }
 }
 
 class Key{
     constructor(key){
-        return JSON.stringify({
+        this._data=JSON.stringify({
             _key:key,
             _url:location.pathname
         });
+    }
+    getString(){
+        return this._data;
     }
 }
 class Store{
@@ -42,13 +48,13 @@ class Store{
         //检查是否过去，页面单实例处理
         //通过url来区别不容的页面
         //time 保存时间，以s为单位
-        let $key=encode(new Key(key));
-        let $val=encode(new Data(val,time));
+        let $key=encode(new Key(key).getString());
+        let $val=encode(new Data(val,time).getString());
         storage.setItem($key,$val);
     }
     static get(key){
         //获取当前页面的值
-        let $key=encode(new Key(key));
+        let $key=encode(new Key(key).getString());
         let $data=storage.getItem($key);
         return !$data?(()=>{
             return null;
@@ -71,7 +77,7 @@ class Store{
         }
     }
     static remove(key){
-        let $key=encode(new Key(key));
+        let $key=encode(new Key(key).getString());
         storage.removeItem($key);
     }
     static clear(page){
@@ -117,13 +123,13 @@ class Session{
         //检查是否过去，页面单实例处理
         //通过url来区别不容的页面
         //time 保存时间，以s为单位
-        let $key=encode(new Key(key));
-        let $val=encode(new Data(val,time));
+        let $key=encode(new Key(key).getString());
+        let $val=encode(new Data(val,time).getString());
         sessionCache.setItem($key,$val);
     }
     static get(key){
         //获取当前页面的值
-        let $key=encode(new Key(key));
+        let $key=encode(new Key(key).getString());
         let $data=sessionCache.getItem($key);
         return !$data?(()=>{
             return null;
@@ -146,7 +152,7 @@ class Session{
         }
     }
     static remove(key){
-        let $key=encode(new Key(key));
+        let $key=encode(new Key(key).getString());
         sessionCache.removeItem($key);
     }
     static clear(page){

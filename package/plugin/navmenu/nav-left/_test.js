@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 49);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -145,7 +145,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(15);
+var _navLeft = __webpack_require__(19);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
@@ -242,7 +242,7 @@ exports.default = LeftMenu;
 
 /***/ }),
 
-/***/ 15:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -429,13 +429,13 @@ try {
 
 /***/ }),
 
-/***/ 48:
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _navLeft = __webpack_require__(11);
+var _navLeft = __webpack_require__(14);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
