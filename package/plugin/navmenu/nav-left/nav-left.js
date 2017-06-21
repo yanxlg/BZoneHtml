@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -222,8 +222,7 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -291,15 +290,14 @@ var Slide = function () {
 exports.default = Slide;
 
 /***/ }),
+/* 5 */,
 /* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
 /* 10 */,
 /* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -338,11 +336,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(19);
+var _navLeft = __webpack_require__(16);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(5);
+var _slide = __webpack_require__(4);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -376,7 +374,7 @@ var LeftMenu = function () {
         key: 'initLife',
         value: function initLife() {
             var _this = this;
-            $("body").on("click", ".nav-menu", function () {
+            this.menusRender.on("click", ".nav-menu", function () {
                 var $this = $(this);
                 if ($this.next().hasClass("slide")) {
                     if ($this.next().hasClass("open")) {
@@ -415,6 +413,7 @@ var LeftMenu = function () {
                     }
                 } else {
                     $(".nav-active").removeClass("nav-active");
+                    $(".nav-menu.active").removeClass("active");
                     $this.addClass("nav-active");
                     var data = $this.attr("data-data");
                     _this.callback && _this.callback.call(_this, data);
@@ -426,6 +425,12 @@ var LeftMenu = function () {
         value: function then(callback) {
             this.callback = callback;
         }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            this.menusRender.remove();
+            $("body").removeClass("width-nav-left");
+        }
     }]);
 
     return LeftMenu;
@@ -434,11 +439,10 @@ var LeftMenu = function () {
 exports.default = LeftMenu;
 
 /***/ }),
+/* 13 */,
+/* 14 */,
 /* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);

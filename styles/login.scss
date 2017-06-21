@@ -1,13 +1,11 @@
-@charset "utf-8";
-@import "../package/ui/cf-ui-base.scss";
-@import "../package/ui/cf-func.scss";
-@import "../package/ui/cf-flex.scss";
 @import "../package/ui/cf-varia.scss";
+@import "../package/ui/cf-func.scss";
+@import "../package/ui/cf-ui-base.scss";
+@import "../package/ui/cf-flex.scss";
 @import "../package/ui/cf-button.scss";
 @import "../package/ui/cf-iconfont.scss";
 @import "../package/plugin/dialog/dialog.scss";
 @import "../package/plugin/loading/loading.scss";
-
 .login-card{
   background: rgba(21,21,21,0.5);
   background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 150, from(rgba(36,36,36,0.5)), to(rgba(9,9,9,9.5)));

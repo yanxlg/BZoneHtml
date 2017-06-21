@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 45);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,402 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-/*! art-template@runtime | https://github.com/aui/art-template */
-
-var detectNode = __webpack_require__(3);
-var runtime = Object.create(detectNode ? global : window);
-var ESCAPE_REG = /["&'<>]/;
-
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-runtime.$escape = function (content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-runtime.$each = function (data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-// 将目标转成字符
-function toString(value) {
-    if (typeof value !== 'string') {
-        if (value === undefined || value === null) {
-            value = '';
-        } else if (typeof value === 'function') {
-            value = toString(value.call(value));
-        } else {
-            value = JSON.stringify(value);
-        }
-    }
-
-    return value;
-};
-
-// 编码 HTML 内容
-function xmlEscape(content) {
-    var html = '' + content;
-    var regexResult = ESCAPE_REG.exec(html);
-    if (!regexResult) {
-        return content;
-    }
-
-    var result = '';
-    var i = void 0,
-        lastIndex = void 0,
-        char = void 0;
-    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-
-        switch (html.charCodeAt(i)) {
-            case 34:
-                char = '&#34;';
-                break;
-            case 38:
-                char = '&#38;';
-                break;
-            case 39:
-                char = '&#39;';
-                break;
-            case 60:
-                char = '&#60;';
-                break;
-            case 62:
-                char = '&#62;';
-                break;
-            default:
-                continue;
-        }
-
-        if (lastIndex !== i) {
-            result += html.substring(lastIndex, i);
-        }
-
-        lastIndex = i + 1;
-        result += char;
-    }
-
-    if (lastIndex !== i) {
-        return result + html.substring(lastIndex, i);
-    } else {
-        return result;
-    }
-};
-
-module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, $escape = $imports.$escape, height = $data.height;
-    $$out += '<div class="data-grid-group">\r\n    <div class="data-grid-wrap grid-header">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
-        $$out += $escape(title.width);
-        $$out += 'px;">\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
-        $$out += $escape(title.title);
-        $$out += '\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class="data-grid-wrap grid-data" style="height: ';
-    $$out += $escape(height);
-    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
-        $$out += $escape(title.width);
-        $$out += 'px;">\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 30:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, $index = $data.$index, titles = $data.titles, title = $data.title, index = $data.index, $escape = $imports.$escape;
-    $each(data, function (row, $index) {
-        $$out += '\r\n    <div class="data-row">\r\n        ';
-        $each(titles, function (title, index) {
-            $$out += '\r\n            <div class="data-column grid-center">\r\n                <div class="data-key">';
-            $$out += $escape(title.title);
-            $$out += '</div>\r\n                <div class="data-data">';
-            $$out += $escape(row[title.bindData]);
-            $$out += '</div>\r\n                ';
-            if (index === 0) {
-                $$out += '\r\n                    <div class="grid-actions hide"></div>\r\n                ';
-            }
-            $$out += '\r\n            </div>\r\n        ';
-        });
-        $$out += '\r\n    </div>\r\n';
-    });
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 36:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxianliang on 2017/6/11.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 数据列表控件
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Web端使用表格显示  移动端列表显示，列表不会显示全部字段 仅显示3或4个字段，其余字段隐藏 显示规则  过滤字段
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * data-row 控制行
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * data-index 控制列
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * flex 表示固定的列
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 表头固定，内容高度自己控制
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 总会有自适应宽度的列  当存在fix时，fix区域就是自适应列，否则
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * titles:[{title:"",width:100,fixed:false,bindData:""}]  宽度默认值为100   如果没有fixed区域,进度条宽度需要保留  bindData:绑定的字段名
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * actions 列表操作项
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _datagrid = __webpack_require__(29);
-
-var _datagrid2 = _interopRequireDefault(_datagrid);
-
-var _rows = __webpack_require__(30);
-
-var _rows2 = _interopRequireDefault(_rows);
-
-var _gridActions = __webpack_require__(8);
-
-var _gridActions2 = _interopRequireDefault(_gridActions);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DataGrid = function () {
-    function DataGrid(container, titles, height) {
-        _classCallCheck(this, DataGrid);
-
-        //通过titles来构造表格
-        titles.forEach(function (title, i) {
-            titles[i].width = title.width || 100;
-        });
-        this.titles = titles;
-        this.container = container;
-        if (height) {
-            this.height = height + "px";
-        } else {
-            this.height = "auto";
-        }
-        this.create();
-        return this;
-    }
-
-    _createClass(DataGrid, [{
-        key: 'create',
-        value: function create() {
-            var gridRender = $((0, _datagrid2.default)({
-                titles: this.titles,
-                height: this.height
-            }));
-            if (this.gridRender) {
-                this.gridRender.replaceWith(gridRender);
-            } else {
-                this.container.append(gridRender);
-            }
-            this.gridRender = gridRender;
-            this.scrollSync();
-            this.initActions();
-            return this;
-        }
-    }, {
-        key: 'update',
-        value: function update(data) {
-            var rows = (0, _rows2.default)({
-                titles: this.titles,
-                data: data
-            });
-            this.gridRender.find(".data-row-group").html(rows);
-            return this;
-        }
-    }, {
-        key: 'append',
-        value: function append(data) {
-            var rows = (0, _rows2.default)({
-                titles: this.titles,
-                data: data
-            });
-            this.gridRender.find(".data-row-group").append(rows);
-            return this;
-        }
-    }, {
-        key: 'scrollSync',
-        value: function scrollSync() {
-            var header = this.gridRender.find(".grid-header");
-            var content = this.gridRender.find(".grid-data");
-            content.on("scroll", function () {
-                header[0].scrollLeft = content[0].scrollLeft;
-            });
-        }
-    }, {
-        key: 'initActions',
-        value: function initActions() {
-            this.listActions = new _gridActions2.default(this.gridRender);
-        }
-    }]);
-
-    return DataGrid;
-}();
-
-exports.default = DataGrid;
-
-/***/ }),
-
-/***/ 44:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _datagrid = __webpack_require__(36);
-
-var _datagrid2 = _interopRequireDefault(_datagrid);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _datagrid2.default($("body"), [{
-    title: "heade1",
-    bindData: "key0"
-}, {
-    title: "heade1",
-    bindData: "key1",
-    width: 300
-}, {
-    title: "heade1",
-    bindData: "key2",
-    width: 1000
-}, {
-    title: "heade1",
-    bindData: "key3",
-    width: 1000
-}, {
-    title: "heade1",
-    bindData: "key4",
-    width: 1000
-}], 200).update([{
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}, {
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}, {
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}, {
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}, {
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}, {
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}, {
-    key0: "0",
-    key1: "1",
-    key2: "2",
-    key3: "3",
-    key4: "4",
-    key5: "5",
-    key6: "6"
-}]); /**
-      * Created by Administrator on 2017/6/13 0013.
-      */
-
-/***/ }),
-
-/***/ 8:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -652,6 +257,401 @@ var ListActions = function () {
 }();
 
 exports.default = ListActions;
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+/*! art-template@runtime | https://github.com/aui/art-template */
+
+var detectNode = __webpack_require__(3);
+var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
+
+// 将目标转成字符
+function toString(value) {
+    if (typeof value !== 'string') {
+        if (value === undefined || value === null) {
+            value = '';
+        } else if (typeof value === 'function') {
+            value = toString(value.call(value));
+        } else {
+            value = JSON.stringify(value);
+        }
+    }
+
+    return value;
+};
+
+// 编码 HTML 内容
+function xmlEscape(content) {
+    var html = '' + content;
+    var regexResult = ESCAPE_REG.exec(html);
+    if (!regexResult) {
+        return content;
+    }
+
+    var result = '';
+    var i = void 0,
+        lastIndex = void 0,
+        char = void 0;
+    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+
+        switch (html.charCodeAt(i)) {
+            case 34:
+                char = '&#34;';
+                break;
+            case 38:
+                char = '&#38;';
+                break;
+            case 39:
+                char = '&#39;';
+                break;
+            case 60:
+                char = '&#60;';
+                break;
+            case 62:
+                char = '&#62;';
+                break;
+            default:
+                continue;
+        }
+
+        if (lastIndex !== i) {
+            result += html.substring(lastIndex, i);
+        }
+
+        lastIndex = i + 1;
+        result += char;
+    }
+
+    if (lastIndex !== i) {
+        return result + html.substring(lastIndex, i);
+    } else {
+        return result;
+    }
+};
+
+module.exports = runtime;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, $escape = $imports.$escape, height = $data.height;
+    $$out += '<div class="data-grid-group">\r\n    <div class="data-grid-wrap grid-header">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += $escape(title.width);
+        $$out += 'px;">\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
+        $$out += $escape(title.title);
+        $$out += '\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class="data-grid-wrap grid-data" style="height: ';
+    $$out += $escape(height);
+    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += $escape(title.width);
+        $$out += 'px;">\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, $index = $data.$index, titles = $data.titles, title = $data.title, index = $data.index, $escape = $imports.$escape;
+    $each(data, function (row, $index) {
+        $$out += '\r\n    <div class="data-row">\r\n        ';
+        $each(titles, function (title, index) {
+            $$out += '\r\n            <div class="data-column grid-center">\r\n                <div class="data-key">';
+            $$out += $escape(title.title);
+            $$out += '</div>\r\n                <div class="data-data">';
+            $$out += $escape(row[title.bindData]);
+            $$out += '</div>\r\n                ';
+            if (index === 0) {
+                $$out += '\r\n                    <div class="grid-actions hide"></div>\r\n                ';
+            }
+            $$out += '\r\n            </div>\r\n        ';
+        });
+        $$out += '\r\n    </div>\r\n';
+    });
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 37:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxianliang on 2017/6/11.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 数据列表控件
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Web端使用表格显示  移动端列表显示，列表不会显示全部字段 仅显示3或4个字段，其余字段隐藏 显示规则  过滤字段
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * data-row 控制行
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * data-index 控制列
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * flex 表示固定的列
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 表头固定，内容高度自己控制
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 总会有自适应宽度的列  当存在fix时，fix区域就是自适应列，否则
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * titles:[{title:"",width:100,fixed:false,bindData:""}]  宽度默认值为100   如果没有fixed区域,进度条宽度需要保留  bindData:绑定的字段名
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * actions 列表操作项
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _datagrid = __webpack_require__(30);
+
+var _datagrid2 = _interopRequireDefault(_datagrid);
+
+var _rows = __webpack_require__(31);
+
+var _rows2 = _interopRequireDefault(_rows);
+
+var _gridActions = __webpack_require__(11);
+
+var _gridActions2 = _interopRequireDefault(_gridActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DataGrid = function () {
+    function DataGrid(container, titles, height) {
+        _classCallCheck(this, DataGrid);
+
+        //通过titles来构造表格
+        titles.forEach(function (title, i) {
+            titles[i].width = title.width || 100;
+        });
+        this.titles = titles;
+        this.container = container;
+        if (height) {
+            this.height = height + "px";
+        } else {
+            this.height = "auto";
+        }
+        this.create();
+        return this;
+    }
+
+    _createClass(DataGrid, [{
+        key: 'create',
+        value: function create() {
+            var gridRender = $((0, _datagrid2.default)({
+                titles: this.titles,
+                height: this.height
+            }));
+            if (this.gridRender) {
+                this.gridRender.replaceWith(gridRender);
+            } else {
+                this.container.append(gridRender);
+            }
+            this.gridRender = gridRender;
+            this.scrollSync();
+            this.initActions();
+            return this;
+        }
+    }, {
+        key: 'update',
+        value: function update(data) {
+            var rows = (0, _rows2.default)({
+                titles: this.titles,
+                data: data
+            });
+            this.gridRender.find(".data-row-group").html(rows);
+            return this;
+        }
+    }, {
+        key: 'append',
+        value: function append(data) {
+            var rows = (0, _rows2.default)({
+                titles: this.titles,
+                data: data
+            });
+            this.gridRender.find(".data-row-group").append(rows);
+            return this;
+        }
+    }, {
+        key: 'scrollSync',
+        value: function scrollSync() {
+            var header = this.gridRender.find(".grid-header");
+            var content = this.gridRender.find(".grid-data");
+            content.on("scroll", function () {
+                header[0].scrollLeft = content[0].scrollLeft;
+            });
+        }
+    }, {
+        key: 'initActions',
+        value: function initActions() {
+            this.listActions = new _gridActions2.default(this.gridRender);
+        }
+    }]);
+
+    return DataGrid;
+}();
+
+exports.default = DataGrid;
+
+/***/ }),
+
+/***/ 45:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _datagrid = __webpack_require__(37);
+
+var _datagrid2 = _interopRequireDefault(_datagrid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _datagrid2.default($("body"), [{
+    title: "heade1",
+    bindData: "key0"
+}, {
+    title: "heade1",
+    bindData: "key1",
+    width: 300
+}, {
+    title: "heade1",
+    bindData: "key2",
+    width: 1000
+}, {
+    title: "heade1",
+    bindData: "key3",
+    width: 1000
+}, {
+    title: "heade1",
+    bindData: "key4",
+    width: 1000
+}], 200).update([{
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}, {
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}, {
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}, {
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}, {
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}, {
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}, {
+    key0: "0",
+    key1: "1",
+    key2: "2",
+    key3: "3",
+    key4: "4",
+    key5: "5",
+    key6: "6"
+}]); /**
+      * Created by Administrator on 2017/6/13 0013.
+      */
 
 /***/ })
 

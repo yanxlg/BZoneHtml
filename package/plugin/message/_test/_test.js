@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ 	return __webpack_require__(__webpack_require__.s = 48);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -227,7 +227,7 @@ try {
 
 /***/ }),
 
-/***/ 32:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -287,7 +287,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -320,12 +320,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _cfTransition = __webpack_require__(4);
+var _cfTransition = __webpack_require__(5);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var messageInstances = new Set();
-var message_render = __webpack_require__(32);
+var message_render = __webpack_require__(33);
 
 var Message = function () {
     function Message(options) {
@@ -445,7 +445,35 @@ exports.default = message;
 
 /***/ }),
 
-/***/ 4:
+/***/ 48:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _message = __webpack_require__(38);
+
+var _message2 = _interopRequireDefault(_message);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _message2.default)({
+    message: "测试",
+    type: "success",
+    iconClass: "icon-success",
+    duration: 3000,
+    showClose: true,
+    round: true,
+    scale: true,
+    actions: [{
+        text: "测试",
+        icon: "icon-close"
+    }]
+});
+
+/***/ }),
+
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -486,34 +514,6 @@ var transitionEnd = function () {
 exports.requestAnimationFrame = requestAnimationFrame;
 exports.transition = transition;
 exports.transitionEnd = transitionEnd;
-
-/***/ }),
-
-/***/ 47:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _message = __webpack_require__(37);
-
-var _message2 = _interopRequireDefault(_message);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-(0, _message2.default)({
-    message: "测试",
-    type: "success",
-    iconClass: "icon-success",
-    duration: 3000,
-    showClose: true,
-    round: true,
-    scale: true,
-    actions: [{
-        text: "测试",
-        icon: "icon-close"
-    }]
-});
 
 /***/ })
 

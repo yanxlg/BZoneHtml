@@ -1,0 +1,13 @@
+<!--动态注入到页面中-->
+<div class="user-container">
+    <div class="user-center">
+        <div class="user-icon"></div>
+        <div class="user-info">
+            <div class="user-name">用户名</div>
+            <div class="user-action">
+                <a href="javascript:void(0);">注销</a>
+                <a href="javascript:void(0);" style="margin-left: 10px">修改密码</a>
+            </div>
+        </div>
+    </div>
+</div>

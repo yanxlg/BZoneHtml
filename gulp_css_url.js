@@ -4,7 +4,6 @@
  */
 let path = require('path');
 let modifyStreamContent=require("./modifyStreamContent.js");
-
 function matchAll(str, reg) {
     var res = []
     var match
@@ -15,6 +14,7 @@ function matchAll(str, reg) {
 }
 module.exports=function (distPath) {
     return modifyStreamContent((content, filePath) => {
+        let i=0;//统计是否已经导入
         if(!distPath) {
             return content
         }
@@ -34,7 +34,6 @@ module.exports=function (distPath) {
                 content = content.replace(url, res);
             })
         }
-
         return content
     })
 }

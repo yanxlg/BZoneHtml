@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 54);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -222,7 +222,8 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -265,8 +266,8 @@ exports.transition = transition;
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -292,11 +293,23 @@ var storage = window.localStorage;
 var sessionCache = window.sessionStorage;
 
 var encode = function encode(text) {
-    return encodeURI(encodeURIComponent(encodeURI(text)));
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) + length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) + text.charCodeAt(i - 1));
+    }
+    return escape(c);
+    // return encodeURI(encodeURIComponent(encodeURI(text)));
 };
-
 var decode = function decode(text) {
-    return decodeURI(decodeURIComponent(decodeURI(text)));
+    text = unescape(text);
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) - length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) - c.charCodeAt(i - 1));
+    }
+    return c;
+    // return decodeURI(decodeURIComponent(decodeURI(text)));
 };
 /****
  * 保存体构造器
@@ -328,8 +341,7 @@ var Key = function () {
         _classCallCheck(this, Key);
 
         this._data = JSON.stringify({
-            _key: key,
-            _url: location.pathname
+            _key: key
         });
     }
 
@@ -554,7 +566,7 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -592,8 +604,26 @@ var IDGenerator = function () {
 exports.default = IDGenerator;
 
 /***/ }),
-/* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomain": "http://10.40.5.30:8081",
+	"successCode": 0,
+	"errorCode": -1,
+	"userLocalKey": "_user"
+};
+
+/***/ }),
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -626,17 +656,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(18);
+var _dialog = __webpack_require__(22);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(7);
+var _cfIdGenerator = __webpack_require__(8);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(4);
+var _cfTransition = __webpack_require__(5);
 
-var _cfDrag = __webpack_require__(10);
+var _cfDrag = __webpack_require__(18);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -840,7 +870,106 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 10 */
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _store = __webpack_require__(7);
+
+var _static = __webpack_require__(10);
+
+var _static2 = _interopRequireDefault(_static);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var USER = function () {
+    function USER() {
+        _classCallCheck(this, USER);
+    }
+
+    _createClass(USER, null, [{
+        key: 'setToken',
+        value: function setToken(token) {
+            var user = this.getInfo();
+            user.Token = token;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getToken',
+        value: function getToken() {
+            var user = this.getInfo();
+            return user.Token;
+        }
+    }, {
+        key: 'getInfo',
+        value: function getInfo() {
+            if (!this._user) {
+                var user = _store.store.get(_static2.default.userLocalKey);
+                if (user && user !== "undefined" && typeof user !== "undefined") {
+                    this._user = user;
+                } else {
+                    this._user = {};
+                }
+            }
+            return this._user;
+        }
+    }, {
+        key: 'setInfo',
+        value: function setInfo(user) {
+            //差量更新
+            var user_old = this.getInfo();
+            var user_new = $.extend(true, user_old, user);
+            console.log(user_new);
+            _store.store.set(_static2.default.userLocalKey, user_new);
+            this._user = user_new;
+        }
+    }, {
+        key: 'cacheLogin',
+        value: function cacheLogin() {
+            var user = this.getInfo();
+            user.cache = true;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'removeCache',
+        value: function removeCache() {
+            var user = this.getInfo();
+            user.cache = false;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'isCached',
+        value: function isCached() {
+            var user = this.getInfo();
+            return user.cache;
+        }
+    }]);
+
+    return USER;
+}();
+
+exports.default = USER;
+
+/***/ }),
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1031,7 +1160,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 11 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1390,10 +1519,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1583,25 +1712,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomain": "http://10.40.5.30:8081",
-	"successCode": 0,
-	"errorCode": -1,
-	"userLocalKey": "_user"
-};
-
-/***/ }),
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1611,7 +1722,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(11);
+var _Promise = __webpack_require__(19);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2085,7 +2196,7 @@ var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 18 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2147,102 +2258,8 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _store = __webpack_require__(6);
-
-var _static = __webpack_require__(13);
-
-var _static2 = _interopRequireDefault(_static);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var USER = function () {
-    function USER() {
-        _classCallCheck(this, USER);
-    }
-
-    _createClass(USER, null, [{
-        key: 'setToken',
-        value: function setToken(token) {
-            var user = this.getInfo();
-            user.Token = token;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'getToken',
-        value: function getToken() {
-            var user = this.getInfo();
-            return user.Token;
-        }
-    }, {
-        key: 'getInfo',
-        value: function getInfo() {
-            var user = _store.store.get(_static2.default.userLocalKey);
-            if (user && user !== "undefined" && typeof user !== "undefined") {
-                return user;
-            } else {
-                return {};
-            }
-        }
-    }, {
-        key: 'setInfo',
-        value: function setInfo(user) {
-            //差量更新
-            var user_old = this.getInfo();
-            var user_new = $.extend(true, user_old, user);
-            console.log(user_new);
-            _store.store.set(_static2.default.userLocalKey, user_new);
-        }
-    }, {
-        key: 'cacheLogin',
-        value: function cacheLogin() {
-            var user = this.getInfo();
-            user.cache = true;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'removeCache',
-        value: function removeCache() {
-            var user = this.getInfo();
-            user.cache = false;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'isCached',
-        value: function isCached() {
-            var user = this.getInfo();
-            return user.cache;
-        }
-    }]);
-
-    return USER;
-}();
-
-exports.default = USER;
-
-/***/ }),
-/* 23 */
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2619,7 +2636,7 @@ var Star = function () {
 exports.default = Star;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2632,7 +2649,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2649,7 +2666,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _loading = __webpack_require__(24);
+var _loading = __webpack_require__(25);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2696,7 +2713,6 @@ var Loading = function () {
 exports.default = Loading;
 
 /***/ }),
-/* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
@@ -2726,25 +2742,25 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(17);
+var _fetch = __webpack_require__(21);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
-var _cfDialog = __webpack_require__(9);
+var _cfDialog = __webpack_require__(14);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(13);
+var _static = __webpack_require__(10);
 
 var _static2 = _interopRequireDefault(_static);
 
-var _loading = __webpack_require__(25);
+var _loading = __webpack_require__(26);
 
 var _loading2 = _interopRequireDefault(_loading);
 
-var _user = __webpack_require__(22);
+var _user = __webpack_require__(15);
 
 var _user2 = _interopRequireDefault(_user);
 
@@ -2875,7 +2891,9 @@ exports.default = fetch;
 /* 51 */,
 /* 52 */,
 /* 53 */,
-/* 54 */
+/* 54 */,
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2887,11 +2905,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _starEffect = __webpack_require__(23);
+var _starEffect = __webpack_require__(24);
 
 var _starEffect2 = _interopRequireDefault(_starEffect);
 
-var _cfDialog = __webpack_require__(9);
+var _cfDialog = __webpack_require__(14);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
@@ -2899,7 +2917,7 @@ var _fetch = __webpack_require__(40);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _user2 = __webpack_require__(22);
+var _user2 = __webpack_require__(15);
 
 var _user3 = _interopRequireDefault(_user2);
 

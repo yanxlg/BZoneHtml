@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 49);
+/******/ 	return __webpack_require__(__webpack_require__.s = 50);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 14:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -145,11 +145,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(19);
+var _navLeft = __webpack_require__(16);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(5);
+var _slide = __webpack_require__(4);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -183,7 +183,7 @@ var LeftMenu = function () {
         key: 'initLife',
         value: function initLife() {
             var _this = this;
-            $("body").on("click", ".nav-menu", function () {
+            this.menusRender.on("click", ".nav-menu", function () {
                 var $this = $(this);
                 if ($this.next().hasClass("slide")) {
                     if ($this.next().hasClass("open")) {
@@ -222,6 +222,7 @@ var LeftMenu = function () {
                     }
                 } else {
                     $(".nav-active").removeClass("nav-active");
+                    $(".nav-menu.active").removeClass("active");
                     $this.addClass("nav-active");
                     var data = $this.attr("data-data");
                     _this.callback && _this.callback.call(_this, data);
@@ -233,6 +234,12 @@ var LeftMenu = function () {
         value: function then(callback) {
             this.callback = callback;
         }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            this.menusRender.remove();
+            $("body").removeClass("width-nav-left");
+        }
     }]);
 
     return LeftMenu;
@@ -242,7 +249,7 @@ exports.default = LeftMenu;
 
 /***/ }),
 
-/***/ 19:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -429,13 +436,82 @@ try {
 
 /***/ }),
 
-/***/ 49:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _navLeft = __webpack_require__(14);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/5 0005.
+ * slide插件
+ * 需要动态计算展开的大小
+ */
+var Slide = function () {
+    function Slide() {
+        _classCallCheck(this, Slide);
+    }
+
+    _createClass(Slide, null, [{
+        key: "slideDown",
+        value: function slideDown(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: offH + "px"
+            });
+            return offH;
+        }
+    }, {
+        key: "slide",
+        value: function slide(el, delY) {
+            //增量处理
+            var offH = el[0].offsetHeight;
+            el.css({
+                height: offH + delY + "px"
+            });
+            return offH + delY;
+        }
+    }, {
+        key: "slideUp",
+        value: function slideUp(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: 0
+            });
+            return offH;
+        }
+    }]);
+
+    return Slide;
+}();
+
+exports.default = Slide;
+
+/***/ }),
+
+/***/ 50:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _navLeft = __webpack_require__(12);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
@@ -503,75 +579,6 @@ setTimeout(function () {
 }, 0); /**
         * Created by yanxlg on 2017/6/5 0005.
         */
-
-/***/ }),
-
-/***/ 5:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/6/5 0005.
- * slide插件
- * 需要动态计算展开的大小
- */
-var Slide = function () {
-    function Slide() {
-        _classCallCheck(this, Slide);
-    }
-
-    _createClass(Slide, null, [{
-        key: "slideDown",
-        value: function slideDown(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: offH + "px"
-            });
-            return offH;
-        }
-    }, {
-        key: "slide",
-        value: function slide(el, delY) {
-            //增量处理
-            var offH = el[0].offsetHeight;
-            el.css({
-                height: offH + delY + "px"
-            });
-            return offH + delY;
-        }
-    }, {
-        key: "slideUp",
-        value: function slideUp(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: 0
-            });
-            return offH;
-        }
-    }]);
-
-    return Slide;
-}();
-
-exports.default = Slide;
 
 /***/ })
 

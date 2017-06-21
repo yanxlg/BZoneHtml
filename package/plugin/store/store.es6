@@ -10,11 +10,21 @@ let storage=window.localStorage;
 let sessionCache=window.sessionStorage;
 
 let encode=(text)=>{
-    return encodeURI(encodeURIComponent(encodeURI(text)));
+    let length=text.length,c=String.fromCharCode(text.charCodeAt(0)+length);
+    for(let i=1;i<length;i++){
+        c+=String.fromCharCode(text.charCodeAt(i)+text.charCodeAt(i-1));
+    }
+    return escape(c);
+    // return encodeURI(encodeURIComponent(encodeURI(text)));
 };
-
 let decode=(text)=>{
-    return decodeURI(decodeURIComponent(decodeURI(text)));
+    text=unescape(text);
+    let length=text.length,c=String.fromCharCode(text.charCodeAt(0)-length);
+    for(let i=1;i<length;i++){
+        c+=String.fromCharCode(text.charCodeAt(i)-c.charCodeAt(i-1));
+    }
+    return c;
+    // return decodeURI(decodeURIComponent(decodeURI(text)));
 };
 /****
  * 保存体构造器
@@ -35,8 +45,7 @@ class Data{
 class Key{
     constructor(key){
         this._data=JSON.stringify({
-            _key:key,
-            _url:location.pathname
+            _key:key
         });
     }
     getString(){

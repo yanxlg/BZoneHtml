@@ -15,11 +15,12 @@
     "local": "fis3 release",
     "release": "fis3 release -wL",
     "server": "fis3 server start",
-    "open":"fis3 server open",
-    "prod":"fis3 release prod"
+    "open": "fis3 server open",
+    "prod": "fis3 release prod"
   },
   "//": "node-sass安装：set SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install node-sass  环境变量设置",
   "///": "node-gyp 安装 node-sass 需要C编译环境",
+  "////sass import once": "gem install compass-import-once",
   "devDependencies": {
     "css-loader": "^0.28.4",
     "uglify-js": "^3.0.18",
@@ -51,6 +52,8 @@
     "gulp-base64": "^0.1.3",
     "minimatch": "^3.0.4",
     "graceful-fs": "^4.1.11",
-    "fis3-postpackager-loader": "^2.1.4"
+    "fis3-postpackager-loader": "^2.1.4",
+    "gulp-cssbeautify": "^0.1.3",
+    "node-sass-import-once": "^1.2.0"
   }
 }

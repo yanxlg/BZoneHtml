@@ -8,8 +8,9 @@ const scss = require('gulp-scss');//ruby 需要安装bundler
 const minify=require("gulp-minify");
 const cleanCSS = require('gulp-clean-css');
 const base64=require('gulp-base64');
-
 const AssetsRelativePath=require("./gulp_css_url");
+const cssbeautify=require("gulp-cssbeautify");
+const importOnce=require("node-sass-import-once");
 gulp.task('default', ["sass","sass:watch"],function() {
     console.log("develop is building");
 });
@@ -17,7 +18,8 @@ gulp.task('sass', function () {
     return gulp.src('./styles/**/*.scss')
         .pipe(sass({
             errLogToConsole: true,
-            outputStyle: 'expanded'
+            outputStyle: 'expanded',
+            importer:importOnce
         }).on('error', sass.logError))
         .pipe(AssetsRelativePath("styles"))
         .pipe(base64({
@@ -27,6 +29,8 @@ gulp.task('sass', function () {
             maxImageSize: 8*1024, // bytes
             debug: true
         }))
+        .pipe(cleanCSS({compatibility: 'ie10',debug:true}))
+        .pipe(cssbeautify())
         .pipe(gulp.dest('./styles'));
 });
 gulp.task('sass:watch', function () {
@@ -35,4 +39,3 @@ gulp.task('sass:watch', function () {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
 });
-

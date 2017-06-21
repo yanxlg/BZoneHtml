@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 6:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94,11 +94,23 @@ var storage = window.localStorage;
 var sessionCache = window.sessionStorage;
 
 var encode = function encode(text) {
-    return encodeURI(encodeURIComponent(encodeURI(text)));
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) + length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) + text.charCodeAt(i - 1));
+    }
+    return escape(c);
+    // return encodeURI(encodeURIComponent(encodeURI(text)));
 };
-
 var decode = function decode(text) {
-    return decodeURI(decodeURIComponent(decodeURI(text)));
+    text = unescape(text);
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) - length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) - c.charCodeAt(i - 1));
+    }
+    return c;
+    // return decodeURI(decodeURIComponent(decodeURI(text)));
 };
 /****
  * 保存体构造器
@@ -130,8 +142,7 @@ var Key = function () {
         _classCallCheck(this, Key);
 
         this._data = JSON.stringify({
-            _key: key,
-            _url: location.pathname
+            _key: key
         });
     }
 

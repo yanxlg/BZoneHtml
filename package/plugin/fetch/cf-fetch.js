@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 47);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -222,7 +222,8 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -265,8 +266,8 @@ exports.transition = transition;
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -292,11 +293,23 @@ var storage = window.localStorage;
 var sessionCache = window.sessionStorage;
 
 var encode = function encode(text) {
-    return encodeURI(encodeURIComponent(encodeURI(text)));
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) + length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) + text.charCodeAt(i - 1));
+    }
+    return escape(c);
+    // return encodeURI(encodeURIComponent(encodeURI(text)));
 };
-
 var decode = function decode(text) {
-    return decodeURI(decodeURIComponent(decodeURI(text)));
+    text = unescape(text);
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) - length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) - c.charCodeAt(i - 1));
+    }
+    return c;
+    // return decodeURI(decodeURIComponent(decodeURI(text)));
 };
 /****
  * 保存体构造器
@@ -328,8 +341,7 @@ var Key = function () {
         _classCallCheck(this, Key);
 
         this._data = JSON.stringify({
-            _key: key,
-            _url: location.pathname
+            _key: key
         });
     }
 
@@ -554,7 +566,7 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -592,8 +604,12 @@ var IDGenerator = function () {
 exports.default = IDGenerator;
 
 /***/ }),
-/* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -626,17 +642,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(18);
+var _dialog = __webpack_require__(22);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(7);
+var _cfIdGenerator = __webpack_require__(8);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(4);
+var _cfTransition = __webpack_require__(5);
 
-var _cfDrag = __webpack_require__(10);
+var _cfDrag = __webpack_require__(18);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -840,7 +856,10 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 10 */
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1031,7 +1050,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 11 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1390,10 +1409,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1583,11 +1602,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1597,7 +1612,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(11);
+var _Promise = __webpack_require__(19);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2071,7 +2086,7 @@ var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 18 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2133,10 +2148,6 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
 /* 23 */,
 /* 24 */,
 /* 25 */,
@@ -2160,7 +2171,8 @@ module.exports = function ($data) {
 /* 43 */,
 /* 44 */,
 /* 45 */,
-/* 46 */
+/* 46 */,
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2176,13 +2188,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(17);
+var _fetch = __webpack_require__(21);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
-var _cfDialog = __webpack_require__(9);
+var _cfDialog = __webpack_require__(14);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 

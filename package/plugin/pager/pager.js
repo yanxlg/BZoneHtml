@@ -227,7 +227,7 @@ try {
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -349,7 +349,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _pager = __webpack_require__(33);
+var _pager = __webpack_require__(34);
 
 var _pager2 = _interopRequireDefault(_pager);
 

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -222,8 +222,7 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -291,16 +290,8 @@ var Slide = function () {
 exports.default = Slide;
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -339,11 +330,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(20);
+var _navPop = __webpack_require__(9);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(5);
+var _slide = __webpack_require__(4);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -379,7 +370,7 @@ var PopMenu = function () {
         key: 'initLife',
         value: function initLife() {
             var _this = this;
-            $("body").on("click", ".nav-menu", function () {
+            this.menusRender.on("click", ".nav-menu", function () {
                 var $this = $(this);
                 if ($this.next().hasClass("slide")) {
                     if ($this.next().hasClass("open")) {
@@ -418,19 +409,22 @@ var PopMenu = function () {
                     }
                 } else {
                     $(".nav-active").removeClass("nav-active");
+                    $(".nav-menu.active").removeClass("active");
+                    //...添加样式
+                    $(".nav-icon-menu").addClass("nav-active");
                     $this.addClass("nav-active");
                     var data = $this.attr("data-data");
                     _this.callback && _this.callback.call(_this, data);
                     _this.close();
                 }
             });
-            $("body").on("click", ".nav-icon-menu", function () {
+            this.menusRender.on("click", ".nav-icon-menu", function () {
                 _this.show();
             });
-            this.menusRender.find(".modal-backdrop").on("click", function () {
+            this.menusRender.on("click", ".modal-backdrop", function () {
                 _this.close();
             });
-            $(window).on("scroll", function () {
+            $(window).on("scroll.pop", function () {
                 _this.updateBg();
             });
         }
@@ -465,6 +459,13 @@ var PopMenu = function () {
         value: function then(callback) {
             this.callback = callback;
         }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            this.menusRender.remove();
+            $("body").removeClass("width-nav-left");
+            $(window).off("scroll.pop");
+        }
     }]);
 
     return PopMenu;
@@ -473,11 +474,9 @@ var PopMenu = function () {
 exports.default = PopMenu;
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
+/* 7 */,
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);

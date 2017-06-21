@@ -1,0 +1,77 @@
+@import "../package/ui/cf-varia.scss";
+@import "../package/ui/cf-func.scss";
+@import "../package/ui/cf-ui-base.scss";
+@import "../package/ui/cf-flex.scss";
+@import "../package/plugin/navmenu/navmenu.scss";
+.nav{
+  position: relative;
+  &.nav-left{
+    &.nav-left-animation{
+      padding-top:remToPx(5.2rem);
+      @include prefix(animation,append 0.5s ease);
+    }
+  }
+}
+@include keyframes(append){
+  0%{
+    padding-top: 0;
+  }
+  100%{
+    padding-top: remToPx(5.2rem);
+  }
+}
+@include keyframes(user-fade){
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.user-container{
+  @include prefix(box-sizing,border-box);
+  @include prefix(animation,user-fade 1s ease);
+  position: absolute;
+  top:0;
+  width:100%;
+  padding:0 remToPx(0.3rem);
+  .user-center{
+    @extend .flex;
+    @extend .flex-1;
+    @extend .align-center;
+    @extend .justify-center;
+    padding: remToPx(1rem) 0;
+    @include prefix(box-sizing,border-box);
+    border-bottom: 1px solid $borderColor;
+    .user-icon{
+      width:remToPx(3rem);
+      height:remToPx(3rem);
+      background: url(../images/logo.png) no-repeat scroll center center;
+      background-size: 80%;
+      @include prefix(border-radius,remToPx(999rem));
+      border:1px solid $borderColor;
+    }
+    .user-info{
+      @extend .flex;
+      @extend .flex-column;
+      margin-left: remToPx(0.5rem);
+      .user-name{
+        color: map_get($baseColor,gray-pale);
+      }
+      .user-action{
+        a{
+          color: map_get($baseColor,blue);
+          &:active,&:link,&:visited{
+            color: map_get($baseColor,blue);
+          }
+          &:hover{
+            color: map_get($baseColor,white);
+          }
+        }
+      }
+    }
+  }
+}

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -213,7 +213,7 @@ module.exports = runtime;
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -249,7 +249,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 27:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -285,7 +285,7 @@ try {
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -305,19 +305,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _action = __webpack_require__(26);
+var _action = __webpack_require__(27);
 
 var _action2 = _interopRequireDefault(_action);
 
-var _action_btn = __webpack_require__(27);
+var _action_btn = __webpack_require__(28);
 
 var _action_btn2 = _interopRequireDefault(_action_btn);
 
-var _cfIdGenerator = __webpack_require__(7);
+var _cfIdGenerator = __webpack_require__(8);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(4);
+var _cfTransition = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -429,7 +429,32 @@ exports.default = action;
 
 /***/ }),
 
-/***/ 4:
+/***/ 42:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _action = __webpack_require__(35);
+
+var _action2 = _interopRequireDefault(_action);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ac = (0, _action2.default)({
+    actionList: ["测试", "测试"],
+    height: "fit"
+}).then(function (res) {}); /**
+                             * Created by Administrator on 2017/6/2 0002.
+                             */
+
+setTimeout(function () {
+    ac.show();
+}, 1000);
+
+/***/ }),
+
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -473,32 +498,7 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 
-/***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _action = __webpack_require__(34);
-
-var _action2 = _interopRequireDefault(_action);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ac = (0, _action2.default)({
-    actionList: ["测试", "测试"],
-    height: "fit"
-}).then(function (res) {}); /**
-                             * Created by Administrator on 2017/6/2 0002.
-                             */
-
-setTimeout(function () {
-    ac.show();
-}, 1000);
-
-/***/ }),
-
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
