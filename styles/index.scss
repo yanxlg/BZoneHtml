@@ -4,6 +4,8 @@
 @import "../package/ui/cf-flex.scss";
 @import "../package/ui/cf-iconfont.scss";
 @import "../package/plugin/navmenu/navmenu.scss";
+@import "../package/plugin/loading/loading-icon.scss";
+@import "../package/plugin/dialog/dialog.scss";
 .nav{
   position: relative;
   &.nav-left{
@@ -284,11 +286,54 @@
 }
 .width-nav-pop{
   .page-container{
-    top: remToPx(1.5rem);
+    //top: remToPx(1.5rem);//使用fix固定logo
+    top: remToPx(0rem);//使用fix固定logo
   }
 }
 .width-nav-top{
   .page-container{
-    top: remToPx(3rem);
+    //top: remToPx(3rem);//使用fix固定logo
+    top: remToPx(0rem);//使用fix固定logo
+  }
+}
+.logo{
+  position: fixed;
+  width: remToPx(10rem);
+  top:0;
+  left:0;
+  height:remToPx(3rem);
+  padding-left: remToPx(0.5rem);
+  .platform-name{
+    font-size: remToPx(1.2rem);
+    color: map_get($baseColor,white);
+  }
+  z-index: 10;
+  @include prefix(transition,all 0.5s ease);
+}
+
+@media screen and (min-width: 1081px){
+    .logo{
+      left:remToPx(10rem);
+      visibility: hidden;
+    }
+}
+@media screen and (max-width: 1080px){
+  .logo{
+    visibility: visible;
+    left:remToPx(0rem);
+  }
+}
+@media screen and (max-width: 699px){
+  .logo{
+    height:remToPx(1.5rem);
+    .loading{
+      width:remToPx(0.8rem);
+      height:remToPx(0.8rem);
+    }
+    .platform-name{
+      font-size: remToPx(0.6rem);
+    }
+    visibility: visible;
+    left:remToPx(0rem);
   }
 }

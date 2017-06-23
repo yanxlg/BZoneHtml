@@ -847,6 +847,7 @@ var Dialog = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }]);
 
@@ -2990,6 +2991,8 @@ exports.default = fetch;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/16 0016.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 登入页面脚本,缓存
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * optimize by yanxlg
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      1.0 :临时兼容angular版本后台
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -3070,6 +3073,8 @@ var Login = function () {
                             alert(res.msg);
                         } else {
                             _user3.default.setInfo(res.data);
+                            //临时兼容angular版本后台
+                            localStorage.setItem("user", res.data);
                             location.replace(_navigator2.default.getHtml("index"));
                         }
                     });

@@ -5,8 +5,8 @@
         <div class="user-info">
             <div class="user-name">{{userName}}</div>
             <div class="user-action">
-                <a href="javascript:void(0);">注销</a>
-                <a href="javascript:void(0);">修改密码</a>
+                <a data-user-action="loginOut" href="javascript:void(0);">注销</a>
+                <a data-user-action="changePwd" href="javascript:void(0);">修改密码</a>
             </div>
         </div>
     </div>

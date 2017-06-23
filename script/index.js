@@ -290,7 +290,49 @@ var Slide = function () {
 exports.default = Slide;
 
 /***/ }),
-/* 5 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -774,7 +816,44 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 8 */,
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1126,7 +1205,254 @@ var TopMenu = function () {
 exports.default = TopMenu;
 
 /***/ }),
-/* 14 */,
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _dialog = __webpack_require__(22);
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _cfIdGenerator = __webpack_require__(8);
+
+var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
+
+var _cfTransition = __webpack_require__(5);
+
+var _cfDrag = __webpack_require__(18);
+
+var _cfDrag2 = _interopRequireDefault(_cfDrag);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DIALOG_DEFAULT_OPTION = {
+    size: "normal",
+    width: "",
+    height: "",
+    title: "",
+    showHeader: true,
+    icon: "",
+    position: "fit",
+    backdrop: true,
+    modal: false,
+    keyboard: true,
+    moveable: true,
+    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
+    showFooter: true,
+    footerBtn: false
+};
+
+var Dialog = function () {
+    function Dialog(options) {
+        _classCallCheck(this, Dialog);
+
+        options = options || {};
+        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
+        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
+        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
+        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
+        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
+        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
+        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
+        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
+        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
+        this.moveable = options.moveable || DIALOG_DEFAULT_OPTION.moveable;
+        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
+        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.id = _cfIdGenerator2.default.uuid();
+        this.create().show();
+    }
+
+    _createClass(Dialog, [{
+        key: 'create',
+        value: function create() {
+            var _this = this;
+            this._element = $((0, _dialog2.default)({
+                size: this.size,
+                width: this.width,
+                height: this.height,
+                title: this.title,
+                showHeader: this.showHeader,
+                icon: this.icon,
+                position: this.position,
+                backdrop: this.backdrop,
+                content: this.content,
+                showFooter: this.showFooter,
+                footerBtn: this.footerBtn,
+                moveable: this.moveable,
+                id: this.id
+            }));
+            if (!this.modal) {
+                this._element[0].onclick = function (event) {
+                    var target = event.srcElement || event.target;
+                    if (target.className.search(/modal/gi) >= 0) {
+                        //关闭当前dialog
+                        _this.close();
+                    }
+                };
+            }
+            if (this.keyboard) {
+                //键盘esc按键关闭
+                $(window).on("keydown." + this.id, function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code === 27) {
+                        _this.close();
+                    }
+                });
+            }
+            this.initMove();
+            this.initEvent();
+            return this;
+        }
+    }, {
+        key: 'initPos',
+        value: function initPos() {
+            //position设置
+            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var win_h = window.screen.availHeight;
+            var half = Math.max(0, (win_h - _h) / 2),
+                top = void 0;
+            switch (this.position) {
+                case "fit":
+                    //中间偏上
+                    top = half * 2 / 3;
+                    break;
+                case "center":
+                    top = half;
+                    break;
+                case "top":
+                    top = 4;
+                    break;
+                case "bottom":
+                    top = win_h - _h - 4;
+                    break;
+                case parseInt(this.position):
+                    //数字
+                    top = parseInt(this.position);
+                    break;
+                default:
+                    top = half * 2 / 3;
+                    break;
+            }
+            $(this._element[0]).find(".dialog").css({
+                "margin-top": top + "px"
+            });
+        }
+    }, {
+        key: 'initMove',
+        value: function initMove() {
+            if (this.moveable) {
+                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
+                    container: $(this._element[0]),
+                    handle: '.dialog-header',
+                    before: function before() {
+                        $(this._element[0]).find(".dialog").css('position', 'absolute');
+                    },
+                    finish: function finish(e) {}
+                });
+            }
+        }
+    }, {
+        key: 'initEvent',
+        value: function initEvent() {
+            var _this = this;
+            $(this._element[0]).on("click", "[data-operation]", function () {
+                var operation = $(this).attr("data-operation");
+                if (operation === "cancel") _this.close();
+                _this.callback && _this.callback.call(_this, 'operation_' + operation);
+            });
+            $(this._element[0]).on("click", ".icon-close", function () {
+                _this.close();
+            });
+        }
+    }, {
+        key: 'show',
+        value: function show() {
+            var _this = this;
+            $("body").append(this._element);
+            this.initPos();
+            (0, _cfTransition.transition)(function () {
+                _this._element.addClass("in");
+            });
+            return this;
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            var _this = this;
+            (0, _cfTransition.transition)(function () {
+                _this.callback && _this.callback.call(_this, "closeStart");
+                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
+                    _this._element.remove();
+                    $(window).off("keydown." + _this.id);
+                    if (_this.dragInstance) {
+                        _this.dragInstance.destroy();
+                    }
+                    _this.callback && _this.callback.call(_this, "closeEnd");
+                });
+            });
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }]);
+
+    return Dialog;
+}();
+
+var dialog = function dialog(options) {
+    return new Dialog(options);
+};
+
+window.alert = function (msg, title) {
+    title = title || "懂老板";
+    return dialog({
+        title: title,
+        content: msg,
+        modal: false
+    }).then(function () {
+        this.close();
+    });
+};
+exports.default = dialog;
+
+/***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1350,11 +1676,262 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 18 */,
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/27 0027.
+ * drag 拖动
+ */
+
+var DRAG_DEFAULT = {
+    container: 'body',
+    move: true
+};
+var idIncrementer = 0;
+
+var Drag = function () {
+    function Drag(element, options) {
+        _classCallCheck(this, Drag);
+
+        this.options = {
+            container: options.container || DRAG_DEFAULT.container,
+            move: options.move || DRAG_DEFAULT.move
+        };
+        this.id = idIncrementer++;
+        this.$ = $(element);
+        this.init();
+    }
+
+    _createClass(Drag, [{
+        key: 'init',
+        value: function init() {
+            var _this = this;
+
+            var that = this,
+                $root = that.$,
+                BEFORE = 'before',
+                DRAG = 'drag',
+                FINISH = 'finish',
+                eventSuffix = '.' + that.id,
+                mouseDownEvent = 'mousedown' + eventSuffix,
+                mouseUpEvent = 'mouseup' + eventSuffix,
+                mouseMoveEvent = 'mousemove' + eventSuffix,
+                setting = that.options,
+                selector = setting.selector,
+                handle = setting.handle,
+                $ele = $root,
+                startPos = void 0,
+                cPos = void 0,
+                startOffset = void 0,
+                mousePos = void 0,
+                moved = void 0;
+
+            var mouseMove = function mouseMove(event) {
+                var mX = event.pageX,
+                    mY = event.pageY;
+                moved = true;
+                var dragPos = {
+                    left: mX - startOffset.x,
+                    top: mY - startOffset.y,
+                    position: "absolute",
+                    "margin-top": 0
+                };
+                $ele.removeClass('drag-ready').addClass('dragging');
+                if (setting.move) {
+                    $ele.css(dragPos);
+                }
+                setting[DRAG] && setting[DRAG]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: dragPos,
+                    offset: {
+                        x: mX - startPos.x,
+                        y: mY - startPos.y
+                    },
+                    smallOffset: {
+                        x: mX - mousePos.x,
+                        y: mY - mousePos.y
+                    }
+                });
+                mousePos.x = mX;
+                mousePos.y = mY;
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseUp = function mouseUp(event) {
+                $(document).off(eventSuffix);
+                if (!moved) {
+                    $ele.removeClass('drag-ready');
+                    return;
+                }
+                var endPos = {
+                    left: event.pageX - startOffset.x,
+                    top: event.pageY - startOffset.y
+                };
+                $ele.removeClass('drag-ready dragging');
+                if (setting.move) {
+                    $ele.css(endPos);
+                }
+                setting[FINISH] && setting[FINISH]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: endPos,
+                    offset: {
+                        x: event.pageX - startPos.x,
+                        y: event.pageY - startPos.y
+                    },
+                    smallOffset: {
+                        x: event.pageX - mousePos.x,
+                        y: event.pageY - mousePos.y
+                    }
+                });
+                event.preventDefault();
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseDown = function mouseDown(event) {
+                var $mouseDownEle = $(_this);
+                if (selector) {
+                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
+                }
+                if (setting[BEFORE]) {
+                    var isSure = setting[BEFORE]({
+                        event: event,
+                        element: $ele
+                    });
+                    if (isSure === false) return;
+                }
+
+                var $container = $(setting.container),
+                    pos = $ele.offset();
+                cPos = $container.offset();
+                startPos = {
+                    x: event.pageX,
+                    y: event.pageY
+                };
+                startOffset = {
+                    x: event.pageX - pos.left + cPos.left,
+                    y: event.pageY - pos.top + cPos.top
+                };
+                mousePos = $.extend({}, startPos);
+                moved = false;
+
+                $ele.addClass('drag-ready');
+                event.preventDefault();
+
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+
+                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
+            };
+
+            if (handle) {
+                $root.on(mouseDownEvent, handle, mouseDown);
+            } else if (selector) {
+                $root.on(mouseDownEvent, selector, mouseDown);
+            } else {
+                $root.on(mouseDownEvent, mouseDown);
+            }
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            var eventSuffix = '.' + this.id;
+            this.$.off(eventSuffix);
+            $(document).off(eventSuffix);
+        }
+    }]);
+
+    return Drag;
+}();
+
+exports.default = Drag;
+
+/***/ }),
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */,
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += '" style="width:';
+    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += ';height:';
+    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
+        }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
+        }
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1563,7 +2140,7 @@ module.exports = function ($data) {
     var $$out = '', $escape = $imports.$escape, userName = $data.userName;
     $$out += '<!--动态注入到页面中-->\r\n<div class="user-container">\r\n    <div class="user-center">\r\n        <div class="user-icon"></div>\r\n        <div class="user-info">\r\n            <div class="user-name">';
     $$out += $escape(userName);
-    $$out += '</div>\r\n            <div class="user-action">\r\n                <a href="javascript:void(0);">注销</a>\r\n                <a href="javascript:void(0);">修改密码</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n';
+    $$out += '</div>\r\n            <div class="user-action">\r\n                <a data-user-action="loginOut" href="javascript:void(0);">注销</a>\r\n                <a data-user-action="changePwd" href="javascript:void(0);">修改密码</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n';
     return $$out;
 };
 
@@ -1608,6 +2185,10 @@ var _myCenter = __webpack_require__(43);
 
 var _myCenter2 = _interopRequireDefault(_myCenter);
 
+var _cfDialog = __webpack_require__(14);
+
+var _cfDialog2 = _interopRequireDefault(_cfDialog);
+
 var _navigator = __webpack_require__(25);
 
 var _navigator2 = _interopRequireDefault(_navigator);
@@ -1635,7 +2216,7 @@ var Index = function () {
             this.checkLogin();
             this.initMenu();
             this.importMyCenter();
-            _navigator2.default.detech();
+            this.LoginOut();
         }
     }, {
         key: 'initMenu',
@@ -1699,6 +2280,18 @@ var Index = function () {
             } else if ($(".nav.nav-pop").length > 0) {
                 $(".nav.nav-pop").prepend(userCenter).addClass("nav-animation");
             }
+        }
+    }, {
+        key: 'LoginOut',
+        value: function LoginOut() {
+            $("body").on("click", '[data-user-action="loginOut"]', function () {
+                alert("退出当前登录用户？").then(function (option) {
+                    if (/\S+ok$/.test(option)) {
+                        //退出登录
+
+                    }
+                });
+            });
         }
     }]);
 

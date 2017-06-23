@@ -1,0 +1,29 @@
+@charset "utf-8";
+//header 中logo
+@import "../package/ui/cf-varia.scss";
+@import "../package/ui/cf-func.scss";
+@import "./sass.scss";
+.logo{
+  position: fixed;
+  width:100%;
+  left:0;
+  top:0;
+  height:remToPx(3rem);
+  background-color: $headerColor;
+  padding-left: remToPx(0.5rem);
+  .platform-name{
+    font-size: remToPx(1.2rem);
+    color: map_get($baseColor,white);
+  }
+}
+@media screen and (max-width: 699px){
+  .logo{
+    height:remToPx(1.5rem);
+  }
+}
+
+@media screen and (min-width: 700px){
+  .logo{
+    height:remToPx(3rem);
+  }
+}

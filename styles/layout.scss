@@ -1,0 +1,14 @@
+@charset "utf-8";
+//布局样式
+@import "../package/ui/cf-ui-base";
+@import "../package/ui/cf-varia";
+@import "../package/ui/cf-func";
+.content{
+  @include prefix(transition,all 0.3s ease);
+  padding-top: remToPx(3rem);
+}
+@media screen and (max-width: 699px){
+  .content{
+    padding-top: remToPx(1.5rem);
+  }
+}

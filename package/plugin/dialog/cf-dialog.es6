@@ -180,6 +180,7 @@ class Dialog{
     }
     then(callback){
         this.callback=callback;
+        return this;
     }
 }
 let dialog=(options)=>{

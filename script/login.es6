@@ -1,6 +1,8 @@
 /**
  * Created by yanxlg on 2017/6/16 0016.
  * 登入页面脚本,缓存
+ * optimize by yanxlg
+ *      1.0 :临时兼容angular版本后台
  */
 import Star from '../package/widget/star/star-effect.es6';
 import dialog from '../package/plugin/dialog/cf-dialog.es6';
@@ -54,6 +56,8 @@ class Login{
                         alert(res.msg);
                     }else{
                         user.setInfo(res.data);
+                        //临时兼容angular版本后台
+                        localStorage.setItem("user",res.data);
                         location.replace(Navigator.getHtml("index"));
                     }
                 });

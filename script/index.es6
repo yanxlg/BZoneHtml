@@ -8,6 +8,7 @@
 import user from './user.es6';
 import NavMenu from '../package/plugin/navmenu/navmenu.es6';
 import myCenter from '../artTemplate/myCenter.art';
+import dialog from '../package/plugin/dialog/cf-dialog.es6';
 import Navigator from './navigator.es6';
 class Index{
     static checkLogin(){
@@ -20,7 +21,7 @@ class Index{
         this.checkLogin();
         this.initMenu();
         this.importMyCenter();
-        Navigator.detech();
+        this.LoginOut();
     }
     static initMenu(){
         let menus=user.getInfo().ModuleInfo;
@@ -78,6 +79,16 @@ class Index{
         }else if($(".nav.nav-pop").length>0){
             $(".nav.nav-pop").prepend(userCenter).addClass("nav-animation");
         }
+    }
+    static LoginOut(){
+        $("body").on("click",'[data-user-action="loginOut"]',function () {
+            alert("退出当前登录用户？").then(function (option) {
+                if(/\S+ok$/.test(option)){
+                    //退出登录
+
+                }
+            })
+        });
     }
 }
 
