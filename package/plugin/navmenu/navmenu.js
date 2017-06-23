@@ -458,6 +458,7 @@ var PopMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -484,7 +485,7 @@ module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
     $$out += $escape(left ? 'left' : '');
     $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
     $each(menus, function (menu, $index) {
@@ -672,6 +673,7 @@ var LeftMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -792,6 +794,7 @@ var TopMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -981,17 +984,15 @@ var NavMenu = function () {
         _classCallCheck(this, NavMenu);
 
         this.menus = menus;
-        var width = document.body.offsetWidth;
-        var ratio = window.devicePixelRatio;
-        if (width / ratio < 700) {
-            this.instance = new _navPop2.default(menus);
-        } else if (width / ratio >= 700 && width / ratio < 1080) {
-            this.instance = new _navTop2.default(menus);
+        var width = document.documentElement.offsetWidth;
+        if (width < 700) {
+            this.instance = new _navPop2.default(menus).then(this.callback);
+        } else if (width >= 700 && width < 1080) {
+            this.instance = new _navTop2.default(menus).then(this.callback);
         } else {
-            this.instance = new _navLeft2.default(menus);
+            this.instance = new _navLeft2.default(menus).then(this.callback);
         }
         this.resize();
-        return this.instance;
     }
 
     _createClass(NavMenu, [{
@@ -1002,6 +1003,7 @@ var NavMenu = function () {
             window[addEvent]("resize", function () {
                 $this.update();
             });
+            return this;
         }
     }, {
         key: 'update',
@@ -1014,23 +1016,33 @@ var NavMenu = function () {
                 }
                 this.instance.destroy();
                 //销毁instance
-                newInstance = new _navPop2.default(this.menus);
+                newInstance = new _navPop2.default(this.menus).then(this.callback);
                 this.instance = newInstance;
+                this.callback && this.callback.call(this, "change");
             } else if (width >= 700 && width <= 1080) {
                 if (this.instance.getType() === "TopMenu") {
                     return;
                 }
                 this.instance.destroy();
-                newInstance = new _navTop2.default(this.menus);
+                newInstance = new _navTop2.default(this.menus).then(this.callback);
                 this.instance = newInstance;
+                this.callback && this.callback.call(this, "change");
             } else {
                 if (this.instance.getType() === "LeftMenu") {
                     return;
                 }
                 this.instance.destroy();
-                newInstance = new _navLeft2.default(this.menus);
+                newInstance = new _navLeft2.default(this.menus).then(this.callback);
                 this.instance = newInstance;
+                this.callback && this.callback.call(this, "change");
             }
+            return this;
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            this.instance.then(callback); //初始化
         }
     }]);
 

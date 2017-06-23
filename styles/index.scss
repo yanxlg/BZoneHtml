@@ -2,14 +2,244 @@
 @import "../package/ui/cf-func.scss";
 @import "../package/ui/cf-ui-base.scss";
 @import "../package/ui/cf-flex.scss";
+@import "../package/ui/cf-iconfont.scss";
 @import "../package/plugin/navmenu/navmenu.scss";
 .nav{
   position: relative;
   &.nav-left{
-    &.nav-left-animation{
+    &.nav-animation{
       padding-top:remToPx(5.2rem);
       @include prefix(animation,append 0.5s ease);
     }
+    .user-container{
+      @include prefix(box-sizing,border-box);
+      @include prefix(animation,user-fade 1s ease);
+      position: absolute;
+      top:0;
+      width:100%;
+      padding:0 remToPx(0.3rem);
+      .user-center{
+        @extend .flex;
+        @extend .flex-1;
+        @extend .align-center;
+        @extend .justify-center;
+        padding: remToPx(1rem) 0;
+        @include prefix(box-sizing,border-box);
+        border-bottom: 1px solid $borderColor;
+        .user-icon{
+          width:remToPx(3rem);
+          height:remToPx(3rem);
+          background: url(../images/logo.png) no-repeat scroll center center;
+          background-size: 80%;
+          @include prefix(border-radius,remToPx(999rem));
+          border:1px solid $borderColor;
+        }
+        .user-info{
+          @extend .flex;
+          @extend .flex-column;
+          margin-left: remToPx(0.5rem);
+          .user-name{
+            color: map_get($baseColor,gray-pale);
+          }
+          .user-action{
+            a{
+              color: map_get($baseColor,blue);
+              &:active,&:link,&:visited{
+                color: map_get($baseColor,blue);
+              }
+              &:hover{
+                color: map_get($baseColor,white);
+              }
+              ~ a{
+                margin-left: remToPx(0.5rem);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.nav-top{
+    .nav-right>li{
+      @include prefix(transition,all 1s ease);
+    }
+    &.nav-animation{
+      //padding-top:remToPx(5.2rem);
+      //@include prefix(animation,append 0.5s ease);
+      .nav-right > li:last-of-type{
+        margin-right: remToPx(5rem);
+      }
+    }
+    .user-container{
+      @include prefix(box-sizing,border-box);
+      @include prefix(animation,user-fade 1s ease);
+      z-index: 20;
+      position: absolute;
+      top:0;
+      right:remToPx(3rem);
+      height:100%;
+      //IE 宽度是0
+      .user-center{
+        @extend .flex;
+        //@extend .flex-1;
+        @extend .align-center;
+        //@extend .justify-center;
+        @include prefix(box-sizing,border-box);
+        .user-icon{
+          width:remToPx(1.3rem);
+          height:remToPx(1.3rem);
+          background: url(../images/logo.png) no-repeat scroll center center;
+          background-size: 80%;
+          @include prefix(border-radius,remToPx(999rem));
+          border:1px solid $borderColor;
+        }
+        .user-info{
+          @extend .flex;
+          @extend .flex-column;
+          margin-left: remToPx(0.2rem);
+          .user-name{
+            color: map_get($baseColor,gray-pale);
+            height:remToPx(0.8rem);
+            font-size: remToPx(0.8rem);
+            line-height: remToPx(0.8rem);
+            cursor: pointer;
+            @extend .icon;
+            &:after{
+              content: '\e6b7';
+              font-size: remToPx(0.6rem);
+              margin-left: remToPx(0.1rem);
+            }
+            &:hover ~ .user-action{
+              filter: alpha(opacity=100);
+              opacity: 1;
+              height:remToPx(3.25rem);
+            }
+          }
+          .user-action{
+            height:0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            margin-left: remToPx(-1rem);
+            background-color: rgba(255,255,255,0.8);
+            border:1px solid $borderColor;
+            @include prefix(border-radius,remToPx(0.15rem));
+            width: remToPx(4rem);
+            position: absolute;
+            top:remToPx(2rem);
+            @extend .flex-column;
+            @include prefix(transition,all 0.5s ease);
+            line-height: 1rem;
+            a{
+              display: block;
+              padding:remToPx(0.3rem) 0;
+              @include prefix(box-sizing,border-box);
+              color: map_get($baseColor,black);
+              text-align: center;
+              &:link{
+                color: map_get($baseColor,black);
+              }
+              &:active,&:visited,&:hover{
+                color: map_get($baseColor,light-silver);
+              }
+              ~a{
+                border-top:1px solid $borderColor;
+              }
+            }
+            &:hover{
+              filter: alpha(opacity=100);
+              opacity: 1;
+              height:remToPx(3.25rem);
+            }
+          }
+        }
+      }
+    }
+  }
+  &.nav-pop{
+    .user-container{
+      @include prefix(box-sizing,border-box);
+      @include prefix(animation,user-fade 1s ease);
+      z-index: 20;
+      position: fixed;
+      top:0;
+      right:remToPx(2rem);
+      height:remToPx(1.5rem);
+      .user-center{
+        @extend .flex;
+        //@extend .flex-1;
+        @extend .align-center;
+        //@extend .justify-center;
+        @include prefix(box-sizing,border-box);
+        .user-icon{
+          width:remToPx(0.7rem);
+          height:remToPx(0.7rem);
+          background: url(../images/logo.png) no-repeat scroll center center;
+          background-size: 80%;
+          @include prefix(border-radius,remToPx(999rem));
+          border:1px solid $borderColor;
+        }
+        .user-info{
+          @extend .flex;
+          @extend .flex-column;
+          margin-left: remToPx(0.2rem);
+          .user-name{
+            color: map_get($baseColor,gray-pale);
+            height:remToPx(0.8rem);
+            font-size: remToPx(0.6rem);
+            line-height: remToPx(0.8rem);
+            cursor: pointer;
+            @extend .icon;
+            &:after{
+              content: '\e6b7';
+            }
+            &:hover ~ .user-action{
+              filter: alpha(opacity=100);
+              opacity: 1;
+              height:remToPx(3.25rem);
+            }
+          }
+          .user-action{
+            height:0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            margin-left: remToPx(-1rem);
+            background-color: rgba(255,255,255,0.8);
+            border:1px solid $borderColor;
+            @include prefix(border-radius,remToPx(0.15rem));
+            width: remToPx(4rem);
+            position: absolute;
+            top:remToPx(1.2rem);
+            @extend .flex-column;
+            @include prefix(transition,all 0.5s ease);
+            line-height: 1rem;
+            a{
+              display: block;
+              padding:remToPx(0.3rem) 0;
+              @include prefix(box-sizing,border-box);
+              color: map_get($baseColor,black);
+              text-align: center;
+              &:link{
+                color: map_get($baseColor,black);
+              }
+              &:active,&:visited,&:hover{
+                color: map_get($baseColor,light-silver);
+              }
+              ~a{
+                border-top:1px solid $borderColor;
+              }
+            }
+            &:hover{
+              filter: alpha(opacity=100);
+              opacity: 1;
+              height:remToPx(3.25rem);
+            }
+          }
+        }
+      }
+    }
+  }
+  .nav-icon-menu{
+    cursor: pointer;
   }
 }
 @include keyframes(append){
@@ -31,47 +261,34 @@
     opacity: 1;
   }
 }
-.user-container{
-  @include prefix(box-sizing,border-box);
-  @include prefix(animation,user-fade 1s ease);
+
+
+//页面容器样式
+.page-container{
   position: absolute;
   top:0;
-  width:100%;
-  padding:0 remToPx(0.3rem);
-  .user-center{
-    @extend .flex;
-    @extend .flex-1;
-    @extend .align-center;
-    @extend .justify-center;
-    padding: remToPx(1rem) 0;
-    @include prefix(box-sizing,border-box);
-    border-bottom: 1px solid $borderColor;
-    .user-icon{
-      width:remToPx(3rem);
-      height:remToPx(3rem);
-      background: url(../images/logo.png) no-repeat scroll center center;
-      background-size: 80%;
-      @include prefix(border-radius,remToPx(999rem));
-      border:1px solid $borderColor;
-    }
-    .user-info{
-      @extend .flex;
-      @extend .flex-column;
-      margin-left: remToPx(0.5rem);
-      .user-name{
-        color: map_get($baseColor,gray-pale);
-      }
-      .user-action{
-        a{
-          color: map_get($baseColor,blue);
-          &:active,&:link,&:visited{
-            color: map_get($baseColor,blue);
-          }
-          &:hover{
-            color: map_get($baseColor,white);
-          }
-        }
-      }
-    }
+  bottom: 0;
+  left:0;
+  right: 0;
+  @include prefix(transition,all 0.5s ease);
+  iframe{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+}
+.width-nav-left{
+  .page-container{
+    left: remToPx(10rem);
+  }
+}
+.width-nav-pop{
+  .page-container{
+    top: remToPx(1.5rem);
+  }
+}
+.width-nav-top{
+  .page-container{
+    top: remToPx(3rem);
   }
 }

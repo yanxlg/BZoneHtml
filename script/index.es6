@@ -3,10 +3,12 @@
  * 懂老板后台管理主界面
  * 登入检查
  * 菜单配置
+ * 如果是移动端则使用iframe嵌套，保留菜单，PC跳转到新页面去
  */
 import user from './user.es6';
 import NavMenu from '../package/plugin/navmenu/navmenu.es6';
 import myCenter from '../artTemplate/myCenter.art';
+import Navigator from './navigator.es6';
 class Index{
     static checkLogin(){
         if(!user.getToken()){
@@ -18,6 +20,7 @@ class Index{
         this.checkLogin();
         this.initMenu();
         this.importMyCenter();
+        Navigator.detech();
     }
     static initMenu(){
         let menus=user.getInfo().ModuleInfo;
@@ -49,14 +52,32 @@ class Index{
                 menuList.push(pMenu);
             }
         });
+        let _this=this;
         this.nav=new NavMenu(menuList).then((data)=>{
-            alert(data);
+            if(data==="change"){
+                //Todo 窗口resize处理
+                _this.importMyCenter();
+            }else{
+                //Todo 菜单点击事件处理
+
+            }
         });
+        $("body").on("click",".nav-top .user-name",function () {
+            $(this).addClass("hover");
+        })
     }
     static importMyCenter(){
-        //注入个人中心模块  需要监听窗口改变事件
-        let userCenter=$(myCenter({}));
-        $(".nav.nav-left").prepend(userCenter).addClass("nav-left-animation");
+        //注入个人中心模块 先后顺序进行控制 ==> fix top 存在两种nav的时候
+        let userCenter=$(myCenter({
+            userName:user.getInfo().User.UserName
+        }));
+        if($(".nav.nav-left").length>0){
+            $(".nav.nav-left").prepend(userCenter).addClass("nav-animation");
+        }else if($(".nav.nav-top").length>0){
+            $(".nav.nav-top").prepend(userCenter).addClass("nav-animation");
+        }else if($(".nav.nav-pop").length>0){
+            $(".nav.nav-pop").prepend(userCenter).addClass("nav-animation");
+        }
     }
 }
 

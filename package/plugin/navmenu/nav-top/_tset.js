@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 52);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -211,6 +211,7 @@ var TopMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -483,7 +484,7 @@ exports.default = Slide;
 
 /***/ }),
 
-/***/ 52:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -727,6 +728,7 @@ var PopMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -752,7 +754,7 @@ module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
     $$out += $escape(left ? 'left' : '');
     $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
     $each(menus, function (menu, $index) {

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 52);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -233,6 +233,7 @@ var LeftMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -505,7 +506,7 @@ exports.default = Slide;
 
 /***/ }),
 
-/***/ 50:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

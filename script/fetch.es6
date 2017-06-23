@@ -47,7 +47,7 @@ let fetch=(url,data,login)=>{
         return fetchApi(staticConfig.webApiDomain+url,{
             method: 'POST',
             headers:{
-                token:token,
+                Token:token,
                 'Content-Type': 'application/json'
             },
             body:JSON.stringify({

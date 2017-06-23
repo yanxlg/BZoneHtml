@@ -63,11 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ 	return __webpack_require__(__webpack_require__.s = 49);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports) {
 
 var g;
@@ -94,7 +95,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103,513 +105,8 @@ module.exports = g;
 module.exports = __webpack_require__(2);
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-/*! art-template@runtime | https://github.com/aui/art-template */
-
-var detectNode = __webpack_require__(3);
-var runtime = Object.create(detectNode ? global : window);
-var ESCAPE_REG = /["&'<>]/;
-
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-runtime.$escape = function (content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-runtime.$each = function (data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-// 将目标转成字符
-function toString(value) {
-    if (typeof value !== 'string') {
-        if (value === undefined || value === null) {
-            value = '';
-        } else if (typeof value === 'function') {
-            value = toString(value.call(value));
-        } else {
-            value = JSON.stringify(value);
-        }
-    }
-
-    return value;
-};
-
-// 编码 HTML 内容
-function xmlEscape(content) {
-    var html = '' + content;
-    var regexResult = ESCAPE_REG.exec(html);
-    if (!regexResult) {
-        return content;
-    }
-
-    var result = '';
-    var i = void 0,
-        lastIndex = void 0,
-        char = void 0;
-    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-
-        switch (html.charCodeAt(i)) {
-            case 34:
-                char = '&#34;';
-                break;
-            case 38:
-                char = '&#38;';
-                break;
-            case 39:
-                char = '&#39;';
-                break;
-            case 60:
-                char = '&#60;';
-                break;
-            case 62:
-                char = '&#62;';
-                break;
-            default:
-                continue;
-        }
-
-        if (lastIndex !== i) {
-            result += html.substring(lastIndex, i);
-        }
-
-        lastIndex = i + 1;
-        result += char;
-    }
-
-    if (lastIndex !== i) {
-        return result + html.substring(lastIndex, i);
-    } else {
-        return result;
-    }
-};
-
-module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */,
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
-};
-
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
-        }
-    }
-}();
-
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
-
-/***/ }),
-/* 6 */,
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Require Promise
- * Created by yanxlg on 2017/5/22 0022.
- * 本地存储，包括持久与临时
- * 不同页面存在不同的空间，接入存储时间控制，在get与set的时候会检查存储时间来清理一次
- * location.href 替换成 location.pathname
- * storage事件在当前页面不会广播，调整为当前页面也能接收到广播
- */
-var storage = window.localStorage;
-var sessionCache = window.sessionStorage;
-
-var encode = function encode(text) {
-    var length = text.length,
-        c = String.fromCharCode(text.charCodeAt(0) + length);
-    for (var i = 1; i < length; i++) {
-        c += String.fromCharCode(text.charCodeAt(i) + text.charCodeAt(i - 1));
-    }
-    return escape(c);
-    // return encodeURI(encodeURIComponent(encodeURI(text)));
-};
-var decode = function decode(text) {
-    text = unescape(text);
-    var length = text.length,
-        c = String.fromCharCode(text.charCodeAt(0) - length);
-    for (var i = 1; i < length; i++) {
-        c += String.fromCharCode(text.charCodeAt(i) - c.charCodeAt(i - 1));
-    }
-    return c;
-    // return decodeURI(decodeURIComponent(decodeURI(text)));
-};
-/****
- * 保存体构造器
- */
-
-var Data = function () {
-    function Data(val, time) {
-        _classCallCheck(this, Data);
-
-        this._data = JSON.stringify({
-            _val: val,
-            _create: new Date().getTime() / 1000,
-            _save: time ? time : -1
-        });
-    }
-
-    _createClass(Data, [{
-        key: "getString",
-        value: function getString() {
-            return this._data;
-        }
-    }]);
-
-    return Data;
-}();
-
-var Key = function () {
-    function Key(key) {
-        _classCallCheck(this, Key);
-
-        this._data = JSON.stringify({
-            _key: key
-        });
-    }
-
-    _createClass(Key, [{
-        key: "getString",
-        value: function getString() {
-            return this._data;
-        }
-    }]);
-
-    return Key;
-}();
-
-var Store = function () {
-    function Store() {
-        _classCallCheck(this, Store);
-    }
-
-    _createClass(Store, null, [{
-        key: "set",
-        value: function set(key, val, time) {
-            //检查是否过去，页面单实例处理
-            //通过url来区别不容的页面
-            //time 保存时间，以s为单位
-            var $key = encode(new Key(key).getString());
-            var $val = encode(new Data(val, time).getString());
-            storage.setItem($key, $val);
-        }
-    }, {
-        key: "get",
-        value: function get(key) {
-            var _this = this;
-
-            //获取当前页面的值
-            var $key = encode(new Key(key).getString());
-            var $data = storage.getItem($key);
-            return !$data ? function () {
-                return null;
-            }() : function () {
-                $data = decode($data);
-                $data = JSON.parse($data);
-                if (_this.isOverduce($data)) {
-                    storage.removeItem($key);
-                    return null;
-                } else {
-                    return $data._val;
-                }
-            }();
-        }
-    }, {
-        key: "isOverduce",
-        value: function isOverduce(val) {
-            var _save = val._save;
-            return _save === -1 ? false : function () {
-                var _create = val._create;
-                return new Date().getTime() / 1000 - _create >= _save;
-            };
-        }
-    }, {
-        key: "remove",
-        value: function remove(key) {
-            var $key = encode(new Key(key).getString());
-            storage.removeItem($key);
-        }
-    }, {
-        key: "clear",
-        value: function clear(page) {
-            //清空当前页面的数据
-            !page && (page = location.pathname);
-            this.iterator().then(function (key, val, $page, $key) {
-                if ($page === page) {
-                    storage.removeItem($key);
-                }
-            });
-        }
-    }, {
-        key: "clearAll",
-        value: function clearAll() {
-            //清空所有数据
-            storage.clear();
-        }
-    }, {
-        key: "getLength",
-        value: function getLength() {
-            return storage.length;
-        }
-    }, {
-        key: "enabled",
-        value: function enabled() {
-            return !!storage;
-        }
-    }, {
-        key: "iterator",
-        value: function iterator() {
-            //遍历取的时候也需要判断是否过去
-            var $this = this;
-            return new Promise(function (resolve) {
-                for (var i = 0, len = storage.length; i < len; i++) {
-                    var $key = storage.key(i);
-                    var $keyObj = JSON.parse($key);
-                    var $value = storage.getItem($key);
-                    var $valObj = JSON.parse($value);
-                    if ($this.isOverduce($valObj)) {
-                        storage.removeItem($key);
-                    } else {
-                        resolve($this, $keyObj._key, $valObj._val, $keyObj._url, $key);
-                        // callback.call($this,$keyObj._key,$valObj._val,$keyObj._url,$key);
-                    }
-                }
-            });
-        }
-    }]);
-
-    return Store;
-}();
-
-var Session = function () {
-    function Session() {
-        _classCallCheck(this, Session);
-    }
-
-    _createClass(Session, null, [{
-        key: "set",
-        value: function set(key, val, time) {
-            //检查是否过去，页面单实例处理
-            //通过url来区别不容的页面
-            //time 保存时间，以s为单位
-            var $key = encode(new Key(key).getString());
-            var $val = encode(new Data(val, time).getString());
-            sessionCache.setItem($key, $val);
-        }
-    }, {
-        key: "get",
-        value: function get(key) {
-            var _this2 = this;
-
-            //获取当前页面的值
-            var $key = encode(new Key(key).getString());
-            var $data = sessionCache.getItem($key);
-            return !$data ? function () {
-                return null;
-            }() : function () {
-                $data = decode($data);
-                $data = JSON.parse($data);
-                if (_this2.isOverduce($data)) {
-                    sessionCache.removeItem($key);
-                    return null;
-                } else {
-                    return $data._val;
-                }
-            }();
-        }
-    }, {
-        key: "isOverduce",
-        value: function isOverduce(val) {
-            var _save = val._save;
-            return _save === -1 ? false : function () {
-                var _create = val._create;
-                return new Date().getTime() / 1000 - _create >= _save;
-            };
-        }
-    }, {
-        key: "remove",
-        value: function remove(key) {
-            var $key = encode(new Key(key).getString());
-            sessionCache.removeItem($key);
-        }
-    }, {
-        key: "clear",
-        value: function clear(page) {
-            //清空当前页面的数据
-            !page && (page = location.pathname);
-            this.iterator(function (key, val, $page, $key) {
-                if ($page === page) {
-                    sessionCache.removeItem($key);
-                }
-            });
-        }
-    }, {
-        key: "clearAll",
-        value: function clearAll() {
-            //清空所有数据
-            sessionCache.clear();
-        }
-    }, {
-        key: "getLength",
-        value: function getLength() {
-            return sessionCache.length;
-        }
-    }, {
-        key: "enabled",
-        value: function enabled() {
-            return !!sessionCache;
-        }
-    }, {
-        key: "iterator",
-        value: function iterator(callback) {
-            //遍历取的时候也需要判断是否过去
-            var $this = this;
-            callback && function () {
-                for (var i = 0, len = sessionCache.length; i < len; i++) {
-                    var $key = sessionCache.key(i);
-                    var $keyObj = JSON.parse(decode($key));
-                    var $value = sessionCache.getItem($key);
-                    var $valObj = JSON.parse(decode($value));
-                    if ($this.isOverduce($valObj)) {
-                        sessionCache.removeItem($key);
-                    } else {
-                        callback.call($this, $keyObj._key, $valObj._val, $keyObj._url, $key);
-                    }
-                }
-            }();
-        }
-    }]);
-
-    return Session;
-}();
-
-exports.store = Store;
-exports.session = Session;
-exports.encode = encode;
-exports.decode = decode;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -856,10 +353,8 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
+
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1050,7 +545,8 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 19 */
+
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1412,7 +908,115 @@ exports.default = Promise;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+/*! art-template@runtime | https://github.com/aui/art-template */
+
+var detectNode = __webpack_require__(3);
+var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
+
+// 将目标转成字符
+function toString(value) {
+    if (typeof value !== 'string') {
+        if (value === undefined || value === null) {
+            value = '';
+        } else if (typeof value === 'function') {
+            value = toString(value.call(value));
+        } else {
+            value = JSON.stringify(value);
+        }
+    }
+
+    return value;
+};
+
+// 编码 HTML 内容
+function xmlEscape(content) {
+    var html = '' + content;
+    var regexResult = ESCAPE_REG.exec(html);
+    if (!regexResult) {
+        return content;
+    }
+
+    var result = '';
+    var i = void 0,
+        lastIndex = void 0,
+        char = void 0;
+    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+
+        switch (html.charCodeAt(i)) {
+            case 34:
+                char = '&#34;';
+                break;
+            case 38:
+                char = '&#38;';
+                break;
+            case 39:
+                char = '&#39;';
+                break;
+            case 60:
+                char = '&#60;';
+                break;
+            case 62:
+                char = '&#62;';
+                break;
+            default:
+                continue;
+        }
+
+        if (lastIndex !== i) {
+            result += html.substring(lastIndex, i);
+        }
+
+        lastIndex = i + 1;
+        result += char;
+    }
+
+    if (lastIndex !== i) {
+        return result + html.substring(lastIndex, i);
+    } else {
+        return result;
+    }
+};
+
+module.exports = runtime;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1602,7 +1206,8 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 21 */
+
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2086,7 +1691,8 @@ var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 22 */
+
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2148,31 +1754,22 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2283,5 +1880,389 @@ var fetch = function fetch(url, data, login) {
 };
 exports.default = fetch;
 
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Require Promise
+ * Created by yanxlg on 2017/5/22 0022.
+ * 本地存储，包括持久与临时
+ * 不同页面存在不同的空间，接入存储时间控制，在get与set的时候会检查存储时间来清理一次
+ * location.href 替换成 location.pathname
+ * storage事件在当前页面不会广播，调整为当前页面也能接收到广播
+ */
+var storage = window.localStorage;
+var sessionCache = window.sessionStorage;
+
+var encode = function encode(text) {
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) + length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) + text.charCodeAt(i - 1));
+    }
+    return escape(c);
+    // return encodeURI(encodeURIComponent(encodeURI(text)));
+};
+var decode = function decode(text) {
+    text = unescape(text);
+    var length = text.length,
+        c = String.fromCharCode(text.charCodeAt(0) - length);
+    for (var i = 1; i < length; i++) {
+        c += String.fromCharCode(text.charCodeAt(i) - c.charCodeAt(i - 1));
+    }
+    return c;
+    // return decodeURI(decodeURIComponent(decodeURI(text)));
+};
+/****
+ * 保存体构造器
+ */
+
+var Data = function () {
+    function Data(val, time) {
+        _classCallCheck(this, Data);
+
+        this._data = JSON.stringify({
+            _val: val,
+            _create: new Date().getTime() / 1000,
+            _save: time ? time : -1
+        });
+    }
+
+    _createClass(Data, [{
+        key: "getString",
+        value: function getString() {
+            return this._data;
+        }
+    }]);
+
+    return Data;
+}();
+
+var Key = function () {
+    function Key(key) {
+        _classCallCheck(this, Key);
+
+        this._data = JSON.stringify({
+            _key: key
+        });
+    }
+
+    _createClass(Key, [{
+        key: "getString",
+        value: function getString() {
+            return this._data;
+        }
+    }]);
+
+    return Key;
+}();
+
+var Store = function () {
+    function Store() {
+        _classCallCheck(this, Store);
+    }
+
+    _createClass(Store, null, [{
+        key: "set",
+        value: function set(key, val, time) {
+            //检查是否过去，页面单实例处理
+            //通过url来区别不容的页面
+            //time 保存时间，以s为单位
+            var $key = encode(new Key(key).getString());
+            var $val = encode(new Data(val, time).getString());
+            storage.setItem($key, $val);
+        }
+    }, {
+        key: "get",
+        value: function get(key) {
+            var _this = this;
+
+            //获取当前页面的值
+            var $key = encode(new Key(key).getString());
+            var $data = storage.getItem($key);
+            return !$data ? function () {
+                return null;
+            }() : function () {
+                $data = decode($data);
+                $data = JSON.parse($data);
+                if (_this.isOverduce($data)) {
+                    storage.removeItem($key);
+                    return null;
+                } else {
+                    return $data._val;
+                }
+            }();
+        }
+    }, {
+        key: "isOverduce",
+        value: function isOverduce(val) {
+            var _save = val._save;
+            return _save === -1 ? false : function () {
+                var _create = val._create;
+                return new Date().getTime() / 1000 - _create >= _save;
+            };
+        }
+    }, {
+        key: "remove",
+        value: function remove(key) {
+            var $key = encode(new Key(key).getString());
+            storage.removeItem($key);
+        }
+    }, {
+        key: "clear",
+        value: function clear(page) {
+            //清空当前页面的数据
+            !page && (page = location.pathname);
+            this.iterator().then(function (key, val, $page, $key) {
+                if ($page === page) {
+                    storage.removeItem($key);
+                }
+            });
+        }
+    }, {
+        key: "clearAll",
+        value: function clearAll() {
+            //清空所有数据
+            storage.clear();
+        }
+    }, {
+        key: "getLength",
+        value: function getLength() {
+            return storage.length;
+        }
+    }, {
+        key: "enabled",
+        value: function enabled() {
+            return !!storage;
+        }
+    }, {
+        key: "iterator",
+        value: function iterator() {
+            //遍历取的时候也需要判断是否过去
+            var $this = this;
+            return new Promise(function (resolve) {
+                for (var i = 0, len = storage.length; i < len; i++) {
+                    var $key = storage.key(i);
+                    var $keyObj = JSON.parse($key);
+                    var $value = storage.getItem($key);
+                    var $valObj = JSON.parse($value);
+                    if ($this.isOverduce($valObj)) {
+                        storage.removeItem($key);
+                    } else {
+                        resolve($this, $keyObj._key, $valObj._val, $keyObj._url, $key);
+                        // callback.call($this,$keyObj._key,$valObj._val,$keyObj._url,$key);
+                    }
+                }
+            });
+        }
+    }]);
+
+    return Store;
+}();
+
+var Session = function () {
+    function Session() {
+        _classCallCheck(this, Session);
+    }
+
+    _createClass(Session, null, [{
+        key: "set",
+        value: function set(key, val, time) {
+            //检查是否过去，页面单实例处理
+            //通过url来区别不容的页面
+            //time 保存时间，以s为单位
+            var $key = encode(new Key(key).getString());
+            var $val = encode(new Data(val, time).getString());
+            sessionCache.setItem($key, $val);
+        }
+    }, {
+        key: "get",
+        value: function get(key) {
+            var _this2 = this;
+
+            //获取当前页面的值
+            var $key = encode(new Key(key).getString());
+            var $data = sessionCache.getItem($key);
+            return !$data ? function () {
+                return null;
+            }() : function () {
+                $data = decode($data);
+                $data = JSON.parse($data);
+                if (_this2.isOverduce($data)) {
+                    sessionCache.removeItem($key);
+                    return null;
+                } else {
+                    return $data._val;
+                }
+            }();
+        }
+    }, {
+        key: "isOverduce",
+        value: function isOverduce(val) {
+            var _save = val._save;
+            return _save === -1 ? false : function () {
+                var _create = val._create;
+                return new Date().getTime() / 1000 - _create >= _save;
+            };
+        }
+    }, {
+        key: "remove",
+        value: function remove(key) {
+            var $key = encode(new Key(key).getString());
+            sessionCache.removeItem($key);
+        }
+    }, {
+        key: "clear",
+        value: function clear(page) {
+            //清空当前页面的数据
+            !page && (page = location.pathname);
+            this.iterator(function (key, val, $page, $key) {
+                if ($page === page) {
+                    sessionCache.removeItem($key);
+                }
+            });
+        }
+    }, {
+        key: "clearAll",
+        value: function clearAll() {
+            //清空所有数据
+            sessionCache.clear();
+        }
+    }, {
+        key: "getLength",
+        value: function getLength() {
+            return sessionCache.length;
+        }
+    }, {
+        key: "enabled",
+        value: function enabled() {
+            return !!sessionCache;
+        }
+    }, {
+        key: "iterator",
+        value: function iterator(callback) {
+            //遍历取的时候也需要判断是否过去
+            var $this = this;
+            callback && function () {
+                for (var i = 0, len = sessionCache.length; i < len; i++) {
+                    var $key = sessionCache.key(i);
+                    var $keyObj = JSON.parse(decode($key));
+                    var $value = sessionCache.getItem($key);
+                    var $valObj = JSON.parse(decode($value));
+                    if ($this.isOverduce($valObj)) {
+                        sessionCache.removeItem($key);
+                    } else {
+                        callback.call($this, $keyObj._key, $valObj._val, $keyObj._url, $key);
+                    }
+                }
+            }();
+        }
+    }]);
+
+    return Session;
+}();
+
+exports.store = Store;
+exports.session = Session;
+exports.encode = encode;
+exports.decode = decode;
+
+/***/ }),
+
+/***/ 8:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
 /***/ })
-/******/ ]);
+
+/******/ });

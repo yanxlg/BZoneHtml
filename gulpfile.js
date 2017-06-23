@@ -11,27 +11,29 @@ const base64=require('gulp-base64');
 const AssetsRelativePath=require("./gulp_css_url");
 const cssbeautify=require("gulp-cssbeautify");
 const importOnce=require("node-sass-import-once");
+const sassImportJson = require('gulp-sass-import-json');
 gulp.task('default', ["sass","sass:watch"],function() {
     console.log("develop is building");
 });
 gulp.task('sass', function () {
-    return gulp.src('./styles/**/*.scss')
+    return gulp.src(["./**/*.scss","!node_modules/**/*.scss","!build/**/*.scss","!ApiModal/**/*.scss","!artTemplate/**/*.scss","!config/**/*.scss","!html/**/*.scss","!images/**/*.scss","!manifest/**/*.scss","!script/**/*.scss","!static/**/*.scss"])
+        .pipe(sassImportJson())
         .pipe(sass({
             errLogToConsole: true,
             outputStyle: 'expanded',
             importer:importOnce
         }).on('error', sass.logError))
-        .pipe(AssetsRelativePath("styles"))
         .pipe(base64({
-            baseDir: 'images',
-            extensions: ['svg', 'png', /\.jpg#datauri$/i],
+            baseDir: './',
+            extensions: ['png', /\.jpg#datauri$/i],
             exclude:    [/\.server\.(com|net)\/dynamic\//, '--live.jpg'],
             maxImageSize: 8*1024, // bytes
             debug: true
         }))
-        .pipe(cleanCSS({compatibility: 'ie10',debug:true}))
+        .pipe(cleanCSS({compatibility: 'ie10'})) //去除@import重复代码
         .pipe(cssbeautify())
-        .pipe(gulp.dest('./styles'));
+        .pipe(AssetsRelativePath())
+        .pipe(gulp.dest("./"));
 });
 gulp.task('sass:watch', function () {
     const watcher = gulp.watch('./styles/**/*.scss', ['sass']);

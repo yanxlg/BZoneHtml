@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 56);
+/******/ 	return __webpack_require__(__webpack_require__.s = 58);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2644,7 +2644,7 @@ module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '';
-    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in flex align-center justify-center">\r\n        <div class="loading-container flex align-center">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
+    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in">\r\n        <div class="loading-container">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
     return $$out;
 };
 
@@ -2726,7 +2726,8 @@ exports.default = Loading;
 /* 37 */,
 /* 38 */,
 /* 39 */,
-/* 40 */
+/* 40 */,
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2816,7 +2817,7 @@ var fetch = function fetch(url, data, login) {
         return (0, _fetch2.default)(_static2.default.webApiDomain + url, {
             method: 'POST',
             headers: {
-                token: token,
+                Token: token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -2878,7 +2879,6 @@ var fetch = function fetch(url, data, login) {
 exports.default = fetch;
 
 /***/ }),
-/* 41 */,
 /* 42 */,
 /* 43 */,
 /* 44 */,
@@ -2893,7 +2893,9 @@ exports.default = fetch;
 /* 53 */,
 /* 54 */,
 /* 55 */,
-/* 56 */
+/* 56 */,
+/* 57 */,
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2913,7 +2915,7 @@ var _cfDialog = __webpack_require__(14);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _fetch = __webpack_require__(40);
+var _fetch = __webpack_require__(41);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 

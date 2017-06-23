@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 55);
+/******/ 	return __webpack_require__(__webpack_require__.s = 57);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -458,6 +458,7 @@ var PopMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -782,7 +783,7 @@ module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
     $$out += $escape(left ? 'left' : '');
     $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
     $each(menus, function (menu, $index) {
@@ -984,6 +985,7 @@ var LeftMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -1104,6 +1106,7 @@ var TopMenu = function () {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
+            return this;
         }
     }, {
         key: 'destroy',
@@ -1389,17 +1392,15 @@ var NavMenu = function () {
         _classCallCheck(this, NavMenu);
 
         this.menus = menus;
-        var width = document.body.offsetWidth;
-        var ratio = window.devicePixelRatio;
-        if (width / ratio < 700) {
-            this.instance = new _navPop2.default(menus);
-        } else if (width / ratio >= 700 && width / ratio < 1080) {
-            this.instance = new _navTop2.default(menus);
+        var width = document.documentElement.offsetWidth;
+        if (width < 700) {
+            this.instance = new _navPop2.default(menus).then(this.callback);
+        } else if (width >= 700 && width < 1080) {
+            this.instance = new _navTop2.default(menus).then(this.callback);
         } else {
-            this.instance = new _navLeft2.default(menus);
+            this.instance = new _navLeft2.default(menus).then(this.callback);
         }
         this.resize();
-        return this.instance;
     }
 
     _createClass(NavMenu, [{
@@ -1410,6 +1411,7 @@ var NavMenu = function () {
             window[addEvent]("resize", function () {
                 $this.update();
             });
+            return this;
         }
     }, {
         key: 'update',
@@ -1422,23 +1424,33 @@ var NavMenu = function () {
                 }
                 this.instance.destroy();
                 //销毁instance
-                newInstance = new _navPop2.default(this.menus);
+                newInstance = new _navPop2.default(this.menus).then(this.callback);
                 this.instance = newInstance;
+                this.callback && this.callback.call(this, "change");
             } else if (width >= 700 && width <= 1080) {
                 if (this.instance.getType() === "TopMenu") {
                     return;
                 }
                 this.instance.destroy();
-                newInstance = new _navTop2.default(this.menus);
+                newInstance = new _navTop2.default(this.menus).then(this.callback);
                 this.instance = newInstance;
+                this.callback && this.callback.call(this, "change");
             } else {
                 if (this.instance.getType() === "LeftMenu") {
                     return;
                 }
                 this.instance.destroy();
-                newInstance = new _navLeft2.default(this.menus);
+                newInstance = new _navLeft2.default(this.menus).then(this.callback);
                 this.instance = newInstance;
+                this.callback && this.callback.call(this, "change");
             }
+            return this;
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            this.instance.then(callback); //初始化
         }
     }]);
 
@@ -1451,7 +1463,12 @@ exports.default = NavMenu;
 /* 24 */,
 /* 25 */,
 /* 26 */,
-/* 27 */,
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+/***/ }),
 /* 28 */,
 /* 29 */,
 /* 30 */,
@@ -1465,21 +1482,82 @@ exports.default = NavMenu;
 /* 38 */,
 /* 39 */,
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/22 0022.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航跳转
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 规则：
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      1. PC端和Pad 打开新浏览器标签
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      2. Mobile iframe中切换
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * detech 功能   设备嗅探
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _router = __webpack_require__(27);
+
+var _router2 = _interopRequireDefault(_router);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Navigator = function () {
+    function Navigator() {
+        _classCallCheck(this, Navigator);
+    }
+
+    _createClass(Navigator, null, [{
+        key: "detech",
+        value: function detech() {
+            this.isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/ig);
+            return this.isMobile;
+        }
+    }, {
+        key: "open",
+        value: function open(page) {
+            var url = _router2.default[page];
+            if (typeof this.isMobile !== "undefined" && this.isMobile || typeof this.isMobile === "undefined" && this.detech()) {
+                //Todo mobile
+
+            } else {
+                // Todo PC
+                window.open(url, "_blank");
+            }
+        }
+    }]);
+
+    return Navigator;
+}();
+
+exports.default = Navigator;
+
+/***/ }),
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '';
-    $$out += '<!--动态注入到页面中-->\r\n<div class="user-container">\r\n    <div class="user-center">\r\n        <div class="user-icon"></div>\r\n        <div class="user-info">\r\n            <div class="user-name">用户名</div>\r\n            <div class="user-action">\r\n                <a href="javascript:void(0);">注销</a>\r\n                <a href="javascript:void(0);" style="margin-left: 10px">修改密码</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n';
+    var $$out = '', $escape = $imports.$escape, userName = $data.userName;
+    $$out += '<!--动态注入到页面中-->\r\n<div class="user-container">\r\n    <div class="user-center">\r\n        <div class="user-icon"></div>\r\n        <div class="user-info">\r\n            <div class="user-name">';
+    $$out += $escape(userName);
+    $$out += '</div>\r\n            <div class="user-action">\r\n                <a href="javascript:void(0);">注销</a>\r\n                <a href="javascript:void(0);">修改密码</a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n';
     return $$out;
 };
 
 /***/ }),
-/* 42 */,
-/* 43 */,
 /* 44 */,
 /* 45 */,
 /* 46 */,
@@ -1491,7 +1569,9 @@ module.exports = function ($data) {
 /* 52 */,
 /* 53 */,
 /* 54 */,
-/* 55 */
+/* 55 */,
+/* 56 */,
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1502,6 +1582,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 懂老板后台管理主界面
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 登入检查
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 菜单配置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 如果是移动端则使用iframe嵌套，保留菜单，PC跳转到新页面去
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -1513,9 +1594,13 @@ var _navmenu = __webpack_require__(23);
 
 var _navmenu2 = _interopRequireDefault(_navmenu);
 
-var _myCenter = __webpack_require__(41);
+var _myCenter = __webpack_require__(43);
 
 var _myCenter2 = _interopRequireDefault(_myCenter);
+
+var _navigator = __webpack_require__(42);
+
+var _navigator2 = _interopRequireDefault(_navigator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1540,6 +1625,7 @@ var Index = function () {
             this.checkLogin();
             this.initMenu();
             this.importMyCenter();
+            _navigator2.default.detech();
         }
     }, {
         key: 'initMenu',
@@ -1575,16 +1661,34 @@ var Index = function () {
                     menuList.push(pMenu);
                 }
             });
+            var _this = this;
             this.nav = new _navmenu2.default(menuList).then(function (data) {
-                alert(data);
+                if (data === "change") {
+                    //Todo 窗口resize处理
+                    _this.importMyCenter();
+                } else {
+                    //Todo 菜单点击事件处理
+
+                }
+            });
+            $("body").on("click", ".nav-top .user-name", function () {
+                $(this).addClass("hover");
             });
         }
     }, {
         key: 'importMyCenter',
         value: function importMyCenter() {
-            //注入个人中心模块  需要监听窗口改变事件
-            var userCenter = $((0, _myCenter2.default)({}));
-            $(".nav.nav-left").prepend(userCenter).addClass("nav-left-animation");
+            //注入个人中心模块 先后顺序进行控制 ==> fix top 存在两种nav的时候
+            var userCenter = $((0, _myCenter2.default)({
+                userName: _user2.default.getInfo().User.UserName
+            }));
+            if ($(".nav.nav-left").length > 0) {
+                $(".nav.nav-left").prepend(userCenter).addClass("nav-animation");
+            } else if ($(".nav.nav-top").length > 0) {
+                $(".nav.nav-top").prepend(userCenter).addClass("nav-animation");
+            } else if ($(".nav.nav-pop").length > 0) {
+                $(".nav.nav-pop").prepend(userCenter).addClass("nav-animation");
+            }
         }
     }]);
 
