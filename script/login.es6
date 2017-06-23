@@ -6,6 +6,7 @@ import Star from '../package/widget/star/star-effect.es6';
 import dialog from '../package/plugin/dialog/cf-dialog.es6';
 import fetch from './fetch.es6';
 import user from './user.es6';
+import Navigator from './navigator.es6';
 class Login{
     static build(){
         if(!navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/i)){
@@ -53,6 +54,7 @@ class Login{
                         alert(res.msg);
                     }else{
                         user.setInfo(res.data);
+                        location.replace(Navigator.getHtml("index"));
                     }
                 });
             }

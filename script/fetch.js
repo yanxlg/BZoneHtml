@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2260,7 +2260,9 @@ module.exports = function ($data) {
 /***/ }),
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */,
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2273,7 +2275,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2290,7 +2292,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _loading = __webpack_require__(25);
+var _loading = __webpack_require__(27);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2337,8 +2339,6 @@ var Loading = function () {
 exports.default = Loading;
 
 /***/ }),
-/* 27 */,
-/* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
@@ -2351,7 +2351,8 @@ exports.default = Loading;
 /* 38 */,
 /* 39 */,
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2381,7 +2382,7 @@ var _static = __webpack_require__(10);
 
 var _static2 = _interopRequireDefault(_static);
 
-var _loading = __webpack_require__(26);
+var _loading = __webpack_require__(28);
 
 var _loading2 = _interopRequireDefault(_loading);
 

@@ -381,7 +381,7 @@ try {
 
 /***/ }),
 
-/***/ 30:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -415,7 +415,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -451,7 +451,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -476,11 +476,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _datagrid = __webpack_require__(30);
+var _datagrid = __webpack_require__(31);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _rows = __webpack_require__(33);
+var _rows = __webpack_require__(34);
 
 var _rows2 = _interopRequireDefault(_rows);
 
@@ -606,7 +606,7 @@ exports.default = DataGrid;
 "use strict";
 
 
-var _datagrid = __webpack_require__(37);
+var _datagrid = __webpack_require__(38);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 

@@ -63,19 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 27:
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-/***/ }),
-
-/***/ 42:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96,7 +89,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _router = __webpack_require__(27);
+var _router = __webpack_require__(26);
 
 var _router2 = _interopRequireDefault(_router);
 
@@ -112,7 +105,7 @@ var Navigator = function () {
     _createClass(Navigator, null, [{
         key: "detech",
         value: function detech() {
-            this.isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/ig);
+            this.isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig);
             return this.isMobile;
         }
     }, {
@@ -127,12 +120,29 @@ var Navigator = function () {
                 window.open(url, "_blank");
             }
         }
+    }, {
+        key: "getHtml",
+        value: function getHtml(page) {
+            return _router2.default[page];
+        }
     }]);
 
     return Navigator;
 }();
 
 exports.default = Navigator;
+
+/***/ }),
+
+/***/ 26:
+/***/ (function(module, exports) {
+
+module.exports = {
+	"name": "router-manage",
+	"version": "1.0.0",
+	"index": "index.html",
+	"login": "login.html"
+};
 
 /***/ })
 

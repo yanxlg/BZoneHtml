@@ -227,7 +227,7 @@ try {
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -287,7 +287,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 39:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -325,7 +325,7 @@ var _cfTransition = __webpack_require__(5);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var messageInstances = new Set();
-var message_render = __webpack_require__(34);
+var message_render = __webpack_require__(35);
 
 var Message = function () {
     function Message(options) {
@@ -495,7 +495,7 @@ exports.transitionEnd = transitionEnd;
 "use strict";
 
 
-var _message = __webpack_require__(39);
+var _message = __webpack_require__(40);
 
 var _message2 = _interopRequireDefault(_message);
 

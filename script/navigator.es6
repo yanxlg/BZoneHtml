@@ -10,7 +10,7 @@
 import router from '../config/router.json';
 class Navigator{
     static detech() {
-        this.isMobile=navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/ig);
+        this.isMobile=navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig);
         return this.isMobile;
     }
     static open(page){
@@ -22,6 +22,9 @@ class Navigator{
             // Todo PC
             window.open(url,"_blank");
         }
+    }
+    static getHtml(page){
+        return router[page];
     }
 }
 export default Navigator;
