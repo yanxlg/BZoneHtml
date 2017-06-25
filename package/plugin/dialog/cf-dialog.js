@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -307,11 +307,7 @@ exports.default = IDGenerator;
 
 /***/ }),
 /* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -344,7 +340,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(22);
+var _dialog = __webpack_require__(17);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -354,7 +350,7 @@ var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(5);
 
-var _cfDrag = __webpack_require__(18);
+var _cfDrag = __webpack_require__(11);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -559,10 +555,7 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -753,10 +746,12 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);

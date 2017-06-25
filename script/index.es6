@@ -60,7 +60,7 @@ class Index{
                 _this.importMyCenter();
             }else{
                 //Todo 菜单点击事件处理
-
+                Navigator.open("test");
             }
         });
         $("body").on("click",".nav-top .user-name",function () {

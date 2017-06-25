@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 10:
+/***/ 12:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -76,7 +76,7 @@ module.exports = {
 	"ApiType": "1",
 	"AppVersion": "1.3.5",
 	"ApiVersion": "1.3.5",
-	"webApiDomain": "http://10.40.5.30:8081",
+	"webApiDomain": "https://admin.5ishang.com",
 	"successCode": 0,
 	"errorCode": -1,
 	"userLocalKey": "_user"
@@ -84,7 +84,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 15:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -104,7 +104,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _store = __webpack_require__(7);
 
-var _static = __webpack_require__(10);
+var _static = __webpack_require__(12);
 
 var _static2 = _interopRequireDefault(_static);
 

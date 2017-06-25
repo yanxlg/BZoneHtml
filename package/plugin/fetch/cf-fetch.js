@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 14:
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -139,7 +139,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(22);
+var _dialog = __webpack_require__(17);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -149,7 +149,7 @@ var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(5);
 
-var _cfDrag = __webpack_require__(18);
+var _cfDrag = __webpack_require__(11);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -355,7 +355,7 @@ exports.default = dialog;
 
 /***/ }),
 
-/***/ 18:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -547,7 +547,177 @@ exports.default = Drag;
 
 /***/ }),
 
-/***/ 19:
+/***/ 17:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += '" style="width:';
+    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += ';height:';
+    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
+        }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
+        }
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+/*! art-template@runtime | https://github.com/aui/art-template */
+
+var detectNode = __webpack_require__(3);
+var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
+
+// 将目标转成字符
+function toString(value) {
+    if (typeof value !== 'string') {
+        if (value === undefined || value === null) {
+            value = '';
+        } else if (typeof value === 'function') {
+            value = toString(value.call(value));
+        } else {
+            value = JSON.stringify(value);
+        }
+    }
+
+    return value;
+};
+
+// 编码 HTML 内容
+function xmlEscape(content) {
+    var html = '' + content;
+    var regexResult = ESCAPE_REG.exec(html);
+    if (!regexResult) {
+        return content;
+    }
+
+    var result = '';
+    var i = void 0,
+        lastIndex = void 0,
+        char = void 0;
+    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+
+        switch (html.charCodeAt(i)) {
+            case 34:
+                char = '&#34;';
+                break;
+            case 38:
+                char = '&#38;';
+                break;
+            case 39:
+                char = '&#39;';
+                break;
+            case 60:
+                char = '&#60;';
+                break;
+            case 62:
+                char = '&#62;';
+                break;
+            default:
+                continue;
+        }
+
+        if (lastIndex !== i) {
+            result += html.substring(lastIndex, i);
+        }
+
+        lastIndex = i + 1;
+        result += char;
+    }
+
+    if (lastIndex !== i) {
+        return result + html.substring(lastIndex, i);
+    } else {
+        return result;
+    }
+};
+
+module.exports = runtime;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -906,118 +1076,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-/*! art-template@runtime | https://github.com/aui/art-template */
-
-var detectNode = __webpack_require__(3);
-var runtime = Object.create(detectNode ? global : window);
-var ESCAPE_REG = /["&'<>]/;
-
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-runtime.$escape = function (content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-runtime.$each = function (data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-// 将目标转成字符
-function toString(value) {
-    if (typeof value !== 'string') {
-        if (value === undefined || value === null) {
-            value = '';
-        } else if (typeof value === 'function') {
-            value = toString(value.call(value));
-        } else {
-            value = JSON.stringify(value);
-        }
-    }
-
-    return value;
-};
-
-// 编码 HTML 内容
-function xmlEscape(content) {
-    var html = '' + content;
-    var regexResult = ESCAPE_REG.exec(html);
-    if (!regexResult) {
-        return content;
-    }
-
-    var result = '';
-    var i = void 0,
-        lastIndex = void 0,
-        char = void 0;
-    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-
-        switch (html.charCodeAt(i)) {
-            case 34:
-                char = '&#34;';
-                break;
-            case 38:
-                char = '&#38;';
-                break;
-            case 39:
-                char = '&#39;';
-                break;
-            case 60:
-                char = '&#60;';
-                break;
-            case 62:
-                char = '&#62;';
-                break;
-            default:
-                continue;
-        }
-
-        if (lastIndex !== i) {
-            result += html.substring(lastIndex, i);
-        }
-
-        lastIndex = i + 1;
-        result += char;
-    }
-
-    if (lastIndex !== i) {
-        return result + html.substring(lastIndex, i);
-    } else {
-        return result;
-    }
-};
-
-module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 20:
+/***/ 21:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1208,7 +1271,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1218,7 +1281,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(19);
+var _Promise = __webpack_require__(20);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -1693,69 +1756,6 @@ exports.default = fetch;
 
 /***/ }),
 
-/***/ 22:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
-    $$out += '<div class="modal fade" data-dialog-id="';
-    $$out += $escape(id);
-    $$out += '">\r\n    <div class="dialog ';
-    $$out += $escape(size);
-    $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
-    $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
-    $$out += ';">\r\n        ';
-    if (showHeader) {
-        $$out += '\r\n            <div class="dialog-header ';
-        $$out += $escape(moveable ? 'dialog-moveable' : '');
-        $$out += '">\r\n                ';
-        if (icon) {
-            $$out += '\r\n                    <div class="dialog-icon ';
-            $$out += $escape(icon);
-            $$out += '"></div>\r\n                ';
-        }
-        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
-        $$out += $escape(title);
-        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        <div class="dialog-content">\r\n            ';
-    $$out += content;
-    $$out += '\r\n        </div>\r\n        ';
-    if (showFooter) {
-        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
-        if (!footerBtn) {
-            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
-        } else {
-            $$out += '\r\n                    ';
-            $each(footerBtn, function (btn, i) {
-                $$out += '\r\n                        <button data-operation="cusBtn';
-                $$out += $escape(i);
-                $$out += '" class="btn ';
-                $$out += $escape(btn.themeCss);
-                $$out += '">';
-                $$out += $escape(btn.text);
-                $$out += '</button>\r\n                    ';
-            });
-            $$out += '\r\n                ';
-        }
-        $$out += '\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n    </div>\r\n</div>\r\n';
-    if (backdrop) {
-        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
-
 /***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1786,13 +1786,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(21);
+var _fetch = __webpack_require__(22);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
 var _store = __webpack_require__(7);
 
-var _cfDialog = __webpack_require__(14);
+var _cfDialog = __webpack_require__(10);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 

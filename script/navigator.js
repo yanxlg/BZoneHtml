@@ -141,7 +141,8 @@ module.exports = {
 	"name": "router-manage",
 	"version": "1.0.0",
 	"index": "index.html",
-	"login": "login.html"
+	"login": "login.html",
+	"test": "angular.html#"
 };
 
 /***/ })

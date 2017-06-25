@@ -606,24 +606,6 @@ exports.default = IDGenerator;
 /***/ }),
 /* 9 */,
 /* 10 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomain": "http://10.40.5.30:8081",
-	"successCode": 0,
-	"errorCode": -1,
-	"userLocalKey": "_user"
-};
-
-/***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -656,7 +638,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(22);
+var _dialog = __webpack_require__(17);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -666,7 +648,7 @@ var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(5);
 
-var _cfDrag = __webpack_require__(18);
+var _cfDrag = __webpack_require__(11);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -871,106 +853,7 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _store = __webpack_require__(7);
-
-var _static = __webpack_require__(10);
-
-var _static2 = _interopRequireDefault(_static);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var USER = function () {
-    function USER() {
-        _classCallCheck(this, USER);
-    }
-
-    _createClass(USER, null, [{
-        key: 'setToken',
-        value: function setToken(token) {
-            var user = this.getInfo();
-            user.Token = token;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'getToken',
-        value: function getToken() {
-            var user = this.getInfo();
-            return user.Token;
-        }
-    }, {
-        key: 'getInfo',
-        value: function getInfo() {
-            if (!this._user) {
-                var user = _store.store.get(_static2.default.userLocalKey);
-                if (user && user !== "undefined" && typeof user !== "undefined") {
-                    this._user = user;
-                } else {
-                    this._user = {};
-                }
-            }
-            return this._user;
-        }
-    }, {
-        key: 'setInfo',
-        value: function setInfo(user) {
-            //差量更新
-            var user_old = this.getInfo();
-            var user_new = $.extend(true, user_old, user);
-            console.log(user_new);
-            _store.store.set(_static2.default.userLocalKey, user_new);
-            this._user = user_new;
-        }
-    }, {
-        key: 'cacheLogin',
-        value: function cacheLogin() {
-            var user = this.getInfo();
-            user.cache = true;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'removeCache',
-        value: function removeCache() {
-            var user = this.getInfo();
-            user.cache = false;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'isCached',
-        value: function isCached() {
-            var user = this.getInfo();
-            return user.cache;
-        }
-    }]);
-
-    return USER;
-}();
-
-exports.default = USER;
-
-/***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1161,7 +1044,186 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 19 */
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomain": "https://admin.5ishang.com",
+	"successCode": 0,
+	"errorCode": -1,
+	"userLocalKey": "_user"
+};
+
+/***/ }),
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _store = __webpack_require__(7);
+
+var _static = __webpack_require__(12);
+
+var _static2 = _interopRequireDefault(_static);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var USER = function () {
+    function USER() {
+        _classCallCheck(this, USER);
+    }
+
+    _createClass(USER, null, [{
+        key: 'setToken',
+        value: function setToken(token) {
+            var user = this.getInfo();
+            user.Token = token;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getToken',
+        value: function getToken() {
+            var user = this.getInfo();
+            return user.Token;
+        }
+    }, {
+        key: 'getInfo',
+        value: function getInfo() {
+            if (!this._user) {
+                var user = _store.store.get(_static2.default.userLocalKey);
+                if (user && user !== "undefined" && typeof user !== "undefined") {
+                    this._user = user;
+                } else {
+                    this._user = {};
+                }
+            }
+            return this._user;
+        }
+    }, {
+        key: 'setInfo',
+        value: function setInfo(user) {
+            //差量更新
+            var user_old = this.getInfo();
+            var user_new = $.extend(true, user_old, user);
+            console.log(user_new);
+            _store.store.set(_static2.default.userLocalKey, user_new);
+            this._user = user_new;
+        }
+    }, {
+        key: 'cacheLogin',
+        value: function cacheLogin() {
+            var user = this.getInfo();
+            user.cache = true;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'removeCache',
+        value: function removeCache() {
+            var user = this.getInfo();
+            user.cache = false;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'isCached',
+        value: function isCached() {
+            var user = this.getInfo();
+            return user.cache;
+        }
+    }]);
+
+    return USER;
+}();
+
+exports.default = USER;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += '" style="width:';
+    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += ';height:';
+    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
+        }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
+        }
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1520,10 +1582,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1713,7 +1775,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1723,7 +1785,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(19);
+var _Promise = __webpack_require__(20);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2197,68 +2259,6 @@ var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
-    $$out += '<div class="modal fade" data-dialog-id="';
-    $$out += $escape(id);
-    $$out += '">\r\n    <div class="dialog ';
-    $$out += $escape(size);
-    $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
-    $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
-    $$out += ';">\r\n        ';
-    if (showHeader) {
-        $$out += '\r\n            <div class="dialog-header ';
-        $$out += $escape(moveable ? 'dialog-moveable' : '');
-        $$out += '">\r\n                ';
-        if (icon) {
-            $$out += '\r\n                    <div class="dialog-icon ';
-            $$out += $escape(icon);
-            $$out += '"></div>\r\n                ';
-        }
-        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
-        $$out += $escape(title);
-        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        <div class="dialog-content">\r\n            ';
-    $$out += content;
-    $$out += '\r\n        </div>\r\n        ';
-    if (showFooter) {
-        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
-        if (!footerBtn) {
-            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
-        } else {
-            $$out += '\r\n                    ';
-            $each(footerBtn, function (btn, i) {
-                $$out += '\r\n                        <button data-operation="cusBtn';
-                $$out += $escape(i);
-                $$out += '" class="btn ';
-                $$out += $escape(btn.themeCss);
-                $$out += '">';
-                $$out += $escape(btn.text);
-                $$out += '</button>\r\n                    ';
-            });
-            $$out += '\r\n                ';
-        }
-        $$out += '\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n    </div>\r\n</div>\r\n';
-    if (backdrop) {
-        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
 /* 23 */,
 /* 24 */,
 /* 25 */,
@@ -2369,17 +2369,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(21);
+var _fetch = __webpack_require__(22);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
 var _store = __webpack_require__(7);
 
-var _cfDialog = __webpack_require__(14);
+var _cfDialog = __webpack_require__(10);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(10);
+var _static = __webpack_require__(12);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -2387,7 +2387,7 @@ var _loading = __webpack_require__(28);
 
 var _loading2 = _interopRequireDefault(_loading);
 
-var _user = __webpack_require__(15);
+var _user = __webpack_require__(16);
 
 var _user2 = _interopRequireDefault(_user);
 
