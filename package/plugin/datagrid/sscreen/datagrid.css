@@ -132,6 +132,18 @@ a,a:active,a:hover,a:link,a:visited {
         border-top: 1px solid #e3e3e3
     }
 
+    .data-grid-group .grid-data>.data-grid>.data-row-group .data-row.data-row-hidden {
+        height: 0;
+        overflow: hidden
+    }
+
+    .data-grid-group .grid-data>.data-grid>.data-row-group .data-row.data-row-hidden .data-column {
+        padding: 0;
+        height: 0;
+        border: none;
+        margin-top: 0
+    }
+
     .data-grid-group .grid-data>.data-grid>.data-row-group .data-row .data-column~.data-column {
         margin-top: .4rem
     }
@@ -160,19 +172,19 @@ a,a:active,a:hover,a:link,a:visited {
         -moz-box-align: center;
         -webkit-box-align: center;
         box-align: center;
-        padding-right: 6px;
-        padding-left: 6px
+        padding-right: .3rem;
+        padding-left: .3rem
     }
 
     .action-btn {
         word-break: keep-all;
         white-space: nowrap;
         display: inline-block;
-        min-width: 80px;
+        min-width: 4rem;
         text-align: center;
-        padding: 4px 4px;
-        min-height: 40px;
-        line-height: 40px;
+        padding: .2rem;
+        min-height: 2rem;
+        line-height: 2rem;
         cursor: pointer;
         background-color: #13ce66;
         border-color: #329d38;
@@ -192,7 +204,7 @@ a,a:active,a:hover,a:link,a:visited {
         -o-background-clip: border-box;
         -ms-background-clip: border-box;
         background-clip: border-box;
-        margin: 0 3px
+        margin: 0 .15rem
     }
 
     .action-btn:focus,.action-btn:hover {

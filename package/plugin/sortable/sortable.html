@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>排序</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <style>
+        .block__list{
+            list-style: none;
+        }
+        .block__list li{
+            display: block;
+            height:40px;
+            border-top: 1px solid silver;
+            cursor: move;
+        }
+        .sortable-ghost {
+            opacity: .2;
+        }
+        .sortable-drag{
+            background: #daf4ff;
+        }
+    </style>
+</head>
+<body>
+    <ul id="foo" class="block__list block__list_words">
+        <li>бегемот</li>
+        <li>корм</li>
+        <li>антон</li>
+        <li>сало</li>
+        <li>железосталь</li>
+        <li>валик</li>
+        <li>кровать</li>
+        <li>краб</li>
+    </ul>
+    <script src="test.js"></script>
+</body>
+</html>

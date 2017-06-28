@@ -18,12 +18,16 @@
  *      showFooter 是否显示底部
  *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
  *
+ *
+ *
+ * issues: moveable 没有控制在header中
+ * 使用Set管理
  */
 import dialogTemplate from './dialog.art';
 import IDGenerator from '../../cf-idGenerator.es6';
 import {transition,transitionEnd} from '../../cf-transition.es6';
 import Drag from '../../cf-drag.es6';
-
+const dialogMap = new Map();
 const DIALOG_DEFAULT_OPTION={
     size:"normal",
     width:"",
@@ -54,12 +58,13 @@ class Dialog{
         this.backdrop=options.backdrop||DIALOG_DEFAULT_OPTION.backdrop;
         this.modal=options.modal||DIALOG_DEFAULT_OPTION.modal;
         this.keyboard=options.keyboard||DIALOG_DEFAULT_OPTION.keyboard;
-        this.moveable=options.moveable||DIALOG_DEFAULT_OPTION.moveable;
+        this.moveable=typeof options.moveable!=="undefined"?options.moveable:DIALOG_DEFAULT_OPTION.moveable;
         this.content=options.content||DIALOG_DEFAULT_OPTION.content;
         this.showFooter=options.content||DIALOG_DEFAULT_OPTION.showFooter;
         this.footerBtn=options.footerBtn||DIALOG_DEFAULT_OPTION.footerBtn;
         this.id=IDGenerator.uuid();
         this.create().show();
+        dialogMap.set(this.id,this);
     }
     create(){
         let _this=this;
@@ -127,6 +132,10 @@ class Dialog{
                 top=half * 2 / 3;
                 break;
         }
+        //full 则top=0;
+        if(this.size==="full"){
+            top=0;
+        }
         $(this._element[0]).find(".dialog").css({
             "margin-top":top+"px"
         })
@@ -175,12 +184,25 @@ class Dialog{
                     _this.dragInstance.destroy();
                 }
                 _this.callback&&_this.callback.call(_this,"closeEnd");
+                _this.destroy();
             });
         })
+    }
+    destroy(){
+        dialogMap.delete(this.id);
     }
     then(callback){
         this.callback=callback;
         return this;
+    }
+    getID(){
+        return this.id;
+    }
+    getByID(/*Number*/ id){
+        return dialogMap.get(id);
+    }
+    getContent(){
+        return this._element.find(".dialog-content");
     }
 }
 let dialog=(options)=>{

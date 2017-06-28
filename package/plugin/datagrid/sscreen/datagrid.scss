@@ -32,6 +32,16 @@
               border-top: 1px solid $borderColor;
             }
             padding:remToPx(0.5rem) remToPx(0.3rem);
+            &.data-row-hidden{
+              height:0;
+              overflow: hidden;
+              .data-column{
+                padding:0;
+                height:0;
+                border:none;
+                margin-top: 0;
+              }
+            }
             .data-column{
               ~.data-column{
                 margin-top:remToPx(0.4rem);
@@ -53,18 +63,18 @@
   }
   .grid-actions{
     @include align-center;
-    padding-right: 6px;
-    padding-left:6px;
+    padding-right: remToPx(0.3rem);
+    padding-left:remToPx(0.3rem);
   }
   .action-btn{
     word-break: keep-all;
     white-space: nowrap;
     display: inline-block;
-    min-width: 80px;
+    min-width: remToPx(4rem);
     text-align: center;
-    padding:4px 4px;
-    min-height:40px;
-    line-height: 40px;
+    padding:remToPx(0.2rem);
+    min-height:remToPx(2rem);
+    line-height: remToPx(2rem);
     cursor:pointer;
     background-color: map_get($messageColor,success);
     border-color:#329d38;
@@ -77,8 +87,9 @@
     @include prefix(border-radius,remToPx(0.2rem));
     @include prefix(box-sizing,border-box);
     @include prefix(background-clip,border-box);
-    margin:0 3px;
+    margin:0 remToPx(0.15rem);
   }
+
 }
 
 

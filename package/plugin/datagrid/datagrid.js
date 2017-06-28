@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 13:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -367,91 +367,7 @@ module.exports = runtime;
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, $escape = $imports.$escape, height = $data.height;
-    $$out += '<div class="data-grid-group">\r\n    <div class="data-grid-wrap grid-header">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
-        $$out += $escape(title.width);
-        $$out += 'px;">\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
-        $$out += $escape(title.title);
-        $$out += '\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class="data-grid-wrap grid-data" style="height: ';
-    $$out += $escape(height);
-    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
-    $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
-        $$out += $escape(title.width);
-        $$out += 'px;">\r\n                    </div>\r\n                ';
-    });
-    $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 34:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, $index = $data.$index, $escape = $imports.$escape, titles = $data.titles, title = $data.title, index = $data.index, actions = $data.actions, action = $data.action;
-    $each(data, function (row, $index) {
-        $$out += '\r\n    <div class="data-row" data-data="';
-        $$out += $escape(row);
-        $$out += '">\r\n        ';
-        $each(titles, function (title, index) {
-            $$out += '\r\n            <div class="data-column grid-center">\r\n                <div class="data-key">';
-            $$out += $escape(title.title);
-            $$out += '</div>\r\n                <div class="data-data">';
-            $$out += $escape(row[title.bindData]);
-            $$out += '</div>\r\n                ';
-            if (index === 0 && actions) {
-                $$out += '\r\n                    <div class="grid-actions hide">\r\n                        ';
-                $each(actions, function (action, $index) {
-                    $$out += '\r\n                            <div class="action-btn">';
-                    $$out += $escape(action.text);
-                    $$out += '</div>\r\n                        ';
-                });
-                $$out += '\r\n                    </div>\r\n                ';
-            }
-            $$out += '\r\n            </div>\r\n        ';
-        });
-        $$out += '\r\n    </div>\r\n';
-    });
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 38:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -467,16 +383,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Web端使用表格显示  移动端列表显示，列表不会显示全部字段 仅显示3或4个字段，其余字段隐藏 显示规则  过滤字段
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * data-row 控制行
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * data-index 控制列
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * flex 表示固定的列
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fixed 表示固定的列
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 表头固定，内容高度自己控制
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 总会有自适应宽度的列  当存在fix时，fix区域就是自适应列，否则
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * titles:[{title:"",width:100,fixed:false,bindData:""}]  宽度默认值为100   如果没有fixed区域,进度条宽度需要保留  bindData:绑定的字段名
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * then执行actions回调
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * actions 传递按钮
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fixedLeft 大小 30%
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fixedRight 大小 30%
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * center 数据是否居中
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _datagrid = __webpack_require__(31);
+var _datagrid = __webpack_require__(33);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
@@ -484,7 +403,7 @@ var _rows = __webpack_require__(34);
 
 var _rows2 = _interopRequireDefault(_rows);
 
-var _gridActions = __webpack_require__(13);
+var _gridActions = __webpack_require__(15);
 
 var _gridActions2 = _interopRequireDefault(_gridActions);
 
@@ -492,22 +411,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var DataGrid = function () {
-    function DataGrid(container) {
-        _classCallCheck(this, DataGrid);
+var Grid = function () {
+    function Grid(container, fixed, width, leftSpace, rightSpace) {
+        _classCallCheck(this, Grid);
 
-        //通过titles来构造表格
         this.container = container;
-        return this;
+        this.fixed = fixed;
+        this.width = width;
+        this.leftSpace = leftSpace;
+        this.rightSpace = rightSpace;
     }
 
-    _createClass(DataGrid, [{
+    _createClass(Grid, [{
         key: 'create',
         value: function create() {
             var gridRender = $((0, _datagrid2.default)({
                 titles: this.titles,
-                height: this.height,
-                actions: this.actions
+                height: this.height + "px",
+                fixed: this.fixed,
+                width: this.width,
+                leftSpace: this.leftSpace,
+                rightSpace: this.rightSpace
             }));
             if (this.gridRender) {
                 this.gridRender.replaceWith(gridRender);
@@ -515,67 +439,21 @@ var DataGrid = function () {
                 this.container.append(gridRender);
             }
             this.gridRender = gridRender;
-            this.scrollSync();
-            this.initActions();
+            this.header = this.gridRender.find(".grid-header");
+            this.content = this.gridRender.find(".grid-data");
+            if (!this.fixed) {
+                this.scrollSync();
+            }
             return this;
-        }
-    }, {
-        key: 'update',
-        value: function update(data) {
-            var rows = (0, _rows2.default)({
-                titles: this.titles,
-                data: data,
-                actions: this.actions
-            });
-            this.gridRender.find(".data-row-group").html(rows);
-            return this;
-        }
-    }, {
-        key: 'append',
-        value: function append(data) {
-            var rows = (0, _rows2.default)({
-                titles: this.titles,
-                data: data,
-                actions: this.actions
-            });
-            this.gridRender.find(".data-row-group").append(rows);
-            return this;
-        }
-    }, {
-        key: 'scrollSync',
-        value: function scrollSync() {
-            var header = this.gridRender.find(".grid-header");
-            var content = this.gridRender.find(".grid-data");
-            content.on("scroll", function () {
-                header[0].scrollLeft = content[0].scrollLeft;
-            });
-        }
-    }, {
-        key: 'initActions',
-        value: function initActions() {
-            this.listActions = new _gridActions2.default(this.gridRender);
-            var _this = this;
-            this.gridRender.on("click", ".action-btn", function () {
-                var data = $(this).parens(".data-row").attr("data-data");
-                _this.callback && _this.callback.call(_this, data);
-            });
-        }
-    }, {
-        key: 'then',
-        value: function then(callback) {
-            this.callback = callback;
         }
     }, {
         key: 'setTitles',
         value: function setTitles(titles, height) {
-            titles.forEach(function (title, i) {
-                titles[i].width = title.width || 100;
-            });
             this.titles = titles;
-            if (height) {
-                this.height = height + "px";
+            if (this.fixed) {
+                this.height = height - 17;
             } else {
-                this.height = "auto";
+                this.height = height;
             }
             this.create();
             return this;
@@ -586,10 +464,228 @@ var DataGrid = function () {
             this.actions = actions;
             return this;
         }
+    }, {
+        key: 'scrollSync',
+        value: function scrollSync() {
+            var _this = this;
+            _this.content.on("scroll", function () {
+                _this.header[0].scrollLeft = _this.content[0].scrollLeft;
+            });
+        }
+    }, {
+        key: 'update',
+        value: function update(data) {
+            this.rowStart = 0;
+            var rows = $((0, _rows2.default)({
+                titles: this.titles,
+                data: data,
+                rowStart: this.rowStart,
+                actions: this.actions
+            })).filter(".data-row");
+            this.gridRender.find(".data-row-group").empty().append(rows);
+            this.rowStart += data.length;
+            return rows;
+        }
+    }, {
+        key: 'append',
+        value: function append(data) {
+            var rows = $((0, _rows2.default)({
+                titles: this.titles,
+                data: data,
+                rowStart: this.rowStart,
+                actions: this.actions
+            })).filter(".data-row");
+            this.gridRender.find(".data-row-group").append(rows);
+            this.rowStart += data.length;
+            return rows;
+        }
+    }]);
+
+    return Grid;
+}();
+
+var DataGrid = function () {
+    function DataGrid(container, titles, height, leftFixedWidth, rightFixedWidth) {
+        _classCallCheck(this, DataGrid);
+
+        //通过titles来构造表格
+        this.container = container;
+        //初始化三个Grid实例对象
+        this.leftWidth = leftFixedWidth;
+        this.rightWidth = rightFixedWidth;
+        this.setTitles(titles, height);
+        this.initActions();
+    }
+
+    _createClass(DataGrid, [{
+        key: 'calcH',
+        value: function calcH(leftRows, midRows, rightRows) {
+            //动态计算高度并且进行修改
+            $.each(leftRows, function (i, v) {
+                var row0 = $(v);
+                var row1 = midRows.eq(i);
+                var row2 = rightRows.eq(i);
+                var leftH = row0.height();
+                var midH = row1.height();
+                var rightH = row2.height();
+                var max = Math.max(parseInt(leftH), parseInt(midH), parseInt(rightH));
+                row0.css({
+                    height: max + "px"
+                }).removeClass("in-calc");
+                row1.css({
+                    height: max + "px"
+                }).removeClass("in-calc");
+                row2.css({
+                    height: max + "px"
+                }).removeClass("in-calc");
+            });
+        }
+    }, {
+        key: 'calcHeader',
+        value: function calcHeader() {
+            //先计算宽度
+            var rightW = this.rightGrid.gridRender.width();
+            this.midGrid.gridRender.find(".data-grid").css({
+                "padding-right": rightW + "px"
+            });
+            var header0 = this.leftGrid.gridRender.find('[data-row="header"]');
+            var header1 = this.midGrid.gridRender.find('[data-row="header"]');
+            var header2 = this.rightGrid.gridRender.find('[data-row="header"]');
+            var leftH = header0.height();
+            var midH = header1.height();
+            var rightH = header2.height();
+            var max = Math.max(parseInt(leftH), parseInt(midH), parseInt(rightH));
+            header0.css({
+                height: max + "px"
+            }).removeClass("in-calc");
+            header1.css({
+                height: max + "px"
+            }).removeClass("in-calc");
+            header2.css({
+                height: max + "px"
+            }).removeClass("in-calc");
+        }
+    }, {
+        key: 'create',
+        value: function create() {
+            this.leftGrid.create();
+            this.midGrid.create();
+            this.rightGrid.create();
+            this.calcHeader();
+            this.scrollSync();
+            return this;
+        }
+    }, {
+        key: 'update',
+        value: function update(data) {
+            //更新数据
+            var rows0 = this.leftGrid.update(data);
+            var rows1 = this.midGrid.update(data);
+            var rows2 = this.rightGrid.update(data);
+            this.calcH(rows0, rows1, rows2);
+            return this;
+        }
+    }, {
+        key: 'append',
+        value: function append(data) {
+            var rows0 = this.leftGrid.append(data);
+            var rows1 = this.midGrid.append(data);
+            var rows2 = this.rightGrid.append(data);
+            this.calcH(rows0, rows1, rows2);
+            return this;
+        }
+    }, {
+        key: 'scrollSync',
+        value: function scrollSync() {
+            var leftContainer = this.leftGrid.content;
+            var midContainer = this.midGrid.content;
+            var rightContainer = this.rightGrid.content;
+            midContainer.on("scroll", function () {
+                leftContainer[0].scrollTop = rightContainer[0].scrollTop = midContainer[0].scrollTop;
+            });
+        }
+    }, {
+        key: 'initActions',
+        value: function initActions() {
+            var _this = this;
+            this.container.on("click", ".btn", function () {
+                var data = $(this).parents(".data-row").attr("data-data");
+                _this.callback && _this.callback.call(_this, $(this).text(), data);
+            });
+            this.container.on("mouseover", ".data-row", function () {
+                var rowIndex = $(this).attr("data-row");
+                _this.container.find('[data-row="' + rowIndex + '"]').addClass("hover");
+            });
+            this.container.on("mouseout", ".data-row", function () {
+                var rowIndex = $(this).attr("data-row");
+                _this.container.find('[data-row="' + rowIndex + '"]').removeClass("hover");
+            });
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }, {
+        key: 'setTitles',
+        value: function setTitles(titles, height) {
+            var leftTitles = [];
+            var midTitles = [];
+            var rightTitles = [];
+            titles.forEach(function (title, i) {
+                title.width = title.width || 100;
+                if (title.fixed === "left") {
+                    leftTitles.push(title);
+                } else if (title.fixed === "right") {
+                    rightTitles.push(title);
+                } else {
+                    midTitles.push(title);
+                }
+            });
+            height = height || 300;
+            this.leftTitles = leftTitles;
+            this.midTitles = midTitles;
+            this.rightTitles = rightTitles;
+            leftTitles.length === 0 && (this.leftWidth = 0);
+            rightTitles.length === 0 && (this.rightWidth = 0);
+            this.leftGrid = new Grid(this.container, "left", this.leftWidth, 0, 0);
+            this.midGrid = new Grid(this.container, null, "100%", this.leftWidth, this.rightWidth);
+            this.rightGrid = new Grid(this.container, "right", this.rightWidth, 0, 0);
+            this.leftGrid.setTitles(leftTitles, height);
+            this.midGrid.setTitles(midTitles, height);
+            this.rightGrid.setTitles(rightTitles, height);
+            this.titles = titles;
+            this.create();
+            return this;
+        }
+    }, {
+        key: 'setActions',
+        value: function setActions(actions) {
+            this.actions = actions;
+            this.leftGrid.setActions(actions);
+            this.midGrid.setActions(actions);
+            this.rightGrid.setActions(actions);
+            return this;
+        }
+        /**
+         * @params
+         * container: 容器
+         * titles:标题数组
+         * height:内容高度
+         * leftFixedWidth:左侧宽度
+         * rightFixedWidth:右侧宽度
+         */
+
     }], [{
         key: 'instance',
-        value: function instance(container) {
-            return new DataGrid(container);
+        value: function instance(params) {
+            var container = params.container || $("body");
+            var titles = params.titles;
+            var height = params.height || 400;
+            var leftFixedWidth = params.leftFixedWidth || "30%";
+            var rightFixedWidth = params.rightFixedWidth || "30%";
+            return new DataGrid(container, titles, height, leftFixedWidth, rightFixedWidth);
         }
     }]);
 
@@ -597,6 +693,110 @@ var DataGrid = function () {
 }();
 
 exports.default = DataGrid;
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 33:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height, index = $data.index;
+    $$out += '<div class="data-grid-group ';
+    $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : '');
+    $$out += '" style="width:';
+    $$out += $escape(width);
+    $$out += '">\r\n    <div class="data-grid-wrap grid-header" style="padding-left: ';
+    $$out += $escape(leftSpace);
+    $$out += ';padding-right: ';
+    $$out += $escape(rightSpace);
+    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += $escape(title.width);
+        $$out += 'px;">\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n            <div class="data-row in-calc" data-row="header">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
+        $$out += $escape(title.title);
+        $$out += '\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class="data-grid-wrap grid-data" style="height: ';
+    $$out += $escape(height);
+    $$out += ';padding-left: ';
+    $$out += $escape(leftSpace);
+    $$out += ';padding-right: ';
+    $$out += $escape(rightSpace);
+    $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += $escape(title.width);
+        $$out += 'px;">\r\n                    </div>\r\n                ';
+    });
+    $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n                <div class="data-row data-row-hidden">\r\n                    ';
+    $each(titles, function (title, index) {
+        $$out += '\r\n                        <div class="data-column grid-center">\r\n                        </div>\r\n                    ';
+    });
+    $$out += '\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 34:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, actions = $data.actions, action = $data.action, $index = $data.$index;
+    $each(data, function (row, index) {
+        $$out += '\r\n    <div class="data-row in-calc" data-data="';
+        $$out += $escape(row);
+        $$out += '" data-row="';
+        $$out += $escape(rowStart + index);
+        $$out += '">\r\n        ';
+        $each(titles, function (title, index) {
+            $$out += '\r\n            ';
+            if (title.bindData === 'actions') {
+                $$out += '\r\n                <div class="data-column grid-center">\r\n                    ';
+                $each(actions, function (action, $index) {
+                    $$out += '\r\n                        <div class="btn btn-primary">';
+                    $$out += $escape(action);
+                    $$out += '</div>\r\n                    ';
+                });
+                $$out += '\r\n                </div>\r\n            ';
+            } else {
+                $$out += '\r\n                <div class="data-column grid-center">\r\n                    <div class="data-key">';
+                $$out += $escape(title.title);
+                $$out += '</div>\r\n                    <div class="data-data">';
+                $$out += $escape(title.filter ? title.filter(row[title.bindData]) : row[title.bindData]);
+                $$out += '</div>\r\n                </div>\r\n            ';
+            }
+            $$out += '\r\n        ';
+        });
+        $$out += '\r\n    </div>\r\n';
+    });
+    return $$out;
+};
 
 /***/ })
 

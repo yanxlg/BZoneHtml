@@ -1,0 +1,6 @@
+<!--对话框编辑信息-->
+<div>
+    <div style="width: 200px;height: 100px;background-color: grey"></div>
+    <input class="test_input">
+    <div style="width: 200px;height: 400px;background-color: green"></div>
+</div>

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 49);
+/******/ 	return __webpack_require__(__webpack_require__.s = 58);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -107,255 +107,6 @@ module.exports = __webpack_require__(2);
 /***/ }),
 
 /***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _dialog = __webpack_require__(17);
-
-var _dialog2 = _interopRequireDefault(_dialog);
-
-var _cfIdGenerator = __webpack_require__(8);
-
-var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
-
-var _cfTransition = __webpack_require__(5);
-
-var _cfDrag = __webpack_require__(11);
-
-var _cfDrag2 = _interopRequireDefault(_cfDrag);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DIALOG_DEFAULT_OPTION = {
-    size: "normal",
-    width: "",
-    height: "",
-    title: "",
-    showHeader: true,
-    icon: "",
-    position: "fit",
-    backdrop: true,
-    modal: false,
-    keyboard: true,
-    moveable: true,
-    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
-    showFooter: true,
-    footerBtn: false
-};
-
-var Dialog = function () {
-    function Dialog(options) {
-        _classCallCheck(this, Dialog);
-
-        options = options || {};
-        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
-        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
-        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
-        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
-        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
-        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
-        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
-        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
-        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
-        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
-        this.moveable = options.moveable || DIALOG_DEFAULT_OPTION.moveable;
-        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
-        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
-        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
-        this.id = _cfIdGenerator2.default.uuid();
-        this.create().show();
-    }
-
-    _createClass(Dialog, [{
-        key: 'create',
-        value: function create() {
-            var _this = this;
-            this._element = $((0, _dialog2.default)({
-                size: this.size,
-                width: this.width,
-                height: this.height,
-                title: this.title,
-                showHeader: this.showHeader,
-                icon: this.icon,
-                position: this.position,
-                backdrop: this.backdrop,
-                content: this.content,
-                showFooter: this.showFooter,
-                footerBtn: this.footerBtn,
-                moveable: this.moveable,
-                id: this.id
-            }));
-            if (!this.modal) {
-                this._element[0].onclick = function (event) {
-                    var target = event.srcElement || event.target;
-                    if (target.className.search(/modal/gi) >= 0) {
-                        //关闭当前dialog
-                        _this.close();
-                    }
-                };
-            }
-            if (this.keyboard) {
-                //键盘esc按键关闭
-                $(window).on("keydown." + this.id, function (e) {
-                    var code = e.keyCode || e.which;
-                    if (code === 27) {
-                        _this.close();
-                    }
-                });
-            }
-            this.initMove();
-            this.initEvent();
-            return this;
-        }
-    }, {
-        key: 'initPos',
-        value: function initPos() {
-            //position设置
-            var _h = $(this._element[0]).find(".dialog").outerHeight();
-            var win_h = window.screen.availHeight;
-            var half = Math.max(0, (win_h - _h) / 2),
-                top = void 0;
-            switch (this.position) {
-                case "fit":
-                    //中间偏上
-                    top = half * 2 / 3;
-                    break;
-                case "center":
-                    top = half;
-                    break;
-                case "top":
-                    top = 4;
-                    break;
-                case "bottom":
-                    top = win_h - _h - 4;
-                    break;
-                case parseInt(this.position):
-                    //数字
-                    top = parseInt(this.position);
-                    break;
-                default:
-                    top = half * 2 / 3;
-                    break;
-            }
-            $(this._element[0]).find(".dialog").css({
-                "margin-top": top + "px"
-            });
-        }
-    }, {
-        key: 'initMove',
-        value: function initMove() {
-            if (this.moveable) {
-                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
-                    container: $(this._element[0]),
-                    handle: '.dialog-header',
-                    before: function before() {
-                        $(this._element[0]).find(".dialog").css('position', 'absolute');
-                    },
-                    finish: function finish(e) {}
-                });
-            }
-        }
-    }, {
-        key: 'initEvent',
-        value: function initEvent() {
-            var _this = this;
-            $(this._element[0]).on("click", "[data-operation]", function () {
-                var operation = $(this).attr("data-operation");
-                if (operation === "cancel") _this.close();
-                _this.callback && _this.callback.call(_this, 'operation_' + operation);
-            });
-            $(this._element[0]).on("click", ".icon-close", function () {
-                _this.close();
-            });
-        }
-    }, {
-        key: 'show',
-        value: function show() {
-            var _this = this;
-            $("body").append(this._element);
-            this.initPos();
-            (0, _cfTransition.transition)(function () {
-                _this._element.addClass("in");
-            });
-            return this;
-        }
-    }, {
-        key: 'close',
-        value: function close() {
-            var _this = this;
-            (0, _cfTransition.transition)(function () {
-                _this.callback && _this.callback.call(_this, "closeStart");
-                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
-                    _this._element.remove();
-                    $(window).off("keydown." + _this.id);
-                    if (_this.dragInstance) {
-                        _this.dragInstance.destroy();
-                    }
-                    _this.callback && _this.callback.call(_this, "closeEnd");
-                });
-            });
-        }
-    }, {
-        key: 'then',
-        value: function then(callback) {
-            this.callback = callback;
-            return this;
-        }
-    }]);
-
-    return Dialog;
-}();
-
-var dialog = function dialog(options) {
-    return new Dialog(options);
-};
-
-window.alert = function (msg, title) {
-    title = title || "懂老板";
-    return dialog({
-        title: title,
-        content: msg,
-        modal: false
-    }).then(function () {
-        this.close();
-    });
-};
-exports.default = dialog;
-
-/***/ }),
-
-/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -547,7 +298,7 @@ exports.default = Drag;
 
 /***/ }),
 
-/***/ 17:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -610,114 +361,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-/*! art-template@runtime | https://github.com/aui/art-template */
-
-var detectNode = __webpack_require__(3);
-var runtime = Object.create(detectNode ? global : window);
-var ESCAPE_REG = /["&'<>]/;
-
-/**
- * 编码模板输出的内容
- * @param  {any}        content
- * @return {string}
- */
-runtime.$escape = function (content) {
-    return xmlEscape(toString(content));
-};
-
-/**
- * 迭代器，支持数组与对象
- * @param {array|Object} data 
- * @param {function}     callback 
- */
-runtime.$each = function (data, callback) {
-    if (Array.isArray(data)) {
-        for (var i = 0, len = data.length; i < len; i++) {
-            callback(data[i], i);
-        }
-    } else {
-        for (var _i in data) {
-            callback(data[_i], _i);
-        }
-    }
-};
-
-// 将目标转成字符
-function toString(value) {
-    if (typeof value !== 'string') {
-        if (value === undefined || value === null) {
-            value = '';
-        } else if (typeof value === 'function') {
-            value = toString(value.call(value));
-        } else {
-            value = JSON.stringify(value);
-        }
-    }
-
-    return value;
-};
-
-// 编码 HTML 内容
-function xmlEscape(content) {
-    var html = '' + content;
-    var regexResult = ESCAPE_REG.exec(html);
-    if (!regexResult) {
-        return content;
-    }
-
-    var result = '';
-    var i = void 0,
-        lastIndex = void 0,
-        char = void 0;
-    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-
-        switch (html.charCodeAt(i)) {
-            case 34:
-                char = '&#34;';
-                break;
-            case 38:
-                char = '&#38;';
-                break;
-            case 39:
-                char = '&#39;';
-                break;
-            case 60:
-                char = '&#60;';
-                break;
-            case 62:
-                char = '&#62;';
-                break;
-            default:
-                continue;
-        }
-
-        if (lastIndex !== i) {
-            result += html.substring(lastIndex, i);
-        }
-
-        lastIndex = i + 1;
-        result += char;
-    }
-
-    if (lastIndex !== i) {
-        return result + html.substring(lastIndex, i);
-    } else {
-        return result;
-    }
-};
-
-module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 20:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1076,11 +720,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 21:
+/***/ 17:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1271,7 +915,114 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 22:
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+/*! art-template@runtime | https://github.com/aui/art-template */
+
+var detectNode = __webpack_require__(3);
+var runtime = Object.create(detectNode ? global : window);
+var ESCAPE_REG = /["&'<>]/;
+
+/**
+ * 编码模板输出的内容
+ * @param  {any}        content
+ * @return {string}
+ */
+runtime.$escape = function (content) {
+    return xmlEscape(toString(content));
+};
+
+/**
+ * 迭代器，支持数组与对象
+ * @param {array|Object} data 
+ * @param {function}     callback 
+ */
+runtime.$each = function (data, callback) {
+    if (Array.isArray(data)) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            callback(data[i], i);
+        }
+    } else {
+        for (var _i in data) {
+            callback(data[_i], _i);
+        }
+    }
+};
+
+// 将目标转成字符
+function toString(value) {
+    if (typeof value !== 'string') {
+        if (value === undefined || value === null) {
+            value = '';
+        } else if (typeof value === 'function') {
+            value = toString(value.call(value));
+        } else {
+            value = JSON.stringify(value);
+        }
+    }
+
+    return value;
+};
+
+// 编码 HTML 内容
+function xmlEscape(content) {
+    var html = '' + content;
+    var regexResult = ESCAPE_REG.exec(html);
+    if (!regexResult) {
+        return content;
+    }
+
+    var result = '';
+    var i = void 0,
+        lastIndex = void 0,
+        char = void 0;
+    for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+
+        switch (html.charCodeAt(i)) {
+            case 34:
+                char = '&#34;';
+                break;
+            case 38:
+                char = '&#38;';
+                break;
+            case 39:
+                char = '&#39;';
+                break;
+            case 60:
+                char = '&#60;';
+                break;
+            case 62:
+                char = '&#62;';
+                break;
+            default:
+                continue;
+        }
+
+        if (lastIndex !== i) {
+            result += html.substring(lastIndex, i);
+        }
+
+        lastIndex = i + 1;
+        result += char;
+    }
+
+    if (lastIndex !== i) {
+        return result + html.substring(lastIndex, i);
+    } else {
+        return result;
+    }
+};
+
+module.exports = runtime;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1281,7 +1032,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(20);
+var _Promise = __webpack_require__(16);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -1770,7 +1521,90 @@ try {
 
 /***/ }),
 
-/***/ 49:
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
+
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1786,13 +1620,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(22);
+var _fetch = __webpack_require__(20);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _store = __webpack_require__(7);
+var _store = __webpack_require__(8);
 
-var _cfDialog = __webpack_require__(10);
+var _cfDialog = __webpack_require__(6);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
@@ -1883,7 +1717,7 @@ exports.default = fetch;
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1892,42 +1726,278 @@ exports.default = fetch;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * issues: moveable 没有控制在header中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用Set管理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _dialog = __webpack_require__(12);
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _cfIdGenerator = __webpack_require__(4);
+
+var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
+
+var _cfTransition = __webpack_require__(5);
+
+var _cfDrag = __webpack_require__(10);
+
+var _cfDrag2 = _interopRequireDefault(_cfDrag);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var dialogMap = new Map();
+var DIALOG_DEFAULT_OPTION = {
+    size: "normal",
+    width: "",
+    height: "",
+    title: "",
+    showHeader: true,
+    icon: "",
+    position: "fit",
+    backdrop: true,
+    modal: false,
+    keyboard: true,
+    moveable: true,
+    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
+    showFooter: true,
+    footerBtn: false
 };
 
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
-        }
+var Dialog = function () {
+    function Dialog(options) {
+        _classCallCheck(this, Dialog);
+
+        options = options || {};
+        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
+        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
+        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
+        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
+        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
+        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
+        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
+        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
+        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
+        this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
+        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
+        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.id = _cfIdGenerator2.default.uuid();
+        this.create().show();
+        dialogMap.set(this.id, this);
     }
+
+    _createClass(Dialog, [{
+        key: 'create',
+        value: function create() {
+            var _this = this;
+            this._element = $((0, _dialog2.default)({
+                size: this.size,
+                width: this.width,
+                height: this.height,
+                title: this.title,
+                showHeader: this.showHeader,
+                icon: this.icon,
+                position: this.position,
+                backdrop: this.backdrop,
+                content: this.content,
+                showFooter: this.showFooter,
+                footerBtn: this.footerBtn,
+                moveable: this.moveable,
+                id: this.id
+            }));
+            if (!this.modal) {
+                this._element[0].onclick = function (event) {
+                    var target = event.srcElement || event.target;
+                    if (target.className.search(/modal/gi) >= 0) {
+                        //关闭当前dialog
+                        _this.close();
+                    }
+                };
+            }
+            if (this.keyboard) {
+                //键盘esc按键关闭
+                $(window).on("keydown." + this.id, function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code === 27) {
+                        _this.close();
+                    }
+                });
+            }
+            this.initMove();
+            this.initEvent();
+            return this;
+        }
+    }, {
+        key: 'initPos',
+        value: function initPos() {
+            //position设置
+            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var win_h = window.screen.availHeight;
+            var half = Math.max(0, (win_h - _h) / 2),
+                top = void 0;
+            switch (this.position) {
+                case "fit":
+                    //中间偏上
+                    top = half * 2 / 3;
+                    break;
+                case "center":
+                    top = half;
+                    break;
+                case "top":
+                    top = 4;
+                    break;
+                case "bottom":
+                    top = win_h - _h - 4;
+                    break;
+                case parseInt(this.position):
+                    //数字
+                    top = parseInt(this.position);
+                    break;
+                default:
+                    top = half * 2 / 3;
+                    break;
+            }
+            //full 则top=0;
+            if (this.size === "full") {
+                top = 0;
+            }
+            $(this._element[0]).find(".dialog").css({
+                "margin-top": top + "px"
+            });
+        }
+    }, {
+        key: 'initMove',
+        value: function initMove() {
+            if (this.moveable) {
+                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
+                    container: $(this._element[0]),
+                    handle: '.dialog-header',
+                    before: function before() {
+                        $(this._element[0]).find(".dialog").css('position', 'absolute');
+                    },
+                    finish: function finish(e) {}
+                });
+            }
+        }
+    }, {
+        key: 'initEvent',
+        value: function initEvent() {
+            var _this = this;
+            $(this._element[0]).on("click", "[data-operation]", function () {
+                var operation = $(this).attr("data-operation");
+                if (operation === "cancel") _this.close();
+                _this.callback && _this.callback.call(_this, 'operation_' + operation);
+            });
+            $(this._element[0]).on("click", ".icon-close", function () {
+                _this.close();
+            });
+        }
+    }, {
+        key: 'show',
+        value: function show() {
+            var _this = this;
+            $("body").append(this._element);
+            this.initPos();
+            (0, _cfTransition.transition)(function () {
+                _this._element.addClass("in");
+            });
+            return this;
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            var _this = this;
+            (0, _cfTransition.transition)(function () {
+                _this.callback && _this.callback.call(_this, "closeStart");
+                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
+                    _this._element.remove();
+                    $(window).off("keydown." + _this.id);
+                    if (_this.dragInstance) {
+                        _this.dragInstance.destroy();
+                    }
+                    _this.callback && _this.callback.call(_this, "closeEnd");
+                    _this.destroy();
+                });
+            });
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            dialogMap.delete(this.id);
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }, {
+        key: 'getID',
+        value: function getID() {
+            return this.id;
+        }
+    }, {
+        key: 'getByID',
+        value: function getByID( /*Number*/id) {
+            return dialogMap.get(id);
+        }
+    }, {
+        key: 'getContent',
+        value: function getContent() {
+            return this._element.find(".dialog-content");
+        }
+    }]);
+
+    return Dialog;
 }();
 
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
+var dialog = function dialog(options) {
+    return new Dialog(options);
+};
+
+window.alert = function (msg, title) {
+    title = title || "懂老板";
+    return dialog({
+        title: title,
+        content: msg,
+        modal: false
+    }).then(function () {
+        this.close();
+    });
+};
+exports.default = dialog;
 
 /***/ }),
 
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2224,45 +2294,6 @@ exports.store = Store;
 exports.session = Session;
 exports.encode = encode;
 exports.decode = decode;
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
 
 /***/ })
 

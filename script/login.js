@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 59);
+/******/ 	return __webpack_require__(__webpack_require__.s = 69);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -222,7 +222,44 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -266,8 +303,287 @@ exports.transition = transition;
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 6 */,
-/* 7 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * issues: moveable 没有控制在header中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用Set管理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _dialog = __webpack_require__(12);
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _cfIdGenerator = __webpack_require__(4);
+
+var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
+
+var _cfTransition = __webpack_require__(5);
+
+var _cfDrag = __webpack_require__(10);
+
+var _cfDrag2 = _interopRequireDefault(_cfDrag);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var dialogMap = new Map();
+var DIALOG_DEFAULT_OPTION = {
+    size: "normal",
+    width: "",
+    height: "",
+    title: "",
+    showHeader: true,
+    icon: "",
+    position: "fit",
+    backdrop: true,
+    modal: false,
+    keyboard: true,
+    moveable: true,
+    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
+    showFooter: true,
+    footerBtn: false
+};
+
+var Dialog = function () {
+    function Dialog(options) {
+        _classCallCheck(this, Dialog);
+
+        options = options || {};
+        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
+        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
+        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
+        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
+        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
+        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
+        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
+        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
+        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
+        this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
+        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
+        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.id = _cfIdGenerator2.default.uuid();
+        this.create().show();
+        dialogMap.set(this.id, this);
+    }
+
+    _createClass(Dialog, [{
+        key: 'create',
+        value: function create() {
+            var _this = this;
+            this._element = $((0, _dialog2.default)({
+                size: this.size,
+                width: this.width,
+                height: this.height,
+                title: this.title,
+                showHeader: this.showHeader,
+                icon: this.icon,
+                position: this.position,
+                backdrop: this.backdrop,
+                content: this.content,
+                showFooter: this.showFooter,
+                footerBtn: this.footerBtn,
+                moveable: this.moveable,
+                id: this.id
+            }));
+            if (!this.modal) {
+                this._element[0].onclick = function (event) {
+                    var target = event.srcElement || event.target;
+                    if (target.className.search(/modal/gi) >= 0) {
+                        //关闭当前dialog
+                        _this.close();
+                    }
+                };
+            }
+            if (this.keyboard) {
+                //键盘esc按键关闭
+                $(window).on("keydown." + this.id, function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code === 27) {
+                        _this.close();
+                    }
+                });
+            }
+            this.initMove();
+            this.initEvent();
+            return this;
+        }
+    }, {
+        key: 'initPos',
+        value: function initPos() {
+            //position设置
+            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var win_h = window.screen.availHeight;
+            var half = Math.max(0, (win_h - _h) / 2),
+                top = void 0;
+            switch (this.position) {
+                case "fit":
+                    //中间偏上
+                    top = half * 2 / 3;
+                    break;
+                case "center":
+                    top = half;
+                    break;
+                case "top":
+                    top = 4;
+                    break;
+                case "bottom":
+                    top = win_h - _h - 4;
+                    break;
+                case parseInt(this.position):
+                    //数字
+                    top = parseInt(this.position);
+                    break;
+                default:
+                    top = half * 2 / 3;
+                    break;
+            }
+            //full 则top=0;
+            if (this.size === "full") {
+                top = 0;
+            }
+            $(this._element[0]).find(".dialog").css({
+                "margin-top": top + "px"
+            });
+        }
+    }, {
+        key: 'initMove',
+        value: function initMove() {
+            if (this.moveable) {
+                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
+                    container: $(this._element[0]),
+                    handle: '.dialog-header',
+                    before: function before() {
+                        $(this._element[0]).find(".dialog").css('position', 'absolute');
+                    },
+                    finish: function finish(e) {}
+                });
+            }
+        }
+    }, {
+        key: 'initEvent',
+        value: function initEvent() {
+            var _this = this;
+            $(this._element[0]).on("click", "[data-operation]", function () {
+                var operation = $(this).attr("data-operation");
+                if (operation === "cancel") _this.close();
+                _this.callback && _this.callback.call(_this, 'operation_' + operation);
+            });
+            $(this._element[0]).on("click", ".icon-close", function () {
+                _this.close();
+            });
+        }
+    }, {
+        key: 'show',
+        value: function show() {
+            var _this = this;
+            $("body").append(this._element);
+            this.initPos();
+            (0, _cfTransition.transition)(function () {
+                _this._element.addClass("in");
+            });
+            return this;
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            var _this = this;
+            (0, _cfTransition.transition)(function () {
+                _this.callback && _this.callback.call(_this, "closeStart");
+                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
+                    _this._element.remove();
+                    $(window).off("keydown." + _this.id);
+                    if (_this.dragInstance) {
+                        _this.dragInstance.destroy();
+                    }
+                    _this.callback && _this.callback.call(_this, "closeEnd");
+                    _this.destroy();
+                });
+            });
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            dialogMap.delete(this.id);
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }, {
+        key: 'getID',
+        value: function getID() {
+            return this.id;
+        }
+    }, {
+        key: 'getByID',
+        value: function getByID( /*Number*/id) {
+            return dialogMap.get(id);
+        }
+    }, {
+        key: 'getContent',
+        value: function getContent() {
+            return this._element.find(".dialog-content");
+        }
+    }]);
+
+    return Dialog;
+}();
+
+var dialog = function dialog(options) {
+    return new Dialog(options);
+};
+
+window.alert = function (msg, title) {
+    title = title || "懂老板";
+    return dialog({
+        title: title,
+        content: msg,
+        modal: false
+    }).then(function () {
+        this.close();
+    });
+};
+exports.default = dialog;
+
+/***/ }),
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -566,294 +882,8 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
 /* 9 */,
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _dialog = __webpack_require__(17);
-
-var _dialog2 = _interopRequireDefault(_dialog);
-
-var _cfIdGenerator = __webpack_require__(8);
-
-var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
-
-var _cfTransition = __webpack_require__(5);
-
-var _cfDrag = __webpack_require__(11);
-
-var _cfDrag2 = _interopRequireDefault(_cfDrag);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DIALOG_DEFAULT_OPTION = {
-    size: "normal",
-    width: "",
-    height: "",
-    title: "",
-    showHeader: true,
-    icon: "",
-    position: "fit",
-    backdrop: true,
-    modal: false,
-    keyboard: true,
-    moveable: true,
-    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
-    showFooter: true,
-    footerBtn: false
-};
-
-var Dialog = function () {
-    function Dialog(options) {
-        _classCallCheck(this, Dialog);
-
-        options = options || {};
-        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
-        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
-        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
-        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
-        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
-        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
-        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
-        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
-        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
-        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
-        this.moveable = options.moveable || DIALOG_DEFAULT_OPTION.moveable;
-        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
-        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
-        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
-        this.id = _cfIdGenerator2.default.uuid();
-        this.create().show();
-    }
-
-    _createClass(Dialog, [{
-        key: 'create',
-        value: function create() {
-            var _this = this;
-            this._element = $((0, _dialog2.default)({
-                size: this.size,
-                width: this.width,
-                height: this.height,
-                title: this.title,
-                showHeader: this.showHeader,
-                icon: this.icon,
-                position: this.position,
-                backdrop: this.backdrop,
-                content: this.content,
-                showFooter: this.showFooter,
-                footerBtn: this.footerBtn,
-                moveable: this.moveable,
-                id: this.id
-            }));
-            if (!this.modal) {
-                this._element[0].onclick = function (event) {
-                    var target = event.srcElement || event.target;
-                    if (target.className.search(/modal/gi) >= 0) {
-                        //关闭当前dialog
-                        _this.close();
-                    }
-                };
-            }
-            if (this.keyboard) {
-                //键盘esc按键关闭
-                $(window).on("keydown." + this.id, function (e) {
-                    var code = e.keyCode || e.which;
-                    if (code === 27) {
-                        _this.close();
-                    }
-                });
-            }
-            this.initMove();
-            this.initEvent();
-            return this;
-        }
-    }, {
-        key: 'initPos',
-        value: function initPos() {
-            //position设置
-            var _h = $(this._element[0]).find(".dialog").outerHeight();
-            var win_h = window.screen.availHeight;
-            var half = Math.max(0, (win_h - _h) / 2),
-                top = void 0;
-            switch (this.position) {
-                case "fit":
-                    //中间偏上
-                    top = half * 2 / 3;
-                    break;
-                case "center":
-                    top = half;
-                    break;
-                case "top":
-                    top = 4;
-                    break;
-                case "bottom":
-                    top = win_h - _h - 4;
-                    break;
-                case parseInt(this.position):
-                    //数字
-                    top = parseInt(this.position);
-                    break;
-                default:
-                    top = half * 2 / 3;
-                    break;
-            }
-            $(this._element[0]).find(".dialog").css({
-                "margin-top": top + "px"
-            });
-        }
-    }, {
-        key: 'initMove',
-        value: function initMove() {
-            if (this.moveable) {
-                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
-                    container: $(this._element[0]),
-                    handle: '.dialog-header',
-                    before: function before() {
-                        $(this._element[0]).find(".dialog").css('position', 'absolute');
-                    },
-                    finish: function finish(e) {}
-                });
-            }
-        }
-    }, {
-        key: 'initEvent',
-        value: function initEvent() {
-            var _this = this;
-            $(this._element[0]).on("click", "[data-operation]", function () {
-                var operation = $(this).attr("data-operation");
-                if (operation === "cancel") _this.close();
-                _this.callback && _this.callback.call(_this, 'operation_' + operation);
-            });
-            $(this._element[0]).on("click", ".icon-close", function () {
-                _this.close();
-            });
-        }
-    }, {
-        key: 'show',
-        value: function show() {
-            var _this = this;
-            $("body").append(this._element);
-            this.initPos();
-            (0, _cfTransition.transition)(function () {
-                _this._element.addClass("in");
-            });
-            return this;
-        }
-    }, {
-        key: 'close',
-        value: function close() {
-            var _this = this;
-            (0, _cfTransition.transition)(function () {
-                _this.callback && _this.callback.call(_this, "closeStart");
-                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
-                    _this._element.remove();
-                    $(window).off("keydown." + _this.id);
-                    if (_this.dragInstance) {
-                        _this.dragInstance.destroy();
-                    }
-                    _this.callback && _this.callback.call(_this, "closeEnd");
-                });
-            });
-        }
-    }, {
-        key: 'then',
-        value: function then(callback) {
-            this.callback = callback;
-            return this;
-        }
-    }]);
-
-    return Dialog;
-}();
-
-var dialog = function dialog(options) {
-    return new Dialog(options);
-};
-
-window.alert = function (msg, title) {
-    title = title || "懂老板";
-    return dialog({
-        title: title,
-        content: msg,
-        modal: false
-    }).then(function () {
-        this.close();
-    });
-};
-exports.default = dialog;
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1044,7 +1074,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1052,17 +1082,78 @@ module.exports = {
 	"ApiType": "1",
 	"AppVersion": "1.3.5",
 	"ApiVersion": "1.3.5",
-	"webApiDomain": "https://admin.5ishang.com",
+	"webApiDomain": "http://10.40.5.30:8081",
 	"successCode": 0,
 	"errorCode": -1,
-	"userLocalKey": "_user"
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
 };
 
 /***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += '" style="width:';
+    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += ';height:';
+    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
+        }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
+        }
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1080,9 +1171,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(7);
+var _store = __webpack_require__(8);
 
-var _static = __webpack_require__(12);
+var _static = __webpack_require__(11);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1159,71 +1250,9 @@ var USER = function () {
 exports.default = USER;
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
-    $$out += '<div class="modal fade" data-dialog-id="';
-    $$out += $escape(id);
-    $$out += '">\r\n    <div class="dialog ';
-    $$out += $escape(size);
-    $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
-    $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
-    $$out += ';">\r\n        ';
-    if (showHeader) {
-        $$out += '\r\n            <div class="dialog-header ';
-        $$out += $escape(moveable ? 'dialog-moveable' : '');
-        $$out += '">\r\n                ';
-        if (icon) {
-            $$out += '\r\n                    <div class="dialog-icon ';
-            $$out += $escape(icon);
-            $$out += '"></div>\r\n                ';
-        }
-        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
-        $$out += $escape(title);
-        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        <div class="dialog-content">\r\n            ';
-    $$out += content;
-    $$out += '\r\n        </div>\r\n        ';
-    if (showFooter) {
-        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
-        if (!footerBtn) {
-            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
-        } else {
-            $$out += '\r\n                    ';
-            $each(footerBtn, function (btn, i) {
-                $$out += '\r\n                        <button data-operation="cusBtn';
-                $$out += $escape(i);
-                $$out += '" class="btn ';
-                $$out += $escape(btn.themeCss);
-                $$out += '">';
-                $$out += $escape(btn.text);
-                $$out += '</button>\r\n                    ';
-            });
-            $$out += '\r\n                ';
-        }
-        $$out += '\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n    </div>\r\n</div>\r\n';
-    if (backdrop) {
-        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1582,10 +1611,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1775,7 +1804,9 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 22 */
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1785,7 +1816,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(20);
+var _Promise = __webpack_require__(16);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2259,8 +2290,90 @@ var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 23 */,
+/* 21 */,
+/* 22 */,
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '';
+    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in">\r\n        <div class="loading-container">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
 /* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/19 0019.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 获取container的overflow属性，关闭后自动设置回去
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用modal进行处理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _loading = __webpack_require__(23);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Loading = function () {
+    function Loading() {
+        _classCallCheck(this, Loading);
+
+        this.renderEle = $((0, _loading2.default)({}));
+        return this;
+    }
+
+    _createClass(Loading, [{
+        key: "show",
+        value: function show() {
+            $("body").append(this.renderEle);
+            return this;
+        }
+    }, {
+        key: "close",
+        value: function close() {
+            this.renderEle.remove();
+            return this;
+        }
+    }], [{
+        key: "show",
+        value: function show() {
+            this.close();
+            return new Loading().show();
+        }
+    }, {
+        key: "close",
+        value: function close() {
+            $(".loading-plugin").remove();
+        }
+    }]);
+
+    return Loading;
+}();
+
+exports.default = Loading;
+
+/***/ }),
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2649,174 +2762,7 @@ var Star = function () {
 exports.default = Star;
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/22 0022.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航跳转
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 规则：
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      1. PC端和Pad 打开新浏览器标签
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      2. Mobile iframe中切换
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * detech 功能   设备嗅探
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _router = __webpack_require__(26);
-
-var _router2 = _interopRequireDefault(_router);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Navigator = function () {
-    function Navigator() {
-        _classCallCheck(this, Navigator);
-    }
-
-    _createClass(Navigator, null, [{
-        key: "detech",
-        value: function detech() {
-            this.isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig);
-            return this.isMobile;
-        }
-    }, {
-        key: "open",
-        value: function open(page) {
-            var url = _router2.default[page];
-            if (typeof this.isMobile !== "undefined" && this.isMobile || typeof this.isMobile === "undefined" && this.detech()) {
-                //Todo mobile
-
-            } else {
-                // Todo PC
-                window.open(url, "_blank");
-            }
-        }
-    }, {
-        key: "getHtml",
-        value: function getHtml(page) {
-            return _router2.default[page];
-        }
-    }]);
-
-    return Navigator;
-}();
-
-exports.default = Navigator;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"name": "router-manage",
-	"version": "1.0.0",
-	"index": "index.html",
-	"login": "login.html",
-	"test": "angular.html#"
-};
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '';
-    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in">\r\n        <div class="loading-container">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/19 0019.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 获取container的overflow属性，关闭后自动设置回去
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用modal进行处理
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _loading = __webpack_require__(27);
-
-var _loading2 = _interopRequireDefault(_loading);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Loading = function () {
-    function Loading() {
-        _classCallCheck(this, Loading);
-
-        this.renderEle = $((0, _loading2.default)({}));
-        return this;
-    }
-
-    _createClass(Loading, [{
-        key: "show",
-        value: function show() {
-            $("body").append(this.renderEle);
-            return this;
-        }
-    }, {
-        key: "close",
-        value: function close() {
-            this.renderEle.remove();
-            return this;
-        }
-    }], [{
-        key: "show",
-        value: function show() {
-            this.close();
-            return new Loading().show();
-        }
-    }, {
-        key: "close",
-        value: function close() {
-            $(".loading-plugin").remove();
-        }
-    }]);
-
-    return Loading;
-}();
-
-exports.default = Loading;
-
-/***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2832,25 +2778,25 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(22);
+var _fetch = __webpack_require__(20);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _store = __webpack_require__(7);
+var _store = __webpack_require__(8);
 
-var _cfDialog = __webpack_require__(10);
+var _cfDialog = __webpack_require__(6);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(12);
+var _static = __webpack_require__(11);
 
 var _static2 = _interopRequireDefault(_static);
 
-var _loading = __webpack_require__(28);
+var _loading = __webpack_require__(24);
 
 var _loading2 = _interopRequireDefault(_loading);
 
-var _user = __webpack_require__(16);
+var _user = __webpack_require__(13);
 
 var _user2 = _interopRequireDefault(_user);
 
@@ -2924,10 +2870,14 @@ var fetch = function fetch(url, data, login) {
             return response.json();
         }).then(function (json) {
             if (json.Head.Ret === _static2.default.errorCode) {
-                return {
+                var back = {
                     ok: false,
                     msg: json.Head.Msg
                 };
+                if (json.Head.Code === _static2.default.overdueCode) {
+                    back.overdue = true;
+                }
+                return back;
             }
             if (json.Head.Ret === _static2.default.successCode) {
                 return {
@@ -2950,10 +2900,14 @@ var fetch = function fetch(url, data, login) {
             return response.json();
         }).then(function (json) {
             if (json.Head.Ret === _static2.default.errorCode) {
-                return {
+                var back = {
                     ok: false,
                     msg: json.Head.Msg
                 };
+                if (json.Head.Code === _static2.default.overdueCode) {
+                    back.overdue = true;
+                }
+                return back;
             }
             if (json.Head.Ret === _static2.default.successCode) {
                 return {
@@ -2968,6 +2922,101 @@ var fetch = function fetch(url, data, login) {
 exports.default = fetch;
 
 /***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/22 0022.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航跳转
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 规则：
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      1. PC端和Pad 打开新浏览器标签
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      2. Mobile iframe中切换
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * detech 功能   设备嗅探
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _router = __webpack_require__(32);
+
+var _router2 = _interopRequireDefault(_router);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Navigator = function () {
+    function Navigator() {
+        _classCallCheck(this, Navigator);
+    }
+
+    _createClass(Navigator, null, [{
+        key: "detech",
+        value: function detech() {
+            this.isMobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig);
+            return this.isMobile;
+        }
+    }, {
+        key: "open",
+        value: function open(page, hash) {
+            var url = _router2.default[page];
+            hash && (hash = "#" + hash);
+            if (typeof this.isMobile !== "undefined" && this.isMobile || typeof this.isMobile === "undefined" && this.detech()) {
+                //Todo mobile
+                var iframe = document.querySelector("iframe");
+                iframe.src = url + hash || "";
+            } else {
+                // Todo PC
+                window.open(url + (hash || ""), "_blank");
+            }
+        }
+    }, {
+        key: "getHtml",
+        value: function getHtml(page) {
+            return _router2.default[page];
+        }
+    }, {
+        key: "isExist",
+        value: function isExist(pageName) {
+            return _router2.default[pageName];
+        }
+    }]);
+
+    return Navigator;
+}();
+
+exports.default = Navigator;
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"name": "router-manage",
+	"version": "1.0.0",
+	"index": "index.html",
+	"login": "login.html",
+	"angularCompute": "angular.html",
+	"CustomerManage": "register.html"
+};
+
+/***/ }),
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
 /* 43 */,
 /* 44 */,
 /* 45 */,
@@ -2984,7 +3033,17 @@ exports.default = fetch;
 /* 56 */,
 /* 57 */,
 /* 58 */,
-/* 59 */
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2998,23 +3057,23 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _starEffect = __webpack_require__(24);
+var _starEffect = __webpack_require__(29);
 
 var _starEffect2 = _interopRequireDefault(_starEffect);
 
-var _cfDialog = __webpack_require__(10);
+var _cfDialog = __webpack_require__(6);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _fetch = __webpack_require__(42);
+var _fetch = __webpack_require__(30);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _user2 = __webpack_require__(16);
+var _user2 = __webpack_require__(13);
 
 var _user3 = _interopRequireDefault(_user2);
 
-var _navigator = __webpack_require__(25);
+var _navigator = __webpack_require__(31);
 
 var _navigator2 = _interopRequireDefault(_navigator);
 

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 55);
+/******/ 	return __webpack_require__(__webpack_require__.s = 64);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -213,6 +213,120 @@ module.exports = runtime;
 
 /***/ }),
 
+/***/ 27:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/7 0007.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分页器插件
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 显示9个
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 添加参数控制是否显示首页 尾页
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _pager = __webpack_require__(35);
+
+var _pager2 = _interopRequireDefault(_pager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Pager = function () {
+    function Pager(container, count, hideJump) {
+        _classCallCheck(this, Pager);
+
+        this.pageIndex = 1;
+        this.pageCount = 0;
+        this.container = container;
+        this.count = count || 9;
+        this.hideJump = hideJump || false;
+        this.initLife();
+    }
+
+    _createClass(Pager, [{
+        key: "update",
+        value: function update() {
+            if (this.element) {
+                var newElement = $((0, _pager2.default)({
+                    pageCount: this.pageCount,
+                    pageIndex: this.pageIndex,
+                    count: this.count,
+                    hideJump: this.hideJump
+                }));
+                this.element.replaceWith(newElement);
+                this.element = newElement;
+            } else {
+                this.element = $((0, _pager2.default)({
+                    pageCount: this.pageCount,
+                    pageIndex: this.pageIndex,
+                    count: this.count,
+                    hideJump: this.hideJump
+                }));
+                this.container.append(this.element);
+            }
+            return this;
+        }
+    }, {
+        key: "setPageIndex",
+        value: function setPageIndex(pageIndex) {
+            this.pageIndex = pageIndex;
+            return this;
+        }
+    }, {
+        key: "setPageCount",
+        value: function setPageCount(pageCount) {
+            this.pageCount = pageCount;
+            return this;
+        }
+    }, {
+        key: "initLife",
+        value: function initLife() {
+            //生命周期
+            var _this = this;
+            this.container.on("click", "span", function () {
+                var li = $(this).parent();
+                if (li.hasClass("disabled") || li.hasClass("active")) return -1; //屏蔽不可点击项
+                var pageIndex = void 0;
+                if (li.hasClass("prev")) {
+                    //当前前一个
+                    pageIndex = parseInt($(this).parent().siblings(".active").children("span").attr("data-index")) - 1;
+                } else if (li.hasClass("next")) {
+                    pageIndex = parseInt($(this).parent().siblings(".active").children("span").attr("data-index")) + 1;
+                } else if (li.hasClass("pager-home")) {
+                    pageIndex = 1;
+                } else if (li.hasClass("pager-last")) {
+                    pageIndex = _this.pageCount;
+                } else {
+                    pageIndex = parseInt($(this).attr("data-index"));
+                }
+                _this.pageIndex = pageIndex;
+                _this.update();
+                _this.callback && _this.callback.call(_this, pageIndex);
+            });
+        }
+    }, {
+        key: "then",
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }]);
+
+    return Pager;
+}();
+
+exports.default = Pager;
+
+/***/ }),
+
 /***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -227,7 +341,7 @@ try {
 
 /***/ }),
 
-/***/ 36:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -331,127 +445,13 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 41:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/7 0007.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分页器插件
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 显示9个
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 添加参数控制是否显示首页 尾页
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _pager = __webpack_require__(36);
-
-var _pager2 = _interopRequireDefault(_pager);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Pager = function () {
-    function Pager(container, count, hideJump) {
-        _classCallCheck(this, Pager);
-
-        this.pageIndex = 1;
-        this.pageCount = 0;
-        this.container = container;
-        this.count = count || 9;
-        this.hideJump = hideJump || false;
-        this.initLife();
-    }
-
-    _createClass(Pager, [{
-        key: "update",
-        value: function update() {
-            if (this.element) {
-                var newElement = $((0, _pager2.default)({
-                    pageCount: this.pageCount,
-                    pageIndex: this.pageIndex,
-                    count: this.count,
-                    hideJump: this.hideJump
-                }));
-                this.element.replaceWith(newElement);
-                this.element = newElement;
-            } else {
-                this.element = $((0, _pager2.default)({
-                    pageCount: this.pageCount,
-                    pageIndex: this.pageIndex,
-                    count: this.count,
-                    hideJump: this.hideJump
-                }));
-                this.container.append(this.element);
-            }
-            return this;
-        }
-    }, {
-        key: "setPageIndex",
-        value: function setPageIndex(pageIndex) {
-            this.pageIndex = pageIndex;
-            return this;
-        }
-    }, {
-        key: "setPageCount",
-        value: function setPageCount(pageCount) {
-            this.pageCount = pageCount;
-            return this;
-        }
-    }, {
-        key: "initLife",
-        value: function initLife() {
-            //生命周期
-            var _this = this;
-            this.container.on("click", "span", function () {
-                var li = $(this).parent();
-                if (li.hasClass("disabled") || li.hasClass("active")) return -1; //屏蔽不可点击项
-                var pageIndex = void 0;
-                if (li.hasClass("prev")) {
-                    //当前前一个
-                    pageIndex = parseInt($(this).parent().siblings(".active").children("span").attr("data-index")) - 1;
-                } else if (li.hasClass("next")) {
-                    pageIndex = parseInt($(this).parent().siblings(".active").children("span").attr("data-index")) + 1;
-                } else if (li.hasClass("pager-home")) {
-                    pageIndex = 1;
-                } else if (li.hasClass("pager-last")) {
-                    pageIndex = _this.pageCount;
-                } else {
-                    pageIndex = parseInt($(this).attr("data-index"));
-                }
-                _this.pageIndex = pageIndex;
-                _this.update();
-                _this.callback && _this.callback.call(_this, pageIndex);
-            });
-        }
-    }, {
-        key: "then",
-        value: function then(callback) {
-            this.callback = callback;
-            return this;
-        }
-    }]);
-
-    return Pager;
-}();
-
-exports.default = Pager;
-
-/***/ }),
-
-/***/ 55:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _pager = __webpack_require__(41);
+var _pager = __webpack_require__(27);
 
 var _pager2 = _interopRequireDefault(_pager);
 

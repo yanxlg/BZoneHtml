@@ -1,0 +1,61 @@
+@charset "utf-8";
+@import "../../ui/input.scss";
+//下拉组件
+$selectOptionBg:#e4e8f1;
+.select{
+  @extend .flex-column;
+  position: relative;
+  .icon-arrow{
+    @include prefix(transition,all 0.3s ease);
+    @include prefix(transform,rotate(0deg));
+  }
+  > .input-icon{
+    width:100%;
+    .input[readonly]{
+      color: map_get($baseColor,dark);
+    }
+  }
+  .select-options{
+    position: absolute;
+    left:remToPx(0.2rem);
+    right:remToPx(0.2rem);
+    top:remToPx(1.7rem);
+    list-style: none;
+    padding:0;
+    margin:0;
+    max-height:remToPx(15rem);
+    overflow-y: auto;
+    border:1px solid $borderColor;
+    background-color: map_get($baseColor,white);
+    z-index: 20;
+    li{
+      cursor: default;
+      padding:remToPx(0.3rem 0.2rem);
+      ~li{
+        border-top:1px solid $borderColor;
+      }
+      &:hover{
+        background-color:$selectOptionBg;
+      }
+      &.active{
+        background-color: map_get($baseColor,light-blue);
+        color: map_get($baseColor,white);
+      }
+    }
+    @include prefix(border-radius,remToPx(0.2rem));
+    @include prefix(transition,all 0.4s ease);
+    @include prefix(transform,scaleZ(0));
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  &.open{
+    .select-options{
+      @include prefix(transform,scaleZ(1));
+      opacity: 1;
+      filter: alpha(opacity=100);
+    }
+    .icon-arrow{
+      @include prefix(transform,rotate(180deg));
+    }
+  }
+}

@@ -60,7 +60,12 @@ class Index{
                 _this.importMyCenter();
             }else{
                 //Todo 菜单点击事件处理
-                Navigator.open("test");
+                let menuDate=JSON.parse(data);
+                if(Navigator.isExist(menuDate.NavigateUrl)){
+                    Navigator.open(menuDate.NavigateUrl);
+                }else{
+                    Navigator.open("angularCompute",menuDate.NavigateUrl);
+                }
             }
         });
         $("body").on("click",".nav-top .user-name",function () {
@@ -85,7 +90,6 @@ class Index{
             alert("退出当前登录用户？").then(function (option) {
                 if(/\S+ok$/.test(option)){
                     //退出登录
-
                 }
             })
         });

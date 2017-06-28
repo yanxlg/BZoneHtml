@@ -121,7 +121,7 @@
             height:0;
             opacity: 0;
             filter: alpha(opacity=0);
-            margin-left: remToPx(-1rem);
+            margin-left: remToPx(-2rem);
             background-color: rgba(255,255,255,0.8);
             border:1px solid $borderColor;
             @include prefix(border-radius,remToPx(0.15rem));
@@ -204,7 +204,7 @@
             height:0;
             opacity: 0;
             filter: alpha(opacity=0);
-            margin-left: remToPx(-1rem);
+            margin-left: remToPx(-2rem);
             background-color: rgba(255,255,255,0.8);
             border:1px solid $borderColor;
             @include prefix(border-radius,remToPx(0.15rem));

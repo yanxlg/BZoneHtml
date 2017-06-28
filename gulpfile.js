@@ -36,7 +36,7 @@ gulp.task('sass', function () {
         .pipe(gulp.dest("./"));
 });
 gulp.task('sass:watch', function () {
-    const watcher = gulp.watch('./styles/**/*.scss', ['sass']);
+    const watcher = gulp.watch(["./**/*.scss","!node_modules/**/*.scss","!build/**/*.scss","!ApiModal/**/*.scss","!artTemplate/**/*.scss","!config/**/*.scss","!html/**/*.scss","!images/**/*.scss","!manifest/**/*.scss","!script/**/*.scss","!static/**/*.scss"], ['sass']);
     watcher.on('change', function(event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -222,7 +222,44 @@ try {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -266,48 +303,7 @@ exports.transition = transition;
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
-/* 9 */,
-/* 10 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -337,20 +333,24 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      showFooter 是否显示底部
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * issues: moveable 没有控制在header中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用Set管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(17);
+var _dialog = __webpack_require__(12);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(8);
+var _cfIdGenerator = __webpack_require__(4);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(5);
 
-var _cfDrag = __webpack_require__(11);
+var _cfDrag = __webpack_require__(10);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -358,6 +358,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var dialogMap = new Map();
 var DIALOG_DEFAULT_OPTION = {
     size: "normal",
     width: "",
@@ -390,12 +391,13 @@ var Dialog = function () {
         this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
         this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
         this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
-        this.moveable = options.moveable || DIALOG_DEFAULT_OPTION.moveable;
+        this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
         this.content = options.content || DIALOG_DEFAULT_OPTION.content;
         this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
         this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
         this.id = _cfIdGenerator2.default.uuid();
         this.create().show();
+        dialogMap.set(this.id, this);
     }
 
     _createClass(Dialog, [{
@@ -469,6 +471,10 @@ var Dialog = function () {
                     top = half * 2 / 3;
                     break;
             }
+            //full 则top=0;
+            if (this.size === "full") {
+                top = 0;
+            }
             $(this._element[0]).find(".dialog").css({
                 "margin-top": top + "px"
             });
@@ -524,14 +530,35 @@ var Dialog = function () {
                         _this.dragInstance.destroy();
                     }
                     _this.callback && _this.callback.call(_this, "closeEnd");
+                    _this.destroy();
                 });
             });
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            dialogMap.delete(this.id);
         }
     }, {
         key: 'then',
         value: function then(callback) {
             this.callback = callback;
             return this;
+        }
+    }, {
+        key: 'getID',
+        value: function getID() {
+            return this.id;
+        }
+    }, {
+        key: 'getByID',
+        value: function getByID( /*Number*/id) {
+            return dialogMap.get(id);
+        }
+    }, {
+        key: 'getContent',
+        value: function getContent() {
+            return this._element.find(".dialog-content");
         }
     }]);
 
@@ -555,7 +582,10 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 11 */
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -746,12 +776,8 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);

@@ -1,14 +1,72 @@
 @charset "utf-8";
 //布局样式
-@import "../package/ui/cf-ui-base";
-@import "../package/ui/cf-varia";
-@import "../package/ui/cf-func";
+@import "../package/ui/cf-ui-base.scss";
+@import "../package/ui/cf-varia.scss";
+@import "../package/ui/cf-func.scss";
+@import "../package/ui/cf-flex.scss";
+@import "../package/ui/cf-flex-include.scss";
 .content{
   @include prefix(transition,all 0.3s ease);
   padding-top: remToPx(3rem);
+  padding-left:remToPx(0.5rem);
+  padding-right:remToPx(0.5rem);
+  @extend .flex-column;
 }
 @media screen and (max-width: 699px){
   .content{
     padding-top: remToPx(1.5rem);
+  }
+}
+.page-title{
+  padding:remToPx(0.7rem) remToPx(0.3rem);
+  color: map_get($baseColor,black);
+  font-size: remToPx(1.1rem);
+  border:1px solid $borderColor;
+  margin-top: remToPx(0.5rem);
+  @include prefix(border-top-left-radius,remToPx(0.2rem));
+  @include prefix(border-top-right-radius,remToPx(0.2rem));
+  ~ .page-form{
+    border-top:0;
+  }
+}
+.page-form{
+  border:1px solid $borderColor;
+  padding:remToPx(0.3rem);
+  .form-item{
+    white-space: nowrap;
+    @extend .align-center;
+    margin:remToPx(0.15rem) remToPx(0.2rem) remToPx(0.15rem) remToPx(0.1rem);
+    label{
+      white-space: nowrap;
+    }
+  }
+}
+.form-input{
+  @extend .flex-1;
+  @extend .flex-wrap;
+}
+.form-action{
+  @extend .align-center;
+  .btn{
+    ~.btn{
+      margin-left: remToPx(0.2rem);
+    }
+  }
+}
+.page-datagrid{
+  margin-top: remToPx(0.6rem);
+  @extend .flex-column;
+  position: relative;
+}
+.page-pager{
+  display: block;
+  text-align: center;
+}
+@media screen and (max-width: 700px){
+  .page-form{
+    @include flex-column;
+  }
+  .form-action{
+    margin-top: remToPx(0.2rem);
   }
 }

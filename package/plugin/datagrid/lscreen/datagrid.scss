@@ -21,9 +21,9 @@
     display: block;
     &.grid-data{
       padding-right: 0;
-      overflow-y: scroll;
+      overflow: scroll;
       .data-row{
-        &:hover{
+        &:hover,&.hover{
           background-color: map_get($paleColor,important-pale);
         }
       }
@@ -41,9 +41,18 @@
     .data-row{
       display: table-row;
       position: relative;
+      &.data-row-hidden{
+        height:0;
+        overflow: hidden;
+        .data-column{
+          padding:0;
+          height:0;
+          border:none;
+        }
+      }
       .data-column{
         display: table-cell;
-        padding:8px 8px;
+        padding:remToPx(0.4rem);
         position: relative;
         &:first-of-type{
           border-left: 1px solid $borderColor;
@@ -54,9 +63,11 @@
       }
       .data-grid-title{
         display: table-cell;
-        padding:8px 8px;
+        padding:remToPx(0.4rem);
         font-weight: bold;
         text-align: center;
+        vertical-align: middle;
+        word-break: break-all;
         &:first-of-type{
           border-left: 1px solid $borderColor;
         }
@@ -65,7 +76,6 @@
         border-right: 1px solid $borderColor;
       }
     }
-
   }
   .data-header{
   }
@@ -76,6 +86,7 @@
   }
   .grid-center{
     text-align: center;
+    vertical-align: middle;
   }
   .data-row-group{
     display: table-row-group;
@@ -86,31 +97,45 @@
   .data-key{
     display: none;
   }
-
-  .grid-actions{
-      @include align-center;
-      padding-right: 23px;
-      padding-left:6px;
-  }
-  .action-btn{
-    word-break: keep-all;
-    white-space: nowrap;
-    display: inline-block;
-    min-width: 60px;
+  .data-data{
+    display: block;
     text-align: center;
-    padding:4px 4px;
-    cursor:pointer;
-    background-color: map_get($messageColor,success);
-    border-color:#329d38;
-    color: map_get($baseColor,white);
-    &:hover,&:focus{
-      background-color: #2e9134;
-      border-color: #236e27;
-      color: map_get($baseColor,white);
+    word-break: break-all;
+  }
+  .grid-fix-left{
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 20;
+    background-color: map_get($baseColor,white);
+    .data-grid-wrap.grid-header,.data-grid-wrap.grid-data{
+      overflow: hidden;
     }
-    @include prefix(border-radius,remToPx(0.2rem));
-    @include prefix(box-sizing,border-box);
-    @include prefix(background-clip,border-box);
-    margin:0 3px;
+    .data-grid-wrap.grid-data{
+      @include prefix(box-sizing,border-box);
+    }
+    .data-grid{
+      table-layout: auto;
+    }
+  }
+  .grid-fix-right{
+    position: absolute;
+    right:remToPx(0.85rem);
+    top:0;
+    z-index: 20;
+    background-color: map_get($baseColor,white);
+    .data-grid-wrap.grid-header,.data-grid-wrap.grid-data{
+      overflow: hidden;
+    }
+    .data-grid-wrap.grid-data{
+      @include prefix(box-sizing,border-box);
+    }
+    .data-grid{
+      table-layout: auto;
+    }
+  }
+
+  .in-calc{
+    visibility: hidden;
   }
 }

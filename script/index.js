@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 58);
+/******/ 	return __webpack_require__(__webpack_require__.s = 68);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -237,57 +237,27 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Created by yanxlg on 2017/6/5 0005.
- * slide插件
- * 需要动态计算展开的大小
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
  */
-var Slide = function () {
-    function Slide() {
-        _classCallCheck(this, Slide);
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
     }
 
-    _createClass(Slide, null, [{
-        key: "slideDown",
-        value: function slideDown(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: offH + "px"
-            });
-            return offH;
-        }
-    }, {
-        key: "slide",
-        value: function slide(el, delY) {
-            //增量处理
-            var offH = el[0].offsetHeight;
-            el.css({
-                height: offH + delY + "px"
-            });
-            return offH + delY;
-        }
-    }, {
-        key: "slideUp",
-        value: function slideUp(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: 0
-            });
-            return offH;
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
         }
     }]);
 
-    return Slide;
+    return IDGenerator;
 }();
 
-exports.default = Slide;
+exports.default = IDGenerator;
 
 /***/ }),
 /* 5 */
@@ -344,157 +314,230 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/2 0002.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航菜单
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 默认根据屏幕大小切换显示方式，大屏显示在左侧 中屏显示在顶部 小屏顶部折叠 右侧显示（支持左侧侧滑）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * options 支持参数
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * left：菜单header的icon显示在左侧
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 菜单循环嵌套,一个菜单项是一个object
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * menus:[{pMenu:{},menuList:[{groupName:"",menus:[]},{},{}]},{}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分组信息 group menus:{groupName:"",menus:[]}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 一组菜单：[]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 支持三层结构
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  name:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  data:obj
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  childMenus:[{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      groupName:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      menus:[{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           name:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           data:obj,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           childMenus:[]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 打开的时候收起其他的
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * issues: moveable 没有控制在header中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用Set管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(9);
+var _dialog = __webpack_require__(12);
 
-var _navPop2 = _interopRequireDefault(_navPop);
+var _dialog2 = _interopRequireDefault(_dialog);
 
-var _slide = __webpack_require__(4);
+var _cfIdGenerator = __webpack_require__(4);
 
-var _slide2 = _interopRequireDefault(_slide);
+var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
+
+var _cfTransition = __webpack_require__(5);
+
+var _cfDrag = __webpack_require__(10);
+
+var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PopMenu = function () {
-    function PopMenu(menus, left) {
-        _classCallCheck(this, PopMenu);
+var dialogMap = new Map();
+var DIALOG_DEFAULT_OPTION = {
+    size: "normal",
+    width: "",
+    height: "",
+    title: "",
+    showHeader: true,
+    icon: "",
+    position: "fit",
+    backdrop: true,
+    modal: false,
+    keyboard: true,
+    moveable: true,
+    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
+    showFooter: true,
+    footerBtn: false
+};
 
-        this.menus = menus;
-        this.left = left || false;
-        this.create();
-        this.initLife();
+var Dialog = function () {
+    function Dialog(options) {
+        _classCallCheck(this, Dialog);
+
+        options = options || {};
+        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
+        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
+        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
+        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
+        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
+        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
+        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
+        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
+        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
+        this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
+        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
+        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.id = _cfIdGenerator2.default.uuid();
+        this.create().show();
+        dialogMap.set(this.id, this);
     }
 
-    _createClass(PopMenu, [{
-        key: 'getType',
-        value: function getType() {
-            return "PopMenu";
-        }
-    }, {
+    _createClass(Dialog, [{
         key: 'create',
         value: function create() {
-            this.menusRender = $((0, _navPop2.default)({
-                menus: this.menus,
-                left: this.left
-            }));
-            $("body").addClass("width-nav-pop").append(this.menusRender);
-        }
-    }, {
-        key: 'initLife',
-        value: function initLife() {
             var _this = this;
-            this.menusRender.on("click", ".nav-menu", function () {
-                var $this = $(this);
-                if ($this.next().hasClass("slide")) {
-                    if ($this.next().hasClass("open")) {
-                        $this.removeClass("open").next().removeClass("open");
-                        var addH = _slide2.default.slideUp($this.next());
-                        var parentSlide = $this.parents(".slide");
-                        $.each(parentSlide, function (i, slide) {
-                            $(slide).addClass("open").prev().addClass("open");
-                            _slide2.default.slide($(slide), -addH);
-                        });
-                    } else {
-                        //这样会造成父级元素高度变化
-                        //fix it
-                        //需要关闭其他父级菜单中已经打开的
-                        var others = $this.parent().siblings(); //li元素
-                        $.each(others, function (i, li) {
-                            var slide = $(li).children(".slide");
-                            if (slide.hasClass("open")) {
-                                slide.removeClass("open").prev().removeClass("open");
-                                _slide2.default.slideUp(slide);
-                                //关闭子的
-                                var childSlide = slide.find(".slide");
-                                $.each(childSlide, function (i, mSlide) {
-                                    $(mSlide).removeClass("open").prev().removeClass("open");
-                                    _slide2.default.slideUp($(mSlide));
-                                });
-                            }
-                        });
-                        $this.addClass("open").next().addClass("open");
-                        var _addH = _slide2.default.slideDown($this.next());
-                        var _parentSlide = $this.parents(".slide");
-                        $.each(_parentSlide, function (i, slide) {
-                            $(slide).addClass("open").prev().addClass("open");
-                            _slide2.default.slide($(slide), _addH);
-                        });
+            this._element = $((0, _dialog2.default)({
+                size: this.size,
+                width: this.width,
+                height: this.height,
+                title: this.title,
+                showHeader: this.showHeader,
+                icon: this.icon,
+                position: this.position,
+                backdrop: this.backdrop,
+                content: this.content,
+                showFooter: this.showFooter,
+                footerBtn: this.footerBtn,
+                moveable: this.moveable,
+                id: this.id
+            }));
+            if (!this.modal) {
+                this._element[0].onclick = function (event) {
+                    var target = event.srcElement || event.target;
+                    if (target.className.search(/modal/gi) >= 0) {
+                        //关闭当前dialog
+                        _this.close();
                     }
-                } else {
-                    $(".nav-active").removeClass("nav-active");
-                    $(".nav-menu.active").removeClass("active");
-                    //...添加样式
-                    $(".nav-icon-menu").addClass("nav-active");
-                    $this.addClass("nav-active");
-                    var data = $this.attr("data-data");
-                    _this.callback && _this.callback.call(_this, data);
-                    _this.close();
-                }
-            });
-            this.menusRender.on("click", ".nav-icon-menu", function () {
-                _this.show();
-            });
-            this.menusRender.on("click", ".modal-backdrop", function () {
-                _this.close();
-            });
-            $(window).on("scroll.pop", function () {
-                _this.updateBg();
+                };
+            }
+            if (this.keyboard) {
+                //键盘esc按键关闭
+                $(window).on("keydown." + this.id, function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code === 27) {
+                        _this.close();
+                    }
+                });
+            }
+            this.initMove();
+            this.initEvent();
+            return this;
+        }
+    }, {
+        key: 'initPos',
+        value: function initPos() {
+            //position设置
+            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var win_h = window.screen.availHeight;
+            var half = Math.max(0, (win_h - _h) / 2),
+                top = void 0;
+            switch (this.position) {
+                case "fit":
+                    //中间偏上
+                    top = half * 2 / 3;
+                    break;
+                case "center":
+                    top = half;
+                    break;
+                case "top":
+                    top = 4;
+                    break;
+                case "bottom":
+                    top = win_h - _h - 4;
+                    break;
+                case parseInt(this.position):
+                    //数字
+                    top = parseInt(this.position);
+                    break;
+                default:
+                    top = half * 2 / 3;
+                    break;
+            }
+            //full 则top=0;
+            if (this.size === "full") {
+                top = 0;
+            }
+            $(this._element[0]).find(".dialog").css({
+                "margin-top": top + "px"
             });
         }
     }, {
-        key: 'updateBg',
-        value: function updateBg() {
-            if (!this.bg) {
-                var bgColor = this.menusRender.find(".nav-header").css("background-color");
-                //正则解析出三段int值
-                this.bg = bgColor.match(/\d+/g);
+        key: 'initMove',
+        value: function initMove() {
+            if (this.moveable) {
+                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
+                    container: $(this._element[0]),
+                    handle: '.dialog-header',
+                    before: function before() {
+                        $(this._element[0]).find(".dialog").css('position', 'absolute');
+                    },
+                    finish: function finish(e) {}
+                });
             }
-            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
-            var opacity = 1 - Math.round(scrolltop / 100) / 10; //背景调整
-            this.menusRender.find(".nav-header").css({
-                "background-color": 'rgba(' + this.bg[0] + ',' + this.bg[1] + ',' + this.bg[2] + ',' + opacity + ')'
+        }
+    }, {
+        key: 'initEvent',
+        value: function initEvent() {
+            var _this = this;
+            $(this._element[0]).on("click", "[data-operation]", function () {
+                var operation = $(this).attr("data-operation");
+                if (operation === "cancel") _this.close();
+                _this.callback && _this.callback.call(_this, 'operation_' + operation);
+            });
+            $(this._element[0]).on("click", ".icon-close", function () {
+                _this.close();
             });
         }
     }, {
         key: 'show',
         value: function show() {
-            this.menusRender.find(".nav-pop").addClass("show");
-            this.menusRender.find(".modal-backdrop").addClass("in");
+            var _this = this;
+            $("body").append(this._element);
+            this.initPos();
+            (0, _cfTransition.transition)(function () {
+                _this._element.addClass("in");
+            });
+            return this;
         }
     }, {
         key: 'close',
         value: function close() {
-            this.menusRender.find(".nav-pop").removeClass("show");
-            this.menusRender.find(".modal-backdrop").removeClass("in");
+            var _this = this;
+            (0, _cfTransition.transition)(function () {
+                _this.callback && _this.callback.call(_this, "closeStart");
+                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
+                    _this._element.remove();
+                    $(window).off("keydown." + _this.id);
+                    if (_this.dragInstance) {
+                        _this.dragInstance.destroy();
+                    }
+                    _this.callback && _this.callback.call(_this, "closeEnd");
+                    _this.destroy();
+                });
+            });
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            dialogMap.delete(this.id);
         }
     }, {
         key: 'then',
@@ -503,21 +546,111 @@ var PopMenu = function () {
             return this;
         }
     }, {
-        key: 'destroy',
-        value: function destroy() {
-            this.menusRender.remove();
-            $("body").removeClass("width-nav-pop");
-            $(window).off("scroll.pop");
+        key: 'getID',
+        value: function getID() {
+            return this.id;
+        }
+    }, {
+        key: 'getByID',
+        value: function getByID( /*Number*/id) {
+            return dialogMap.get(id);
+        }
+    }, {
+        key: 'getContent',
+        value: function getContent() {
+            return this._element.find(".dialog-content");
         }
     }]);
 
-    return PopMenu;
+    return Dialog;
 }();
 
-exports.default = PopMenu;
+var dialog = function dialog(options) {
+    return new Dialog(options);
+};
+
+window.alert = function (msg, title) {
+    title = title || "懂老板";
+    return dialog({
+        title: title,
+        content: msg,
+        modal: false
+    }).then(function () {
+        this.close();
+    });
+};
+exports.default = dialog;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/5 0005.
+ * slide插件
+ * 需要动态计算展开的大小
+ */
+var Slide = function () {
+    function Slide() {
+        _classCallCheck(this, Slide);
+    }
+
+    _createClass(Slide, null, [{
+        key: "slideDown",
+        value: function slideDown(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: offH + "px"
+            });
+            return offH;
+        }
+    }, {
+        key: "slide",
+        value: function slide(el, delY) {
+            //增量处理
+            var offH = el[0].offsetHeight;
+            el.css({
+                height: offH + delY + "px"
+            });
+            return offH + delY;
+        }
+    }, {
+        key: "slideUp",
+        value: function slideUp(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: 0
+            });
+            return offH;
+        }
+    }]);
+
+    return Slide;
+}();
+
+exports.default = Slide;
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -816,112 +949,7 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
-    $$out += $escape(left ? 'left' : '');
-    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
-    $each(menus, function (menu, $index) {
-        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
-        $$out += $escape(menu.data);
-        $$out += '">';
-        $$out += $escape(menu.name);
-        $$out += '</div>\r\n            ';
-        if (menu.childMenus && menu.childMenus.length > 0) {
-            $$out += '\r\n            <ul class="slide">\r\n                ';
-            $each(menu.childMenus, function (childMenu, $index) {
-                $$out += '\r\n                ';
-                if (childMenu.groupName) {
-                    $$out += '\r\n                <div class="nav-group">';
-                    $$out += $escape(childMenu.groupName);
-                    $$out += '</div>\r\n                ';
-                }
-                $$out += '\r\n                ';
-                $each(childMenu.menus, function (subMenu, $index) {
-                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
-                    $$out += $escape(subMenu.data);
-                    $$out += '">';
-                    $$out += $escape(subMenu.name);
-                    $$out += '</div>\r\n                    ';
-                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
-                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
-                        $each(subMenu.childMenus, function (lastMenu, $index) {
-                            $$out += '\r\n                        ';
-                            if (lastMenu.groupName) {
-                                $$out += '\r\n                        <div class="nav-group">';
-                                $$out += $escape(lastMenu.groupName);
-                                $$out += '</div>\r\n                        ';
-                            }
-                            $$out += '\r\n                        ';
-                            $each(lastMenu.menus, function (item, $index) {
-                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
-                                $$out += $escape(item.data);
-                                $$out += '">';
-                                $$out += $escape(item.name);
-                                $$out += '</div>\r\n                        </li>\r\n                        ';
-                            });
-                            $$out += '\r\n                        ';
-                        });
-                        $$out += '\r\n                    </ul>\r\n                    ';
-                    }
-                    $$out += '\r\n                </li>\r\n                ';
-                });
-                $$out += '\r\n                ';
-            });
-            $$out += '\r\n            </ul>\r\n            ';
-        }
-        $$out += '\r\n        </li>\r\n        ';
-    });
-    $$out += '\r\n    </ul>\r\n</div>\r\n';
-    return $$out;
-};
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -932,214 +960,157 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/5/18 0018.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * fit 位置   高度调整为最佳高度，不是居中，可以控制为居中
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  dialog 叠加显示   需要控制z-index
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * params
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      size  大小 默认为lg  sm  full
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      width  宽度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      height 高度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      title 标题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showHeader 通过该字段来控制是否显示标题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      icon 对话框标题图标    主题图标
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      position 位置   fit or center                   js控制   参数设置位置
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      backdrop  遮罩背景
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      modal  模态非模态
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      keyboard esc关闭对话框 默认为true
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      moveable  是否可拖动  默认为false
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      content 内容
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      showFooter 是否显示底部
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/2 0002.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航菜单
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 默认根据屏幕大小切换显示方式，大屏显示在左侧 中屏显示在顶部 小屏顶部折叠 右侧显示（支持左侧侧滑）
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * options 支持参数
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * left：菜单header的icon显示在左侧
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 菜单循环嵌套,一个菜单项是一个object
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * menus:[{pMenu:{},menuList:[{groupName:"",menus:[]},{},{}]},{}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分组信息 group menus:{groupName:"",menus:[]}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 一组菜单：[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 支持三层结构
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  name:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  data:obj
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  childMenus:[{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      groupName:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      menus:[{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           name:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           data:obj,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           childMenus:[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      }]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  }]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 打开的时候收起其他的
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(17);
+var _navPop = __webpack_require__(14);
 
-var _dialog2 = _interopRequireDefault(_dialog);
+var _navPop2 = _interopRequireDefault(_navPop);
 
-var _cfIdGenerator = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
-var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
-
-var _cfTransition = __webpack_require__(5);
-
-var _cfDrag = __webpack_require__(11);
-
-var _cfDrag2 = _interopRequireDefault(_cfDrag);
+var _slide2 = _interopRequireDefault(_slide);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var DIALOG_DEFAULT_OPTION = {
-    size: "normal",
-    width: "",
-    height: "",
-    title: "",
-    showHeader: true,
-    icon: "",
-    position: "fit",
-    backdrop: true,
-    modal: false,
-    keyboard: true,
-    moveable: true,
-    content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
-    showFooter: true,
-    footerBtn: false
-};
+var PopMenu = function () {
+    function PopMenu(menus, left) {
+        _classCallCheck(this, PopMenu);
 
-var Dialog = function () {
-    function Dialog(options) {
-        _classCallCheck(this, Dialog);
-
-        options = options || {};
-        this.size = options.size || DIALOG_DEFAULT_OPTION.size;
-        this.width = options.width || DIALOG_DEFAULT_OPTION.width;
-        this.height = options.height || DIALOG_DEFAULT_OPTION.height;
-        this.title = options.title || DIALOG_DEFAULT_OPTION.title;
-        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
-        this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
-        this.position = options.position || DIALOG_DEFAULT_OPTION.position;
-        this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
-        this.modal = options.modal || DIALOG_DEFAULT_OPTION.modal;
-        this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
-        this.moveable = options.moveable || DIALOG_DEFAULT_OPTION.moveable;
-        this.content = options.content || DIALOG_DEFAULT_OPTION.content;
-        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
-        this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
-        this.id = _cfIdGenerator2.default.uuid();
-        this.create().show();
+        this.menus = menus;
+        this.left = left || false;
+        this.create();
+        this.initLife();
     }
 
-    _createClass(Dialog, [{
+    _createClass(PopMenu, [{
+        key: 'getType',
+        value: function getType() {
+            return "PopMenu";
+        }
+    }, {
         key: 'create',
         value: function create() {
-            var _this = this;
-            this._element = $((0, _dialog2.default)({
-                size: this.size,
-                width: this.width,
-                height: this.height,
-                title: this.title,
-                showHeader: this.showHeader,
-                icon: this.icon,
-                position: this.position,
-                backdrop: this.backdrop,
-                content: this.content,
-                showFooter: this.showFooter,
-                footerBtn: this.footerBtn,
-                moveable: this.moveable,
-                id: this.id
+            this.menusRender = $((0, _navPop2.default)({
+                menus: this.menus,
+                left: this.left
             }));
-            if (!this.modal) {
-                this._element[0].onclick = function (event) {
-                    var target = event.srcElement || event.target;
-                    if (target.className.search(/modal/gi) >= 0) {
-                        //关闭当前dialog
-                        _this.close();
-                    }
-                };
-            }
-            if (this.keyboard) {
-                //键盘esc按键关闭
-                $(window).on("keydown." + this.id, function (e) {
-                    var code = e.keyCode || e.which;
-                    if (code === 27) {
-                        _this.close();
-                    }
-                });
-            }
-            this.initMove();
-            this.initEvent();
-            return this;
+            $("body").addClass("width-nav-pop").append(this.menusRender);
         }
     }, {
-        key: 'initPos',
-        value: function initPos() {
-            //position设置
-            var _h = $(this._element[0]).find(".dialog").outerHeight();
-            var win_h = window.screen.availHeight;
-            var half = Math.max(0, (win_h - _h) / 2),
-                top = void 0;
-            switch (this.position) {
-                case "fit":
-                    //中间偏上
-                    top = half * 2 / 3;
-                    break;
-                case "center":
-                    top = half;
-                    break;
-                case "top":
-                    top = 4;
-                    break;
-                case "bottom":
-                    top = win_h - _h - 4;
-                    break;
-                case parseInt(this.position):
-                    //数字
-                    top = parseInt(this.position);
-                    break;
-                default:
-                    top = half * 2 / 3;
-                    break;
-            }
-            $(this._element[0]).find(".dialog").css({
-                "margin-top": top + "px"
-            });
-        }
-    }, {
-        key: 'initMove',
-        value: function initMove() {
-            if (this.moveable) {
-                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
-                    container: $(this._element[0]),
-                    handle: '.dialog-header',
-                    before: function before() {
-                        $(this._element[0]).find(".dialog").css('position', 'absolute');
-                    },
-                    finish: function finish(e) {}
-                });
-            }
-        }
-    }, {
-        key: 'initEvent',
-        value: function initEvent() {
+        key: 'initLife',
+        value: function initLife() {
             var _this = this;
-            $(this._element[0]).on("click", "[data-operation]", function () {
-                var operation = $(this).attr("data-operation");
-                if (operation === "cancel") _this.close();
-                _this.callback && _this.callback.call(_this, 'operation_' + operation);
+            this.menusRender.on("click", ".nav-menu", function () {
+                var $this = $(this);
+                if ($this.next().hasClass("slide")) {
+                    if ($this.next().hasClass("open")) {
+                        $this.removeClass("open").next().removeClass("open");
+                        var addH = _slide2.default.slideUp($this.next());
+                        var parentSlide = $this.parents(".slide");
+                        $.each(parentSlide, function (i, slide) {
+                            $(slide).addClass("open").prev().addClass("open");
+                            _slide2.default.slide($(slide), -addH);
+                        });
+                    } else {
+                        //这样会造成父级元素高度变化
+                        //fix it
+                        //需要关闭其他父级菜单中已经打开的
+                        var others = $this.parent().siblings(); //li元素
+                        $.each(others, function (i, li) {
+                            var slide = $(li).children(".slide");
+                            if (slide.hasClass("open")) {
+                                slide.removeClass("open").prev().removeClass("open");
+                                _slide2.default.slideUp(slide);
+                                //关闭子的
+                                var childSlide = slide.find(".slide");
+                                $.each(childSlide, function (i, mSlide) {
+                                    $(mSlide).removeClass("open").prev().removeClass("open");
+                                    _slide2.default.slideUp($(mSlide));
+                                });
+                            }
+                        });
+                        $this.addClass("open").next().addClass("open");
+                        var _addH = _slide2.default.slideDown($this.next());
+                        var _parentSlide = $this.parents(".slide");
+                        $.each(_parentSlide, function (i, slide) {
+                            $(slide).addClass("open").prev().addClass("open");
+                            _slide2.default.slide($(slide), _addH);
+                        });
+                    }
+                } else {
+                    $(".nav-active").removeClass("nav-active");
+                    $(".nav-menu.active").removeClass("active");
+                    //...添加样式
+                    $(".nav-icon-menu").addClass("nav-active");
+                    $this.addClass("nav-active");
+                    var data = $this.attr("data-data");
+                    _this.callback && _this.callback.call(_this, data);
+                    _this.close();
+                }
             });
-            $(this._element[0]).on("click", ".icon-close", function () {
+            this.menusRender.on("click", ".nav-icon-menu", function () {
+                _this.show();
+            });
+            this.menusRender.on("click", ".modal-backdrop", function () {
                 _this.close();
+            });
+            $(window).on("scroll.pop", function () {
+                _this.updateBg();
+            });
+        }
+    }, {
+        key: 'updateBg',
+        value: function updateBg() {
+            if (!this.bg) {
+                var bgColor = this.menusRender.find(".nav-header").css("background-color");
+                //正则解析出三段int值
+                this.bg = bgColor.match(/\d+/g);
+            }
+            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+            var opacity = 1 - Math.round(scrolltop / 100) / 10; //背景调整
+            this.menusRender.find(".nav-header").css({
+                "background-color": 'rgba(' + this.bg[0] + ',' + this.bg[1] + ',' + this.bg[2] + ',' + opacity + ')'
             });
         }
     }, {
         key: 'show',
         value: function show() {
-            var _this = this;
-            $("body").append(this._element);
-            this.initPos();
-            (0, _cfTransition.transition)(function () {
-                _this._element.addClass("in");
-            });
-            return this;
+            this.menusRender.find(".nav-pop").addClass("show");
+            this.menusRender.find(".modal-backdrop").addClass("in");
         }
     }, {
         key: 'close',
         value: function close() {
-            var _this = this;
-            (0, _cfTransition.transition)(function () {
-                _this.callback && _this.callback.call(_this, "closeStart");
-                _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
-                    _this._element.remove();
-                    $(window).off("keydown." + _this.id);
-                    if (_this.dragInstance) {
-                        _this.dragInstance.destroy();
-                    }
-                    _this.callback && _this.callback.call(_this, "closeEnd");
-                });
-            });
+            this.menusRender.find(".nav-pop").removeClass("show");
+            this.menusRender.find(".modal-backdrop").removeClass("in");
         }
     }, {
         key: 'then',
@@ -1147,29 +1118,22 @@ var Dialog = function () {
             this.callback = callback;
             return this;
         }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            this.menusRender.remove();
+            $("body").removeClass("width-nav-pop");
+            $(window).off("scroll.pop");
+        }
     }]);
 
-    return Dialog;
+    return PopMenu;
 }();
 
-var dialog = function dialog(options) {
-    return new Dialog(options);
-};
-
-window.alert = function (msg, title) {
-    title = title || "懂老板";
-    return dialog({
-        title: title,
-        content: msg,
-        modal: false
-    }).then(function () {
-        this.close();
-    });
-};
-exports.default = dialog;
+exports.default = PopMenu;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1360,7 +1324,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1368,15 +1332,245 @@ module.exports = {
 	"ApiType": "1",
 	"AppVersion": "1.3.5",
 	"ApiVersion": "1.3.5",
-	"webApiDomain": "https://admin.5ishang.com",
+	"webApiDomain": "http://10.40.5.30:8081",
 	"successCode": 0,
 	"errorCode": -1,
-	"userLocalKey": "_user"
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
 };
 
 /***/ }),
-/* 13 */,
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += '" style="width:';
+    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += ';height:';
+    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
+        }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
+        }
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _store = __webpack_require__(8);
+
+var _static = __webpack_require__(11);
+
+var _static2 = _interopRequireDefault(_static);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var USER = function () {
+    function USER() {
+        _classCallCheck(this, USER);
+    }
+
+    _createClass(USER, null, [{
+        key: 'setToken',
+        value: function setToken(token) {
+            var user = this.getInfo();
+            user.Token = token;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getToken',
+        value: function getToken() {
+            var user = this.getInfo();
+            return user.Token;
+        }
+    }, {
+        key: 'getInfo',
+        value: function getInfo() {
+            if (!this._user) {
+                var user = _store.store.get(_static2.default.userLocalKey);
+                if (user && user !== "undefined" && typeof user !== "undefined") {
+                    this._user = user;
+                } else {
+                    this._user = {};
+                }
+            }
+            return this._user;
+        }
+    }, {
+        key: 'setInfo',
+        value: function setInfo(user) {
+            //差量更新
+            var user_old = this.getInfo();
+            var user_new = $.extend(true, user_old, user);
+            console.log(user_new);
+            _store.store.set(_static2.default.userLocalKey, user_new);
+            this._user = user_new;
+        }
+    }, {
+        key: 'cacheLogin',
+        value: function cacheLogin() {
+            var user = this.getInfo();
+            user.cache = true;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'removeCache',
+        value: function removeCache() {
+            var user = this.getInfo();
+            user.cache = false;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'isCached',
+        value: function isCached() {
+            var user = this.getInfo();
+            return user.cache;
+        }
+    }]);
+
+    return USER;
+}();
+
+exports.default = USER;
+
+/***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
+    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += $escape(left ? 'left' : '');
+    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
+    $each(menus, function (menu, $index) {
+        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
+        $$out += $escape(menu.data);
+        $$out += '">';
+        $$out += $escape(menu.name);
+        $$out += '</div>\r\n            ';
+        if (menu.childMenus && menu.childMenus.length > 0) {
+            $$out += '\r\n            <ul class="slide">\r\n                ';
+            $each(menu.childMenus, function (childMenu, $index) {
+                $$out += '\r\n                ';
+                if (childMenu.groupName) {
+                    $$out += '\r\n                <div class="nav-group">';
+                    $$out += $escape(childMenu.groupName);
+                    $$out += '</div>\r\n                ';
+                }
+                $$out += '\r\n                ';
+                $each(childMenu.menus, function (subMenu, $index) {
+                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
+                    $$out += $escape(subMenu.data);
+                    $$out += '">';
+                    $$out += $escape(subMenu.name);
+                    $$out += '</div>\r\n                    ';
+                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
+                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
+                        $each(subMenu.childMenus, function (lastMenu, $index) {
+                            $$out += '\r\n                        ';
+                            if (lastMenu.groupName) {
+                                $$out += '\r\n                        <div class="nav-group">';
+                                $$out += $escape(lastMenu.groupName);
+                                $$out += '</div>\r\n                        ';
+                            }
+                            $$out += '\r\n                        ';
+                            $each(lastMenu.menus, function (item, $index) {
+                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
+                                $$out += $escape(item.data);
+                                $$out += '">';
+                                $$out += $escape(item.name);
+                                $$out += '</div>\r\n                        </li>\r\n                        ';
+                            });
+                            $$out += '\r\n                        ';
+                        });
+                        $$out += '\r\n                    </ul>\r\n                    ';
+                    }
+                    $$out += '\r\n                </li>\r\n                ';
+                });
+                $$out += '\r\n                ';
+            });
+            $$out += '\r\n            </ul>\r\n            ';
+        }
+        $$out += '\r\n        </li>\r\n        ';
+    });
+    $$out += '\r\n    </ul>\r\n</div>\r\n';
+    return $$out;
+};
+
+/***/ }),
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1415,11 +1609,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(18);
+var _navLeft = __webpack_require__(21);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(4);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -1519,7 +1713,7 @@ var LeftMenu = function () {
 exports.default = LeftMenu;
 
 /***/ }),
-/* 15 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1536,11 +1730,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navTop = __webpack_require__(19);
+var _navTop = __webpack_require__(22);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
-var _navPop = __webpack_require__(6);
+var _navPop = __webpack_require__(9);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -1644,166 +1838,8 @@ var TopMenu = function () {
 exports.default = TopMenu;
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _store = __webpack_require__(7);
-
-var _static = __webpack_require__(12);
-
-var _static2 = _interopRequireDefault(_static);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var USER = function () {
-    function USER() {
-        _classCallCheck(this, USER);
-    }
-
-    _createClass(USER, null, [{
-        key: 'setToken',
-        value: function setToken(token) {
-            var user = this.getInfo();
-            user.Token = token;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'getToken',
-        value: function getToken() {
-            var user = this.getInfo();
-            return user.Token;
-        }
-    }, {
-        key: 'getInfo',
-        value: function getInfo() {
-            if (!this._user) {
-                var user = _store.store.get(_static2.default.userLocalKey);
-                if (user && user !== "undefined" && typeof user !== "undefined") {
-                    this._user = user;
-                } else {
-                    this._user = {};
-                }
-            }
-            return this._user;
-        }
-    }, {
-        key: 'setInfo',
-        value: function setInfo(user) {
-            //差量更新
-            var user_old = this.getInfo();
-            var user_new = $.extend(true, user_old, user);
-            console.log(user_new);
-            _store.store.set(_static2.default.userLocalKey, user_new);
-            this._user = user_new;
-        }
-    }, {
-        key: 'cacheLogin',
-        value: function cacheLogin() {
-            var user = this.getInfo();
-            user.cache = true;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'removeCache',
-        value: function removeCache() {
-            var user = this.getInfo();
-            user.cache = false;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'isCached',
-        value: function isCached() {
-            var user = this.getInfo();
-            return user.cache;
-        }
-    }]);
-
-    return USER;
-}();
-
-exports.default = USER;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
-    $$out += '<div class="modal fade" data-dialog-id="';
-    $$out += $escape(id);
-    $$out += '">\r\n    <div class="dialog ';
-    $$out += $escape(size);
-    $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
-    $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
-    $$out += ';">\r\n        ';
-    if (showHeader) {
-        $$out += '\r\n            <div class="dialog-header ';
-        $$out += $escape(moveable ? 'dialog-moveable' : '');
-        $$out += '">\r\n                ';
-        if (icon) {
-            $$out += '\r\n                    <div class="dialog-icon ';
-            $$out += $escape(icon);
-            $$out += '"></div>\r\n                ';
-        }
-        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
-        $$out += $escape(title);
-        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        <div class="dialog-content">\r\n            ';
-    $$out += content;
-    $$out += '\r\n        </div>\r\n        ';
-    if (showFooter) {
-        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
-        if (!footerBtn) {
-            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
-        } else {
-            $$out += '\r\n                    ';
-            $each(footerBtn, function (btn, i) {
-                $$out += '\r\n                        <button data-operation="cusBtn';
-                $$out += $escape(i);
-                $$out += '" class="btn ';
-                $$out += $escape(btn.themeCss);
-                $$out += '">';
-                $$out += $escape(btn.text);
-                $$out += '</button>\r\n                    ';
-            });
-            $$out += '\r\n                ';
-        }
-        $$out += '\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n    </div>\r\n</div>\r\n';
-    if (backdrop) {
-        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
-/* 18 */
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -1868,7 +1904,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -1929,10 +1965,10 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1948,15 +1984,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(14);
+var _navLeft = __webpack_require__(18);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _navTop = __webpack_require__(15);
+var _navTop = __webpack_require__(19);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
-var _navPop = __webpack_require__(6);
+var _navPop = __webpack_require__(9);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -2037,8 +2073,11 @@ var NavMenu = function () {
 exports.default = NavMenu;
 
 /***/ }),
-/* 24 */,
-/* 25 */
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2059,7 +2098,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _router = __webpack_require__(26);
+var _router = __webpack_require__(32);
 
 var _router2 = _interopRequireDefault(_router);
 
@@ -2080,20 +2119,27 @@ var Navigator = function () {
         }
     }, {
         key: "open",
-        value: function open(page) {
+        value: function open(page, hash) {
             var url = _router2.default[page];
+            hash && (hash = "#" + hash);
             if (typeof this.isMobile !== "undefined" && this.isMobile || typeof this.isMobile === "undefined" && this.detech()) {
                 //Todo mobile
-
+                var iframe = document.querySelector("iframe");
+                iframe.src = url + hash || "";
             } else {
                 // Todo PC
-                window.open(url, "_blank");
+                window.open(url + (hash || ""), "_blank");
             }
         }
     }, {
         key: "getHtml",
         value: function getHtml(page) {
             return _router2.default[page];
+        }
+    }, {
+        key: "isExist",
+        value: function isExist(pageName) {
+            return _router2.default[pageName];
         }
     }]);
 
@@ -2103,7 +2149,7 @@ var Navigator = function () {
 exports.default = Navigator;
 
 /***/ }),
-/* 26 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2111,16 +2157,11 @@ module.exports = {
 	"version": "1.0.0",
 	"index": "index.html",
 	"login": "login.html",
-	"test": "angular.html#"
+	"angularCompute": "angular.html",
+	"CustomerManage": "register.html"
 };
 
 /***/ }),
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
 /* 33 */,
 /* 34 */,
 /* 35 */,
@@ -2131,7 +2172,14 @@ module.exports = {
 /* 40 */,
 /* 41 */,
 /* 42 */,
-/* 43 */
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2146,13 +2194,6 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -2160,7 +2201,17 @@ module.exports = function ($data) {
 /* 55 */,
 /* 56 */,
 /* 57 */,
-/* 58 */
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2175,23 +2226,23 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _user = __webpack_require__(16);
+var _user = __webpack_require__(13);
 
 var _user2 = _interopRequireDefault(_user);
 
-var _navmenu = __webpack_require__(23);
+var _navmenu = __webpack_require__(26);
 
 var _navmenu2 = _interopRequireDefault(_navmenu);
 
-var _myCenter = __webpack_require__(43);
+var _myCenter = __webpack_require__(50);
 
 var _myCenter2 = _interopRequireDefault(_myCenter);
 
-var _cfDialog = __webpack_require__(10);
+var _cfDialog = __webpack_require__(6);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _navigator = __webpack_require__(25);
+var _navigator = __webpack_require__(31);
 
 var _navigator2 = _interopRequireDefault(_navigator);
 
@@ -2261,7 +2312,12 @@ var Index = function () {
                     _this.importMyCenter();
                 } else {
                     //Todo 菜单点击事件处理
-                    _navigator2.default.open("test");
+                    var menuDate = JSON.parse(data);
+                    if (_navigator2.default.isExist(menuDate.NavigateUrl)) {
+                        _navigator2.default.open(menuDate.NavigateUrl);
+                    } else {
+                        _navigator2.default.open("angularCompute", menuDate.NavigateUrl);
+                    }
                 }
             });
             $("body").on("click", ".nav-top .user-name", function () {
@@ -2290,7 +2346,6 @@ var Index = function () {
                 alert("退出当前登录用户？").then(function (option) {
                     if (/\S+ok$/.test(option)) {
                         //退出登录
-
                     }
                 });
             });

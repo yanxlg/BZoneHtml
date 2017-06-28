@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 25:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _router = __webpack_require__(26);
+var _router = __webpack_require__(32);
 
 var _router2 = _interopRequireDefault(_router);
 
@@ -110,20 +110,27 @@ var Navigator = function () {
         }
     }, {
         key: "open",
-        value: function open(page) {
+        value: function open(page, hash) {
             var url = _router2.default[page];
+            hash && (hash = "#" + hash);
             if (typeof this.isMobile !== "undefined" && this.isMobile || typeof this.isMobile === "undefined" && this.detech()) {
                 //Todo mobile
-
+                var iframe = document.querySelector("iframe");
+                iframe.src = url + hash || "";
             } else {
                 // Todo PC
-                window.open(url, "_blank");
+                window.open(url + (hash || ""), "_blank");
             }
         }
     }, {
         key: "getHtml",
         value: function getHtml(page) {
             return _router2.default[page];
+        }
+    }, {
+        key: "isExist",
+        value: function isExist(pageName) {
+            return _router2.default[pageName];
         }
     }]);
 
@@ -134,7 +141,7 @@ exports.default = Navigator;
 
 /***/ }),
 
-/***/ 26:
+/***/ 32:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -142,7 +149,8 @@ module.exports = {
 	"version": "1.0.0",
 	"index": "index.html",
 	"login": "login.html",
-	"test": "angular.html#"
+	"angularCompute": "angular.html",
+	"CustomerManage": "register.html"
 };
 
 /***/ })

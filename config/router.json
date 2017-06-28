@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "index":"index.html",
   "login":"login.html",
-  "test":"angular.html#"
+  "angularCompute":"angular.html",
+  "CustomerManage":"register.html"
 }

@@ -1,0 +1,149 @@
+@charset "utf-8";
+@import "./cf-ui-base.scss";
+@import "./cf-varia.scss";
+@import "./cf-func.scss";
+@import "./cf-iconfont.scss";
+@import "./cf-flex.scss";
+//输入框样式
+$disabledBg:#eef1f6;
+$disabledBorder:#d1dbe5;
+$disabledColor:#bbb;
+.input{
+  display: inline-block;
+  width: 100%;
+  height: remToPx(1.6rem);
+  padding: remToPx(0.25rem) remToPx(0.4rem);
+  font-size: remToPx(0.65rem);
+  line-height: 1.53846154;
+  color: map_get($baseColor,black);
+  vertical-align: middle;
+  background-color: map_get($baseColor,white);
+  border: 1px solid $borderColor;
+  border-radius: remToPx(0.2rem);
+  @include prefix(box-shadow,inset 0 0 1px rgba(0,0,0,.075),0 0 1px rgba(0,0,0,.075));
+  @include prefix(transition,border-color .15s ease-in-out,-webkit-box-shadow ease-in-out .15s);
+  @include prefix(box-sizing,border-box);
+  &[disabled],&[readonly]{
+    background-color:$disabledBg;
+    border-color: $disabledBorder;
+    color: $disabledColor;
+    cursor: not-allowed;
+  }
+  &[readonly]{
+    cursor: default;
+  }
+  &:hover{
+    border-color: map_get($baseColor,silver);
+  }
+  &:focus,&:active{
+    border-color: map_get($baseColor,blue)!important;
+    outline: 0;
+    @include prefix(box-shadow,inset 0 0 1px map_get($baseColor,light-blue), 0 0 1px map_get($baseColor,light-blue));
+  }
+  &:not(:focus){
+   &.validate-error{
+     @include prefix(animation,error 0.8s infinite ease);
+   }
+  }
+}
+//里面可以添加icon
+.input-icon{
+  @extend .align-center;
+  &:hover{
+    .input{
+      border-color: map_get($baseColor,silver);
+    }
+  }
+  .input ~ .icon{
+    position: absolute;
+    right:remToPx(0.2rem);
+    display: block;
+    color: map_get($baseColor,light-silver);
+    &:hover{
+      color: map_get($baseColor,light-black);
+    }
+  }
+}
+@keyframes error{
+  from{
+    border-color: $borderColor;
+    box-shadow:inset 0 0 1px rgba(0,0,0,.075),0 0 1px rgba(0,0,0,.075);
+  }
+  50%{
+    @include prefix(box-shadow,inset 0 0 1px red, 0 0 2px red);
+    border-color: red;
+  }
+  to{
+    border-color: $borderColor;
+    @include prefix(box-shadow,inset 0 1px 1px rgba(0,0,0,.075));
+  }
+}
+@include keyframes(error){
+  from{
+    border-color: $borderColor;
+    @include prefix(box-shadow,inset 0 1px 1px rgba(0,0,0,.075));
+  }
+  50%{
+    @include prefix(box-shadow,inset 0 0 1px red, 0 0 2px red);
+    border-color: red;
+  }
+  to{
+    border-color: $borderColor;
+    @include prefix(box-shadow,inset 0 1px 1px rgba(0,0,0,.075));
+  }
+}
+
+//textarea文本域
+textarea{
+  &.input{
+    resize: vertical;
+    line-height: 1;
+    padding:remToPx(0.45rem) remToPx(0.4rem);
+  }
+}
+.input-group{
+  display: table;
+  width:100%;
+  .input-prepend{
+    display: table-cell;
+    vertical-align: middle;
+    padding:0 remToPx(0.3rem);
+    width:1px;
+    white-space: nowrap;
+    border:1px solid $borderColor;
+    border-right:0;
+    @include prefix(border-top-left-radius,remToPx(0.2rem));
+    @include prefix(border-bottom-left-radius,remToPx(0.2rem));
+    ~ .input{
+      display: table-cell;
+      vertical-align:middle;
+      @include prefix(border-top-left-radius,0);
+      @include prefix(border-bottom-left-radius,0);
+    }
+  }
+  .input-append{
+    display: table-cell;
+    vertical-align: middle;
+    padding:0 remToPx(0.3rem);
+    width:1px;
+    white-space: nowrap;
+    border:1px solid $borderColor;
+    border-left:0;
+    @include prefix(border-top-right-radius,remToPx(0.2rem));
+    @include prefix(border-bottom-right-radius,remToPx(0.2rem));
+  }
+  &.input-group-append{
+    .input{
+      @include prefix(border-top-right-radius,0);
+      @include prefix(border-bottom-right-radius,0);
+    }
+  }
+}
+
+//禁用number的小箭头
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none!important;
+  margin: 0;
+}
+input[type="number"]{-moz-appearance:textfield;}

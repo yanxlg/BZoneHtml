@@ -1,0 +1,46 @@
+
+@import "../../ui/cf-ui-base.scss";
+@import "../../ui/cf-varia.scss";
+@import "../../ui/cf-func.scss";
+@import "../../ui/cf-flex.scss";
+@import "../dialog/dialog.scss";
+//sortable 样式
+.sortable-ghost {
+  opacity: .2;
+}
+
+.plugin{
+  cursor: move;
+}
+.editor-container{
+  position: relative;
+  display: block;
+  .editor-content{
+    display: block;
+    position: absolute;
+    width: 100%;
+    top:0;
+    left:0;
+    height: 100%;
+    overflow-y: auto;
+  }
+  .plugin-picker{
+    position: absolute;
+    display: block;
+    top:0;
+    right:0;
+    width:200px;
+    height:100%;
+    background-color: green;
+    padding:0 5px;
+    overflow-y: auto;
+    .plugin{
+      display: block;
+      min-height:100px;
+      border:1px solid silver;
+      margin-top:5px;
+      margin-bottom: 5px;
+    }
+  }
+}
+

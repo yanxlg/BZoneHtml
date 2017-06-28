@@ -65,10 +65,14 @@ let fetch=(url,data,login)=>{
             return response.json();
         }).then(json=>{
             if(json.Head.Ret===staticConfig.errorCode){
-                return {
+                let back={
                     ok:false,
                     msg:json.Head.Msg
+                };
+                if(json.Head.Code===staticConfig.overdueCode){
+                    back.overdue=true;
                 }
+                return back;
             }
             if(json.Head.Ret===staticConfig.successCode){
                 return {
@@ -91,10 +95,14 @@ let fetch=(url,data,login)=>{
             return response.json();
         }).then(json=>{
             if(json.Head.Ret===staticConfig.errorCode){
-                return {
+                let back={
                     ok:false,
                     msg:json.Head.Msg
+                };
+                if(json.Head.Code===staticConfig.overdueCode){
+                    back.overdue=true;
                 }
+                return back;
             }
             if(json.Head.Ret===staticConfig.successCode){
                 return {

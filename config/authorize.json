@@ -1,0 +1,8 @@
+{
+  "name": "认证状态枚举",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": ["authorize"],
+  "Authenticated":2,
+  "Unauthorized":1
+}

@@ -1,0 +1,3 @@
+{{each plugins as plugin}}
+    {{#plugin.render}}
+{{/each}}

@@ -1,5 +1,5 @@
-<div class="data-grid-group">
-    <div class="data-grid-wrap grid-header">
+<div class="data-grid-group {{fixed==='left'?'grid-fix-left':fixed==='right'?'grid-fix-right':''}}" style="width:{{width}}">
+    <div class="data-grid-wrap grid-header" style="padding-left: {{leftSpace}};padding-right: {{rightSpace}};">
         <div class="data-grid">
             <div class="data-row">
                 {{each titles as title }}
@@ -7,7 +7,7 @@
                     </div>
                 {{/each}}
             </div>
-            <div class="data-row">
+            <div class="data-row in-calc" data-row="header">
                 {{each titles as title }}
                     <div class="data-grid-title">
                         {{title.title}}
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="data-grid-wrap grid-data" style="height: {{height}};">
+    <div class="data-grid-wrap grid-data" style="height: {{height}};padding-left: {{leftSpace}};padding-right: {{rightSpace}};">
         <div class="data-grid">
             <div class="data-row">
                 {{each titles as title }}
@@ -25,6 +25,12 @@
                 {{/each}}
             </div>
             <div class="data-row-group">
+                <div class="data-row data-row-hidden">
+                    {{each titles as title index}}
+                        <div class="data-column grid-center">
+                        </div>
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>

@@ -74,7 +74,7 @@ a,a:active,a:hover,a:link,a:visited {
     display: box
 }
 
-.flex-1,.nav.nav-left .user-container .user-center {
+.dialog .dialog-content,.flex-1,.nav.nav-left .user-container .user-center {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
@@ -106,7 +106,7 @@ a,a:active,a:hover,a:link,a:visited {
     -moz-box-orient: horizontal
 }
 
-.flex-column,.nav.nav-left .user-container .user-center .user-info,.nav.nav-pop .user-container .user-center .user-info,.nav.nav-pop .user-container .user-center .user-info .user-action,.nav.nav-top .user-container .user-center .user-info,.nav.nav-top .user-container .user-center .user-info .user-action {
+.dialog,.flex-column,.nav.nav-left .user-container .user-center .user-info,.nav.nav-pop .user-container .user-center .user-info,.nav.nav-pop .user-container .user-center .user-info .user-action,.nav.nav-top .user-container .user-center .user-info,.nav.nav-top .user-container .user-center .user-info .user-action {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -1656,7 +1656,6 @@ a,a:active,a:hover,a:link,a:visited {
 }
 
 .dialog {
-    display: block;
     min-width: 10rem;
     max-width: 30rem;
     margin: 1.5rem auto;
@@ -1735,7 +1734,6 @@ a,a:active,a:hover,a:link,a:visited {
 }
 
 .dialog .dialog-content {
-    display: block;
     position: relative;
     padding: 15px
 }
@@ -1760,7 +1758,8 @@ a,a:active,a:hover,a:link,a:visited {
     width: 100%!important;
     height: 100%!important;
     margin: 0;
-    border-radius: 0
+    border-radius: 0;
+    max-width: 10000rem
 }
 
 @media (max-width:767px) {
@@ -1957,7 +1956,7 @@ a,a:active,a:hover,a:link,a:visited {
 .nav.nav-top .user-container .user-center .user-info .user-action {
     height: 0;
     opacity: 0;
-    margin-left: -1rem;
+    margin-left: -2rem;
     background-color: rgba(255,255,255,.8);
     border: 1px solid #e3e3e3;
     -webkit-border-radius: .15rem;
@@ -2068,7 +2067,7 @@ a,a:active,a:hover,a:link,a:visited {
 .nav.nav-pop .user-container .user-center .user-info .user-action {
     height: 0;
     opacity: 0;
-    margin-left: -1rem;
+    margin-left: -2rem;
     background-color: rgba(255,255,255,.8);
     border: 1px solid #e3e3e3;
     -webkit-border-radius: .15rem;

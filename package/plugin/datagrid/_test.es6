@@ -2,10 +2,10 @@
  * Created by Administrator on 2017/6/13 0013.
  */
 import Datagrid from './datagrid.es6';
-let datagrid=Datagrid.instance($("body"));
+
 let titles=[{
-    title:"heade1",
-    bindData:"key0"
+    title:"left",
+    bindData:"key0",
 },{
     title:"heade1",
     bindData:"key1",
@@ -19,9 +19,14 @@ let titles=[{
     bindData:"key3",
     width:1000,
 },{
-    title:"heade1",
+    title:"right",
     bindData:"key4",
     width:1000,
+},{
+    title:"操作",
+    bindData:"actions",
+    width:300,
+    fixed:"right"
 }];
 let data=[{
     key0:"0",
@@ -79,10 +84,31 @@ let data=[{
     key4:"4",
     key5:"5",
     key6:"6",
-}];
-datagrid.setActions([{
-    text:"按钮"
 },{
-    text:"按钮"
-}]).setTitles(titles,200).update(data);
+    key0:"0",
+    key1:"1",
+    key2:"2",
+    key3:"3",
+    key4:"4",
+    key5:"5",
+    key6:"6",
+},{
+    key0:"0",
+    key1:"1",
+    key2:"2",
+    key3:"3",
+    key4:"4",
+    key5:"5",
+    key6:"6",
+}];
+let datagrid=Datagrid.instance({
+    container:$("body"),
+    titles:titles,
+    height:200,
+    rightFixedWidth:"300px",
+    leftFixedWidth:"0px"
+}).setActions(["删除","查看","编辑"]).then((type,data)=>{
+    alert(type);
+});
+datagrid.update(data);
 

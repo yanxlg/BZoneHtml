@@ -1,0 +1,10 @@
+{
+  "name": "注册来源",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": ["registerSource"],
+  "0":"分享页面",
+  "1":"后台运营",
+  "2":"Android",
+  "3":"IOS"
+}

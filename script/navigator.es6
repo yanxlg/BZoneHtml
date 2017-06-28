@@ -13,18 +13,23 @@ class Navigator{
         this.isMobile=navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig);
         return this.isMobile;
     }
-    static open(page){
+    static open(page,hash){
         let url=router[page];
+        hash&&(hash="#"+hash);
         if((typeof this.isMobile!=="undefined"&&this.isMobile)||(typeof this.isMobile==="undefined"&&this.detech())){
             //Todo mobile
-
+            let iframe=document.querySelector("iframe");
+            iframe.src=url+hash||"";
         }else{
             // Todo PC
-            window.open(url,"_blank");
+            window.open(url+(hash||""),"_blank");
         }
     }
     static getHtml(page){
         return router[page];
+    }
+    static isExist(pageName){
+        return router[pageName];
     }
 }
 export default Navigator;

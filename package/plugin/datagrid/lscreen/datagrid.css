@@ -131,10 +131,10 @@ a,a:active,a:hover,a:link,a:visited {
 
     .data-grid-wrap.grid-data {
         padding-right: 0;
-        overflow-y: scroll
+        overflow: scroll
     }
 
-    .data-grid-wrap.grid-data .data-row:hover {
+    .data-grid-wrap.grid-data .data-row.hover,.data-grid-wrap.grid-data .data-row:hover {
         background-color: #f7ebe1
     }
 
@@ -155,9 +155,20 @@ a,a:active,a:hover,a:link,a:visited {
         position: relative
     }
 
+    .data-grid .data-row.data-row-hidden {
+        height: 0;
+        overflow: hidden
+    }
+
+    .data-grid .data-row.data-row-hidden .data-column {
+        padding: 0;
+        height: 0;
+        border: none
+    }
+
     .data-grid .data-row .data-column {
         display: table-cell;
-        padding: 8px 8px;
+        padding: .4rem;
         position: relative
     }
 
@@ -171,9 +182,11 @@ a,a:active,a:hover,a:link,a:visited {
 
     .data-grid .data-row .data-grid-title {
         display: table-cell;
-        padding: 8px 8px;
+        padding: .4rem;
         font-weight: 700;
-        text-align: center
+        text-align: center;
+        vertical-align: middle;
+        word-break: break-all
     }
 
     .data-grid .data-row .data-grid-title:first-of-type {
@@ -189,7 +202,8 @@ a,a:active,a:hover,a:link,a:visited {
     }
 
     .grid-center {
-        text-align: center
+        text-align: center;
+        vertical-align: middle
     }
 
     .data-row-group {
@@ -204,49 +218,61 @@ a,a:active,a:hover,a:link,a:visited {
         display: none
     }
 
-    .grid-actions {
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -moz-box-align: center;
-        -webkit-box-align: center;
-        box-align: center;
-        padding-right: 23px;
-        padding-left: 6px
+    .data-data {
+        display: block;
+        text-align: center;
+        word-break: break-all
     }
 
-    .action-btn {
-        word-break: keep-all;
-        white-space: nowrap;
-        display: inline-block;
-        min-width: 60px;
-        text-align: center;
-        padding: 4px 4px;
-        cursor: pointer;
-        background-color: #13ce66;
-        border-color: #329d38;
-        color: #fff;
-        -webkit-border-radius: .2rem;
-        -moz-border-radius: .2rem;
-        -o-border-radius: .2rem;
-        -ms-border-radius: .2rem;
-        border-radius: .2rem;
+    .grid-fix-left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 20;
+        background-color: #fff
+    }
+
+    .grid-fix-left .data-grid-wrap.grid-data,.grid-fix-left .data-grid-wrap.grid-header {
+        overflow: hidden
+    }
+
+    .grid-fix-left .data-grid-wrap.grid-data {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         -o-box-sizing: border-box;
         -ms-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-background-clip: border-box;
-        -moz-background-clip: border-box;
-        -o-background-clip: border-box;
-        -ms-background-clip: border-box;
-        background-clip: border-box;
-        margin: 0 3px
+        box-sizing: border-box
     }
 
-    .action-btn:focus,.action-btn:hover {
-        background-color: #2e9134;
-        border-color: #236e27;
-        color: #fff
+    .grid-fix-left .data-grid {
+        table-layout: auto
+    }
+
+    .grid-fix-right {
+        position: absolute;
+        right: .85rem;
+        top: 0;
+        z-index: 20;
+        background-color: #fff
+    }
+
+    .grid-fix-right .data-grid-wrap.grid-data,.grid-fix-right .data-grid-wrap.grid-header {
+        overflow: hidden
+    }
+
+    .grid-fix-right .data-grid-wrap.grid-data {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box
+    }
+
+    .grid-fix-right .data-grid {
+        table-layout: auto
+    }
+
+    .in-calc {
+        visibility: hidden
     }
 }

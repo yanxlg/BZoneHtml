@@ -1,0 +1,7 @@
+<!--data-instance 标注是哪个插件-->
+<div class="plugin" data-instance="test">
+    <div style="width: 100px;height: 50px;background-color: red">
+    </div>
+    <div class="test_input"></div>
+    <div>test 测试</div>
+</div>
