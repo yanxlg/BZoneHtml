@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 69);
+/******/ 	return __webpack_require__(__webpack_require__.s = 73);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -269,49 +269,6 @@ exports.default = IDGenerator;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
-};
-
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
-        }
-    }
-}();
-
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/5/18 0018.
@@ -333,14 +290,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      showFooter 是否显示底部
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      customCss:自定义样式  用于控制特殊弹层
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * issues: moveable 没有控制在header中
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 使用Set管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(12);
+var _dialog = __webpack_require__(11);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -348,9 +305,9 @@ var _cfIdGenerator = __webpack_require__(4);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(6);
 
-var _cfDrag = __webpack_require__(10);
+var _cfDrag = __webpack_require__(9);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -373,7 +330,8 @@ var DIALOG_DEFAULT_OPTION = {
     moveable: true,
     content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
     showFooter: true,
-    footerBtn: false
+    footerBtn: false,
+    customCss: ""
 };
 
 var Dialog = function () {
@@ -385,7 +343,7 @@ var Dialog = function () {
         this.width = options.width || DIALOG_DEFAULT_OPTION.width;
         this.height = options.height || DIALOG_DEFAULT_OPTION.height;
         this.title = options.title || DIALOG_DEFAULT_OPTION.title;
-        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.showHeader = typeof options.showHeader !== "undefined" ? options.showHeader : DIALOG_DEFAULT_OPTION.showHeader;
         this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
         this.position = options.position || DIALOG_DEFAULT_OPTION.position;
         this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
@@ -393,8 +351,9 @@ var Dialog = function () {
         this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
         this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
         this.content = options.content || DIALOG_DEFAULT_OPTION.content;
-        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.showFooter = typeof options.showFooter !== "undefined" ? options.showFooter : DIALOG_DEFAULT_OPTION.showFooter;
         this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.customCss = options.customCss || DIALOG_DEFAULT_OPTION.customCss;
         this.id = _cfIdGenerator2.default.uuid();
         this.create().show();
         dialogMap.set(this.id, this);
@@ -417,16 +376,19 @@ var Dialog = function () {
                 showFooter: this.showFooter,
                 footerBtn: this.footerBtn,
                 moveable: this.moveable,
+                customCss: this.customCss,
                 id: this.id
             }));
+            this._dialog = this._element.filter(".modal");
+            this._modal = this._element.filter(".modal-backdrop");
             if (!this.modal) {
-                this._element[0].onclick = function (event) {
+                this._dialog.on("click", function (event) {
                     var target = event.srcElement || event.target;
                     if (target.className.search(/modal/gi) >= 0) {
                         //关闭当前dialog
                         _this.close();
                     }
-                };
+                });
             }
             if (this.keyboard) {
                 //键盘esc按键关闭
@@ -445,7 +407,7 @@ var Dialog = function () {
         key: 'initPos',
         value: function initPos() {
             //position设置
-            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var _h = this._dialog.children().outerHeight();
             var win_h = window.screen.availHeight;
             var half = Math.max(0, (win_h - _h) / 2),
                 top = void 0;
@@ -475,7 +437,7 @@ var Dialog = function () {
             if (this.size === "full") {
                 top = 0;
             }
-            $(this._element[0]).find(".dialog").css({
+            this._dialog.children().css({
                 "margin-top": top + "px"
             });
         }
@@ -483,8 +445,8 @@ var Dialog = function () {
         key: 'initMove',
         value: function initMove() {
             if (this.moveable) {
-                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
-                    container: $(this._element[0]),
+                this.dragInstance = new _cfDrag2.default(this._dialog.children()[0], {
+                    container: this._dialog,
                     handle: '.dialog-header',
                     before: function before() {
                         $(this._element[0]).find(".dialog").css('position', 'absolute');
@@ -497,12 +459,12 @@ var Dialog = function () {
         key: 'initEvent',
         value: function initEvent() {
             var _this = this;
-            $(this._element[0]).on("click", "[data-operation]", function () {
+            this._dialog.on("click", "[data-operation]", function () {
                 var operation = $(this).attr("data-operation");
                 if (operation === "cancel") _this.close();
                 _this.callback && _this.callback.call(_this, 'operation_' + operation);
             });
-            $(this._element[0]).on("click", ".icon-close", function () {
+            this._dialog.on("click", ".icon-close", function () {
                 _this.close();
             });
         }
@@ -558,7 +520,7 @@ var Dialog = function () {
     }, {
         key: 'getContent',
         value: function getContent() {
-            return this._element.find(".dialog-content");
+            return this._dialog.find(".dialog-content");
         }
     }]);
 
@@ -582,7 +544,7 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -591,66 +553,41 @@ exports.default = dialog;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 /**
- * Created by yanxlg on 2017/6/5 0005.
- * slide插件
- * 需要动态计算展开的大小
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
  */
-var Slide = function () {
-    function Slide() {
-        _classCallCheck(this, Slide);
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
     }
-
-    _createClass(Slide, null, [{
-        key: "slideDown",
-        value: function slideDown(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: offH + "px"
-            });
-            return offH;
-        }
-    }, {
-        key: "slide",
-        value: function slide(el, delY) {
-            //增量处理
-            var offH = el[0].offsetHeight;
-            el.css({
-                height: offH + delY + "px"
-            });
-            return offH + delY;
-        }
-    }, {
-        key: "slideUp",
-        value: function slideUp(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: 0
-            });
-            return offH;
-        }
-    }]);
-
-    return Slide;
 }();
 
-exports.default = Slide;
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -949,7 +886,348 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/5 0005.
+ * slide插件
+ * 需要动态计算展开的大小
+ */
+var Slide = function () {
+    function Slide() {
+        _classCallCheck(this, Slide);
+    }
+
+    _createClass(Slide, null, [{
+        key: "slideDown",
+        value: function slideDown(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: offH + "px"
+            });
+            return offH;
+        }
+    }, {
+        key: "slide",
+        value: function slide(el, delY) {
+            //增量处理
+            var offH = el[0].offsetHeight;
+            el.css({
+                height: offH + delY + "px"
+            });
+            return offH + delY;
+        }
+    }, {
+        key: "slideUp",
+        value: function slideUp(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: 0
+            });
+            return offH;
+        }
+    }]);
+
+    return Slide;
+}();
+
+exports.default = Slide;
+
+/***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/27 0027.
+ * drag 拖动
+ */
+
+var DRAG_DEFAULT = {
+    container: 'body',
+    move: true
+};
+var idIncrementer = 0;
+
+var Drag = function () {
+    function Drag(element, options) {
+        _classCallCheck(this, Drag);
+
+        this.options = {
+            container: options.container || DRAG_DEFAULT.container,
+            move: options.move || DRAG_DEFAULT.move,
+            handle: options.handle
+        };
+        this.id = idIncrementer++;
+        this.$ = $(element);
+        this.init();
+    }
+
+    _createClass(Drag, [{
+        key: 'init',
+        value: function init() {
+            var _this = this;
+
+            var that = this,
+                $root = that.$,
+                BEFORE = 'before',
+                DRAG = 'drag',
+                FINISH = 'finish',
+                eventSuffix = '.' + that.id,
+                mouseDownEvent = 'mousedown' + eventSuffix,
+                mouseUpEvent = 'mouseup' + eventSuffix,
+                mouseMoveEvent = 'mousemove' + eventSuffix,
+                setting = that.options,
+                selector = setting.selector,
+                handle = setting.handle,
+                $ele = $root,
+                startPos = void 0,
+                cPos = void 0,
+                startOffset = void 0,
+                mousePos = void 0,
+                moved = void 0;
+
+            var mouseMove = function mouseMove(event) {
+                var mX = event.pageX,
+                    mY = event.pageY;
+                moved = true;
+                var dragPos = {
+                    left: mX - startOffset.x,
+                    top: mY - startOffset.y,
+                    position: "absolute",
+                    "margin-top": 0
+                };
+                $ele.removeClass('drag-ready').addClass('dragging');
+                if (setting.move) {
+                    $ele.css(dragPos);
+                }
+                setting[DRAG] && setting[DRAG]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: dragPos,
+                    offset: {
+                        x: mX - startPos.x,
+                        y: mY - startPos.y
+                    },
+                    smallOffset: {
+                        x: mX - mousePos.x,
+                        y: mY - mousePos.y
+                    }
+                });
+                mousePos.x = mX;
+                mousePos.y = mY;
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseUp = function mouseUp(event) {
+                $(document).off(eventSuffix);
+                if (!moved) {
+                    $ele.removeClass('drag-ready');
+                    return;
+                }
+                var endPos = {
+                    left: event.pageX - startOffset.x,
+                    top: event.pageY - startOffset.y
+                };
+                $ele.removeClass('drag-ready dragging');
+                if (setting.move) {
+                    $ele.css(endPos);
+                }
+                setting[FINISH] && setting[FINISH]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: endPos,
+                    offset: {
+                        x: event.pageX - startPos.x,
+                        y: event.pageY - startPos.y
+                    },
+                    smallOffset: {
+                        x: event.pageX - mousePos.x,
+                        y: event.pageY - mousePos.y
+                    }
+                });
+                event.preventDefault();
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseDown = function mouseDown(event) {
+                var $mouseDownEle = $(_this);
+                if (selector) {
+                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
+                }
+                if (setting[BEFORE]) {
+                    var isSure = setting[BEFORE]({
+                        event: event,
+                        element: $ele
+                    });
+                    if (isSure === false) return;
+                }
+
+                var $container = $(setting.container),
+                    pos = $ele.offset();
+                cPos = $container.offset();
+                startPos = {
+                    x: event.pageX,
+                    y: event.pageY
+                };
+                startOffset = {
+                    x: event.pageX - pos.left + cPos.left,
+                    y: event.pageY - pos.top + cPos.top
+                };
+                mousePos = $.extend({}, startPos);
+                moved = false;
+
+                $ele.addClass('drag-ready');
+                event.preventDefault();
+
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+
+                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
+            };
+            if (handle) {
+                $root.on(mouseDownEvent, handle, mouseDown);
+            } else if (selector) {
+                $root.on(mouseDownEvent, selector, mouseDown);
+            } else {
+                $root.on(mouseDownEvent, mouseDown);
+            }
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            var eventSuffix = '.' + this.id;
+            this.$.off(eventSuffix);
+            $(document).off(eventSuffix);
+        }
+    }]);
+
+    return Drag;
+}();
+
+exports.default = Drag;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomain1": "http://10.40.5.30:8081",
+	"webApiDomain": "http://localhost:5007",
+	"successCode": 0,
+	"errorCode": -1,
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, customCss = $data.customCss, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    $$out += '<div class="modal fade" data-dialog-id="';
+    $$out += $escape(id);
+    $$out += '">\r\n    <div class="dialog ';
+    $$out += $escape(size);
+    $$out += ' ';
+    $$out += $escape(customCss);
+    $$out += '" style="width:';
+    $$out += $escape(size == 'normal' ? width ? width + 'px' : '90%' : '');
+    $$out += ';height:';
+    $$out += $escape(size == 'normal' ? height ? height + 'px' : 'auto' : '');
+    $$out += ';">\r\n        ';
+    if (showHeader) {
+        $$out += '\r\n            <div class="dialog-header ';
+        $$out += $escape(moveable ? 'dialog-moveable' : '');
+        $$out += '">\r\n                ';
+        if (icon) {
+            $$out += '\r\n                    <div class="dialog-icon ';
+            $$out += $escape(icon);
+            $$out += '"></div>\r\n                ';
+        }
+        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
+        $$out += $escape(title);
+        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        <div class="dialog-content">\r\n            ';
+    $$out += content;
+    $$out += '\r\n        </div>\r\n        ';
+    if (showFooter) {
+        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
+        if (!footerBtn) {
+            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
+        } else {
+            $$out += '\r\n                    ';
+            $each(footerBtn, function (btn, i) {
+                $$out += '\r\n                        <button data-operation="cusBtn';
+                $$out += $escape(i);
+                $$out += '" class="btn ';
+                $$out += $escape(btn.themeCss);
+                $$out += '">';
+                $$out += $escape(btn.text);
+                $$out += '</button>\r\n                    ';
+            });
+            $$out += '\r\n                ';
+        }
+        $$out += '\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n    </div>\r\n</div>\r\n';
+    if (backdrop) {
+        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -988,11 +1266,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(14);
+var _navPop = __webpack_require__(15);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(7);
+var _slide = __webpack_require__(8);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -1133,276 +1411,6 @@ var PopMenu = function () {
 exports.default = PopMenu;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/27 0027.
- * drag 拖动
- */
-
-var DRAG_DEFAULT = {
-    container: 'body',
-    move: true
-};
-var idIncrementer = 0;
-
-var Drag = function () {
-    function Drag(element, options) {
-        _classCallCheck(this, Drag);
-
-        this.options = {
-            container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move
-        };
-        this.id = idIncrementer++;
-        this.$ = $(element);
-        this.init();
-    }
-
-    _createClass(Drag, [{
-        key: 'init',
-        value: function init() {
-            var _this = this;
-
-            var that = this,
-                $root = that.$,
-                BEFORE = 'before',
-                DRAG = 'drag',
-                FINISH = 'finish',
-                eventSuffix = '.' + that.id,
-                mouseDownEvent = 'mousedown' + eventSuffix,
-                mouseUpEvent = 'mouseup' + eventSuffix,
-                mouseMoveEvent = 'mousemove' + eventSuffix,
-                setting = that.options,
-                selector = setting.selector,
-                handle = setting.handle,
-                $ele = $root,
-                startPos = void 0,
-                cPos = void 0,
-                startOffset = void 0,
-                mousePos = void 0,
-                moved = void 0;
-
-            var mouseMove = function mouseMove(event) {
-                var mX = event.pageX,
-                    mY = event.pageY;
-                moved = true;
-                var dragPos = {
-                    left: mX - startOffset.x,
-                    top: mY - startOffset.y,
-                    position: "absolute",
-                    "margin-top": 0
-                };
-                $ele.removeClass('drag-ready').addClass('dragging');
-                if (setting.move) {
-                    $ele.css(dragPos);
-                }
-                setting[DRAG] && setting[DRAG]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: dragPos,
-                    offset: {
-                        x: mX - startPos.x,
-                        y: mY - startPos.y
-                    },
-                    smallOffset: {
-                        x: mX - mousePos.x,
-                        y: mY - mousePos.y
-                    }
-                });
-                mousePos.x = mX;
-                mousePos.y = mY;
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseUp = function mouseUp(event) {
-                $(document).off(eventSuffix);
-                if (!moved) {
-                    $ele.removeClass('drag-ready');
-                    return;
-                }
-                var endPos = {
-                    left: event.pageX - startOffset.x,
-                    top: event.pageY - startOffset.y
-                };
-                $ele.removeClass('drag-ready dragging');
-                if (setting.move) {
-                    $ele.css(endPos);
-                }
-                setting[FINISH] && setting[FINISH]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: endPos,
-                    offset: {
-                        x: event.pageX - startPos.x,
-                        y: event.pageY - startPos.y
-                    },
-                    smallOffset: {
-                        x: event.pageX - mousePos.x,
-                        y: event.pageY - mousePos.y
-                    }
-                });
-                event.preventDefault();
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseDown = function mouseDown(event) {
-                var $mouseDownEle = $(_this);
-                if (selector) {
-                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
-                }
-                if (setting[BEFORE]) {
-                    var isSure = setting[BEFORE]({
-                        event: event,
-                        element: $ele
-                    });
-                    if (isSure === false) return;
-                }
-
-                var $container = $(setting.container),
-                    pos = $ele.offset();
-                cPos = $container.offset();
-                startPos = {
-                    x: event.pageX,
-                    y: event.pageY
-                };
-                startOffset = {
-                    x: event.pageX - pos.left + cPos.left,
-                    y: event.pageY - pos.top + cPos.top
-                };
-                mousePos = $.extend({}, startPos);
-                moved = false;
-
-                $ele.addClass('drag-ready');
-                event.preventDefault();
-
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-
-                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
-            };
-
-            if (handle) {
-                $root.on(mouseDownEvent, handle, mouseDown);
-            } else if (selector) {
-                $root.on(mouseDownEvent, selector, mouseDown);
-            } else {
-                $root.on(mouseDownEvent, mouseDown);
-            }
-        }
-    }, {
-        key: 'destroy',
-        value: function destroy() {
-            var eventSuffix = '.' + this.id;
-            this.$.off(eventSuffix);
-            $(document).off(eventSuffix);
-        }
-    }]);
-
-    return Drag;
-}();
-
-exports.default = Drag;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomain": "http://10.40.5.30:8081",
-	"successCode": 0,
-	"errorCode": -1,
-	"overdueCode": 10040,
-	"userLocalKey": "_user",
-	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
-    $$out += '<div class="modal fade" data-dialog-id="';
-    $$out += $escape(id);
-    $$out += '">\r\n    <div class="dialog ';
-    $$out += $escape(size);
-    $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
-    $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
-    $$out += ';">\r\n        ';
-    if (showHeader) {
-        $$out += '\r\n            <div class="dialog-header ';
-        $$out += $escape(moveable ? 'dialog-moveable' : '');
-        $$out += '">\r\n                ';
-        if (icon) {
-            $$out += '\r\n                    <div class="dialog-icon ';
-            $$out += $escape(icon);
-            $$out += '"></div>\r\n                ';
-        }
-        $$out += '\r\n                <div class="dialog-title">\r\n                    ';
-        $$out += $escape(title);
-        $$out += '\r\n                </div>\r\n                <div class="dialog-close icon-close"></div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        <div class="dialog-content">\r\n            ';
-    $$out += content;
-    $$out += '\r\n        </div>\r\n        ';
-    if (showFooter) {
-        $$out += '\r\n            <div class="dialog-footer">\r\n                ';
-        if (!footerBtn) {
-            $$out += '\r\n                    <button data-operation="cancel" class="btn">取消</button>\r\n                    <button data-operation="ok" class="btn btn-primary">确定</button>\r\n                ';
-        } else {
-            $$out += '\r\n                    ';
-            $each(footerBtn, function (btn, i) {
-                $$out += '\r\n                        <button data-operation="cusBtn';
-                $$out += $escape(i);
-                $$out += '" class="btn ';
-                $$out += $escape(btn.themeCss);
-                $$out += '">';
-                $$out += $escape(btn.text);
-                $$out += '</button>\r\n                    ';
-            });
-            $$out += '\r\n                ';
-        }
-        $$out += '\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n    </div>\r\n</div>\r\n';
-    if (backdrop) {
-        $$out += '\r\n    <div class="modal-backdrop fade" data-for="dialog_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1421,9 +1429,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(7);
 
-var _static = __webpack_require__(11);
+var _static = __webpack_require__(10);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1500,7 +1508,8 @@ var USER = function () {
 exports.default = USER;
 
 /***/ }),
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -1567,10 +1576,10 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1609,11 +1618,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(21);
+var _navLeft = __webpack_require__(22);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(7);
+var _slide = __webpack_require__(8);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -1713,7 +1722,7 @@ var LeftMenu = function () {
 exports.default = LeftMenu;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1730,11 +1739,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navTop = __webpack_require__(22);
+var _navTop = __webpack_require__(23);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
-var _navPop = __webpack_require__(9);
+var _navPop = __webpack_require__(12);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -1838,8 +1847,8 @@ var TopMenu = function () {
 exports.default = TopMenu;
 
 /***/ }),
-/* 20 */,
-/* 21 */
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -1904,7 +1913,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -1965,10 +1974,14 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 23 */,
 /* 24 */,
 /* 25 */,
-/* 26 */
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1984,15 +1997,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(18);
+var _navLeft = __webpack_require__(19);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _navTop = __webpack_require__(19);
+var _navTop = __webpack_require__(20);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
-var _navPop = __webpack_require__(9);
+var _navPop = __webpack_require__(12);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -2073,11 +2086,11 @@ var NavMenu = function () {
 exports.default = NavMenu;
 
 /***/ }),
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2098,7 +2111,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _router = __webpack_require__(32);
+var _router = __webpack_require__(37);
 
 var _router2 = _interopRequireDefault(_router);
 
@@ -2149,7 +2162,7 @@ var Navigator = function () {
 exports.default = Navigator;
 
 /***/ }),
-/* 32 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2158,15 +2171,11 @@ module.exports = {
 	"index": "index.html",
 	"login": "login.html",
 	"angularCompute": "angular.html",
-	"CustomerManage": "register.html"
+	"CustomerManage": "register.html",
+	"TalentCertification.html": "talentRegister.html"
 };
 
 /***/ }),
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
 /* 38 */,
 /* 39 */,
 /* 40 */,
@@ -2180,7 +2189,9 @@ module.exports = {
 /* 48 */,
 /* 49 */,
 /* 50 */,
-/* 51 */
+/* 51 */,
+/* 52 */,
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2195,8 +2206,6 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 52 */,
-/* 53 */,
 /* 54 */,
 /* 55 */,
 /* 56 */,
@@ -2212,7 +2221,11 @@ module.exports = function ($data) {
 /* 66 */,
 /* 67 */,
 /* 68 */,
-/* 69 */
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2231,19 +2244,19 @@ var _user = __webpack_require__(13);
 
 var _user2 = _interopRequireDefault(_user);
 
-var _navmenu = __webpack_require__(26);
+var _navmenu = __webpack_require__(31);
 
 var _navmenu2 = _interopRequireDefault(_navmenu);
 
-var _myCenter = __webpack_require__(51);
+var _myCenter = __webpack_require__(53);
 
 var _myCenter2 = _interopRequireDefault(_myCenter);
 
-var _cfDialog = __webpack_require__(6);
+var _cfDialog = __webpack_require__(5);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _navigator = __webpack_require__(31);
+var _navigator = __webpack_require__(36);
 
 var _navigator2 = _interopRequireDefault(_navigator);
 

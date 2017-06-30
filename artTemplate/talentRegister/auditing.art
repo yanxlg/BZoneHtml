@@ -1,0 +1,89 @@
+<div class="scroll-content">
+    <div class="block no-border">
+        <div class="item">
+            <div class="item-info">用户姓名：{{CustomerName}}</div>
+            <div class="item-info">手&ensp;机&ensp;号：{{CustomerTel}}</div>
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item">
+            <div class="item-info">
+                头&emsp;&emsp;像：{{if CustomerAvatar}}<img data-toggle="viewer" src="{{CustomerAvatar}}" height="60">{{else}}未上传{{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item">
+            <div class="item-info">认证类别：{{TalentName}}</div>
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item">
+            <div class="item-info">形&ensp;象&ensp;照：
+                <div class="flex-1" style="display: block">
+                    <!--{{pics=TalentPictures.split(";")}}-->
+                    {{each pics as pic}}
+                        <img data-toggle="viewer" data-group="beauty" src="{{pic}}" height="100">
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item skill-audio">
+            <div class="keep-all">技能语音：</div><audio class="flex flex-1" controls="controls" preload="preload" src="{{AudioUrl}}"></audio>
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item">技能描述：{{TalentDescribe}}</div>
+    </div>
+    <div class="block no-border">
+        <div class="item">
+            收款账号：{{if !AliPayAccount&&!WeChatPayAccount}}未填写{{/if}}
+            {{if AliPayAccount}}
+                <div class="flex-1 flex-column">
+                    <div class="block">
+                        <div class="item">
+                            姓名：{{CustomerName}}
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="item">
+                            支付宝账号：{{AliPayAccount}}
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            {{if WeChatPayAccount}}
+                <div class="flex-1 flex-column">
+                    <div class="block">
+                        <div class="item">
+                            姓名：{{CustomerName}}
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="item">
+                            微信账号：{{AliPayAccount}}
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item align-center add-price">
+            给该技能定价：<input type="number" value="{{Price}}" class="input price-number" id="price">
+            <div class="select price-unit" id="changePrice">
+                <div class="input-icon">
+                    <input type="text" readonly="readonly" class="input" value="{{PriceUnit?('元/'+PriceUnit):''}}"><i class="icon icon-arrow"></i>
+                </div>
+                <ul class="select-options up">
+                    <li value="次">元/次</li>
+                    <li value="小时">元/小时</li>
+                    <li value="30分钟">元/30分钟</li>
+                    <li value="15分钟">元/15分钟</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

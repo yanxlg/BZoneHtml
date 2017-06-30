@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>达人认证</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" type="text/css" href="../styles/talentRegister.css">
+</head>
+<body>
+<!--[if lt IE 10]>
+<div class="ie-lt">您正在使用 <strong>过时的</strong> 浏览器. 是时候 <a href="http://browsehappy.com/">更换一个更好的浏览器</a> 来提升用户体验.</div>
+<![endif]-->
+<div class="logo flex align-center">
+    <div class="loading">
+        <div class="loading_0"></div>
+        <div class="loading_1"></div>
+        <div class="loading_2"></div>
+        <div class="loading_3"></div>
+        <div class="loading_4"></div>
+        <div class="loading_5"></div>
+        <div class="loading_6"></div>
+        <div class="loading_7"></div>
+        <div class="loading_8"></div>
+        <div class="loading_9"></div>
+        <div class="loading_10"></div>
+        <div class="loading_11"></div>
+        <div class="loading_12"></div>
+        <div class="loading_13"></div>
+        <div class="loading_14"></div>
+        <div class="loading_15"></div>
+        <div class="loading_16"></div>
+        <div class="loading_17"></div>
+        <div class="loading_18"></div>
+        <div class="loading_19"></div>
+        <div class="loading_20"></div>
+        <div class="loading_21"></div>
+        <div class="loading_22"></div>
+        <div class="loading_23"></div>
+        <div class="loading_24"></div>
+    </div>
+    <div class="platform-name">懂老板</div>
+</div>
+<div class="content">
+    <div class="page-title">
+        达人认证
+    </div>
+    <div class="page-form">
+        <div class="form-input">
+            <div class="form-item">
+                <label>姓&emsp;&emsp;名：</label>
+                <input id="userName" class="input" type="text">
+            </div>
+            <div class="form-item">
+                <label>手&ensp;机&ensp;号：</label>
+                <input id="phone" class="input" type="tel">
+            </div>
+            <div class="form-item">
+                <label>认证状态：</label>
+                <div class="select" id="authStatus">
+                    <div class="input-icon">
+                        <input type="text" readonly="readonly" class="input" value="" placeholder="请选择认证状态"><i class="icon icon-arrow"></i>
+                    </div>
+                    <ul class="select-options">
+                    </ul>
+                </div>
+            </div>
+            <div class="form-item">
+                <label>认证类型：</label>
+                <div class="select" id="authType">
+                    <div class="input-icon">
+                        <input type="text" readonly="readonly" class="input" value="" placeholder="请选择认证类型"><i class="icon icon-arrow"></i>
+                    </div>
+                    <ul class="select-options">
+                    </ul>
+                </div>
+            </div>
+            <div class="form-item">
+                <label>首次认证：</label>
+                <div class="select" id="authTimes">
+                    <div class="input-icon">
+                        <input type="text" readonly="readonly" class="input" value="" placeholder="请选择认证次数"><i class="icon icon-arrow"></i>
+                    </div>
+                    <ul class="select-options">
+                        <li value="">请选择认证次数</li>
+                        <li value="1">是</li>
+                        <li value="2">否</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-action">
+            <button class="btn btn-primary" id="search">查询</button>
+        </div>
+    </div>
+    <div class="page-datagrid">
+    </div>
+    <div class="page-pager">
+
+    </div>
+</div>
+<script src="../static/jquery-3.2.1.min.js"></script>
+<script src="../static/fastclick.js"></script>
+<script src="../script/talentRegister.js"></script>
+</body>
+</html>

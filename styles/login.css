@@ -370,7 +370,7 @@ a,a:active,a:hover,a:link,a:visited {
     content: "\e6b7"
 }
 
-.icon-arrow-right {
+.icon-arrow-right:before {
     content: "\e6b8"
 }
 
@@ -529,7 +529,8 @@ a,a:active,a:hover,a:link,a:visited {
 
 .dialog .dialog-content {
     position: relative;
-    padding: 15px
+    padding: 15px;
+    overflow-y: auto
 }
 
 .dialog .dialog-footer {
@@ -1230,7 +1231,12 @@ a,a:active,a:hover,a:link,a:visited {
 }
 
 .loading-plugin .modal-backdrop {
-    background-color: #6950ee
+    background-color: #6950ee;
+    z-index: 10000
+}
+
+.loading-plugin .loading-container {
+    z-index: 11000
 }
 
 .loading-plugin .loading-container .loading-package {

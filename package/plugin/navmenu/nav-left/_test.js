@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 62);
+/******/ 	return __webpack_require__(__webpack_require__.s = 66);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 18:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -145,11 +145,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(21);
+var _navLeft = __webpack_require__(22);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(7);
+var _slide = __webpack_require__(8);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -357,7 +357,7 @@ module.exports = runtime;
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -437,13 +437,13 @@ try {
 
 /***/ }),
 
-/***/ 62:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _navLeft = __webpack_require__(18);
+var _navLeft = __webpack_require__(19);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
@@ -514,7 +514,7 @@ setTimeout(function () {
 
 /***/ }),
 
-/***/ 7:
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

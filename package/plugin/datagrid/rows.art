@@ -1,11 +1,15 @@
 {{each data as row index}}
     <div class="data-row in-calc" data-data="{{row}}" data-row="{{rowStart+index}}">
-        {{each titles as title index}}
+        {{each titles as title}}
             {{if title.bindData==='actions'}}
                 <div class="data-column grid-center {{fixed!=title.fixed?'grid-show-in-mobile':''}}" data-data="{{fixed}}">
                     {{each actions as action}}
                         <div class="btn btn-primary">{{action}}</div>
                     {{/each}}
+                </div>
+            {{else if title.bindData==='index'}}
+                <div class="data-column grid-center grid-show-in-pc">
+                    <div class="data-data">{{rowStart+index}}</div>
                 </div>
             {{else}}
                 <div class="data-column grid-center {{fixed!=title.fixed?'grid-show-in-mobile':''}}">

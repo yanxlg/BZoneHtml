@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 65);
+/******/ 	return __webpack_require__(__webpack_require__.s = 69);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -213,7 +213,7 @@ module.exports = runtime;
 
 /***/ }),
 
-/***/ 27:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -232,7 +232,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _pager = __webpack_require__(35);
+var _pager = __webpack_require__(30);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -349,7 +349,7 @@ try {
 
 /***/ }),
 
-/***/ 35:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -421,7 +421,7 @@ module.exports = function ($data) {
         } else {
             $$out += '\r\n            ';
             for (var i = 2; pageCount > i; i++) {
-                $$out += '\r\n            <li class="';
+                $$out += '\r\n                <li class="';
                 $$out += $escape(i == pageIndex ? 'active' : '');
                 $$out += '"><span data-index="';
                 $$out += $escape(i);
@@ -431,13 +431,17 @@ module.exports = function ($data) {
             }
             $$out += '\r\n        ';
         }
-        $$out += '\r\n        <li class="';
-        $$out += $escape(pageCount == pageIndex ? 'active' : '');
-        $$out += '"><span data-index="';
-        $$out += $escape(pageCount);
-        $$out += '">';
-        $$out += $escape(pageCount);
-        $$out += '</span></li>\r\n        <li class="next ';
+        $$out += '\r\n        ';
+        if (pageCount !== 1) {
+            $$out += '\r\n            <li class="';
+            $$out += $escape(pageCount == pageIndex ? 'active' : '');
+            $$out += '"><span data-index="';
+            $$out += $escape(pageCount);
+            $$out += '">';
+            $$out += $escape(pageCount);
+            $$out += '</span></li>\r\n        ';
+        }
+        $$out += '\r\n        <li class="next ';
         $$out += $escape(pageCount == pageIndex ? 'disabled' : '');
         $$out += '">\r\n            <span>\xBB</span>\r\n        </li>\r\n        ';
         if (!hideJump) {
@@ -453,13 +457,13 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _pager = __webpack_require__(27);
+var _pager = __webpack_require__(26);
 
 var _pager2 = _interopRequireDefault(_pager);
 

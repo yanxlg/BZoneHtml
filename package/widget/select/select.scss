@@ -20,6 +20,10 @@ $selectOptionBg:#e4e8f1;
     left:remToPx(0.2rem);
     right:remToPx(0.2rem);
     top:remToPx(1.7rem);
+    &.up{
+      top:auto;
+      bottom:remToPx(1.7rem);
+    }
     list-style: none;
     padding:0;
     margin:0;

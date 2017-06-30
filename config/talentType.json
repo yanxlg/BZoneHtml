@@ -1,0 +1,9 @@
+{
+  "name": "达人技能类型",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": ["talent","skill"],
+  "skills":[{
+
+  }]
+}

@@ -68,7 +68,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 11:
+/***/ 10:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -76,7 +76,8 @@ module.exports = {
 	"ApiType": "1",
 	"AppVersion": "1.3.5",
 	"ApiVersion": "1.3.5",
-	"webApiDomain": "http://10.40.5.30:8081",
+	"webApiDomain1": "http://10.40.5.30:8081",
+	"webApiDomain": "http://localhost:5007",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,
@@ -104,9 +105,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(7);
 
-var _static = __webpack_require__(11);
+var _static = __webpack_require__(10);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -184,7 +185,7 @@ exports.default = USER;
 
 /***/ }),
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -1,0 +1,53 @@
+<div class="scroll-content">
+    <div class="block">
+        <div class="item-name">
+            基本资料
+        </div>
+        <div class="item">
+            <div class="item-info">姓名：{{CustomerName}}</div>
+            <div class="item-info">手机号：{{CustomerTel}}</div>
+            <div class="item-info">状态：{{IdentificationState==1?'待审核':IdentificationState==2?'成功':'失败'}}</div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="item-name">
+            详细资料
+        </div>
+        <div class="item">
+            <div class="item-info">
+                头像：{{if CustomerAvatar}}<div class="img" style="background-image: url('{{CustomerAvatar}}')"></div>{{else}}未上传{{/if}}
+            </div>
+            <div class="item-info">性别：{{Sex===1?"男":Sex===2?"女":"未填写"}}</div>
+            <div class="item-info">家乡：{{CustomerHometownName}}</div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                所在地：{{CustomerLocationName}}
+            </div>
+            <div class="item-info">
+                体重：{{Weight||"未填写"}}
+            </div>
+            <div class="item-info">
+                身高：{{Height||"未填写"}}
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                出生日期：{{BirthDay?BirthDay.replace(/T/g," "):"未填写"}}
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="item-name">
+            认证信息
+        </div>
+        <div class="item">
+            <div class="item-info">
+                是否首次认证：{{IsFirstIdentification?"是":"否"}}
+            </div>
+            <div class="item-info">
+                已认证类型：{{each IdentificateTalentName as name}}<span class="skill-name">{{name}}</span>{{/each}}
+            </div>
+        </div>
+    </div>
+</div>

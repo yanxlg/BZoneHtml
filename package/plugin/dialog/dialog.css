@@ -210,7 +210,7 @@
     content: "\e6b7"
 }
 
-.icon-arrow-right {
+.icon-arrow-right:before {
     content: "\e6b8"
 }
 
@@ -467,7 +467,8 @@
 
 .dialog .dialog-content {
     position: relative;
-    padding: 15px
+    padding: 15px;
+    overflow-y: auto
 }
 
 .dialog .dialog-footer {

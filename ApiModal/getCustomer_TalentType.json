@@ -1,0 +1,65 @@
+{
+  "name": "达人认证类型",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "Talent",
+    "skill"
+  ],
+  "Head": {
+    "Ret": 0,
+    "Code": 10000,
+    "Token": null,
+    "Msg": "接口调用成功"
+  },
+  "Content": [
+    {
+      "CustomerTalentTypeID": 1,
+      "TalentName": "叫醒",
+      "Type": 1,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 2,
+      "TalentName": "哄睡觉",
+      "Type": 1,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 3,
+      "TalentName": "视频聊天",
+      "Type": 1,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 4,
+      "TalentName": "虚拟女友",
+      "Type": 1,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 5,
+      "TalentName": "线下K歌",
+      "Type": 2,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 6,
+      "TalentName": "陪吃饭",
+      "Type": 2,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 7,
+      "TalentName": "当地向导",
+      "Type": 2,
+      "IsDeleted": false
+    },
+    {
+      "CustomerTalentTypeID": 8,
+      "TalentName": "陪打球",
+      "Type": 2,
+      "IsDeleted": false
+    }
+  ]
+}

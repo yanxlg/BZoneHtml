@@ -31,10 +31,12 @@
             {{/if}}
         {{else}}
             <%for(var i=2;pageCount>i;i++){%>
-            <li class="<%=i==pageIndex?'active':''%>"><span data-index="{{i}}"><%=i%></span></li>
+                <li class="<%=i==pageIndex?'active':''%>"><span data-index="{{i}}"><%=i%></span></li>
             <%}%>
         {{/if}}
-        <li class="{{pageCount==pageIndex?'active':''}}"><span data-index="{{pageCount}}">{{pageCount}}</span></li>
+        {{if pageCount!==1}}
+            <li class="{{pageCount==pageIndex?'active':''}}"><span data-index="{{pageCount}}">{{pageCount}}</span></li>
+        {{/if}}
         <li class="next {{pageCount==pageIndex?'disabled':''}}">
             <span>»</span>
         </li>

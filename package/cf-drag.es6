@@ -13,6 +13,7 @@ class Drag{
         this.options={
             container:options.container||DRAG_DEFAULT.container,
             move:options.move||DRAG_DEFAULT.move,
+            handle:options.handle
         };
         this.id=idIncrementer++;
         this.$=$(element);
@@ -143,7 +144,6 @@ class Drag{
 
             $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
         };
-
         if(handle) {
             $root.on(mouseDownEvent, handle, mouseDown);
         } else if(selector) {

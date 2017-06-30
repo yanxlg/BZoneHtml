@@ -63,51 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
-
-/***/ 48:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -119,7 +80,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/27 0027.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * update 方向  默认向下，可能向上
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -134,7 +95,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var SelectMap = new Map();
 
 var SelectClass = function () {
-    function SelectClass(select) {
+    function SelectClass(select, direction) {
         _classCallCheck(this, SelectClass);
 
         this.$ = select;
@@ -151,6 +112,18 @@ var SelectClass = function () {
         });
         this.options = options;
         this.mounted();
+        this.direction = direction || "auto";
+        switch (this.direction) {
+            case "auto":
+                this.$.find(".select-options").removeClass("up");
+                break;
+            case "up":
+                this.$.find(".select-options").addClass("up");
+                break;
+            case "down":
+                this.$.find(".select-options").removeClass("up");
+                break;
+        }
     }
 
     _createClass(SelectClass, [{
@@ -235,8 +208,8 @@ var SelectClass = function () {
         }
     }, {
         key: "initWithElement",
-        value: function initWithElement(el) {
-            return new SelectClass(el);
+        value: function initWithElement(el, direction) {
+            return new SelectClass(el, direction);
         }
     }, {
         key: "initialize",
@@ -255,6 +228,45 @@ var SelectClass = function () {
 }();
 
 exports.default = SelectClass;
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
 
 /***/ })
 

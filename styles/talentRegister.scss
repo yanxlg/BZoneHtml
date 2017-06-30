@@ -1,0 +1,92 @@
+@charset "utf-8";
+//达人认证
+@import "./base.scss";
+@import "../package/ui/cf-button.scss";
+@import "../package/ui/input.scss";
+@import "../package/widget/select/select.scss";
+@import "../package/plugin/datagrid/datagrid.scss";
+@import "../package/plugin/dialog/dialog.scss";
+@import "../package/plugin/loading/loading.scss";
+@import "../package/plugin/datagrid/datagrid.scss";
+@import "../package/plugin/pager/pager.scss";
+@import "../package/ui/cf-flex-include.scss";
+@import "../package/plugin/imgviewer/imgviewer.scss";
+
+.block{
+  padding: remToPx(0.5rem) remToPx(0.3rem);
+  @extend .flex-column;
+  ~.block{
+    border-top: 1px solid $borderColor;
+    &.no-border{
+      border-top:none;
+    }
+  }
+  .item-name{
+    font-size: remToPx(.8rem);
+    font-weight: bold;
+    color: $headerColor;
+    padding:remToPx(0.3rem) 0;
+  }
+  .item-info{
+    padding:remToPx(0.2rem) 0;
+    font-size: remToPx(0.7rem);
+    color: map_get($baseColor,black);
+    .img{
+      display: inline-block;
+      width:remToPx(3rem);
+      height:remToPx(3rem);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+  .price-number{
+    width:remToPx(7rem);
+  }
+  .price-unit{
+    width: remToPx(4rem);
+  }
+}
+
+.skill-name{
+  padding:remToPx(0.2rem) 0.5rem;
+  background-color: map_get($baseColor,silver);
+  color: map_get($baseColor,white);
+  margin-right: remToPx(0.1rem);
+}
+.keep-all{
+  word-break: keep-all;white-space: nowrap;
+  @extend .align-center;
+}
+.skill-audio{
+  audio{
+    width:auto;
+  }
+}
+@media screen and(min-width: 700px) {
+  .item-info{
+    @include flex;
+    @include flex-1;
+    @include align-center;
+  }
+  .scroll-content{
+    @include flex-column;
+    @include flex-1;
+  }
+}
+@media screen and(max-width: 699px) {
+  .item-info{
+    @include flex;
+    @include flex-1;
+    @include align-center;
+  }
+  .item{
+    @include flex-column;
+  }
+  .skill-audio,.add-price{
+    @include flex-row;
+  }
+  .scroll-content{
+    display: block;
+  }
+}

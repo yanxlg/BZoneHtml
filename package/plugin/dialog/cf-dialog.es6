@@ -18,7 +18,7 @@
  *      showFooter 是否显示底部
  *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
  *
- *
+ *      customCss:自定义样式  用于控制特殊弹层
  *
  * issues: moveable 没有控制在header中
  * 使用Set管理
@@ -42,7 +42,8 @@ const DIALOG_DEFAULT_OPTION={
     moveable:true,
     content:"<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
     showFooter:true,
-    footerBtn:false
+    footerBtn:false,
+    customCss:""
 };
 
 class Dialog{
@@ -52,7 +53,7 @@ class Dialog{
         this.width=options.width||DIALOG_DEFAULT_OPTION.width;
         this.height=options.height||DIALOG_DEFAULT_OPTION.height;
         this.title=options.title||DIALOG_DEFAULT_OPTION.title;
-        this.showHeader=options.showHeader||DIALOG_DEFAULT_OPTION.showHeader;
+        this.showHeader=typeof options.showHeader!=="undefined"?options.showHeader:DIALOG_DEFAULT_OPTION.showHeader;
         this.icon=options.icon||DIALOG_DEFAULT_OPTION.icon;
         this.position=options.position||DIALOG_DEFAULT_OPTION.position;
         this.backdrop=options.backdrop||DIALOG_DEFAULT_OPTION.backdrop;
@@ -60,8 +61,9 @@ class Dialog{
         this.keyboard=options.keyboard||DIALOG_DEFAULT_OPTION.keyboard;
         this.moveable=typeof options.moveable!=="undefined"?options.moveable:DIALOG_DEFAULT_OPTION.moveable;
         this.content=options.content||DIALOG_DEFAULT_OPTION.content;
-        this.showFooter=options.content||DIALOG_DEFAULT_OPTION.showFooter;
+        this.showFooter=typeof options.showFooter!=="undefined"?options.showFooter:DIALOG_DEFAULT_OPTION.showFooter;
         this.footerBtn=options.footerBtn||DIALOG_DEFAULT_OPTION.footerBtn;
+        this.customCss=options.customCss||DIALOG_DEFAULT_OPTION.customCss;
         this.id=IDGenerator.uuid();
         this.create().show();
         dialogMap.set(this.id,this);
@@ -81,16 +83,19 @@ class Dialog{
             showFooter:this.showFooter,
             footerBtn:this.footerBtn,
             moveable:this.moveable,
+            customCss:this.customCss,
             id:this.id
         }));
+        this._dialog=this._element.filter(".modal");
+        this._modal=this._element.filter(".modal-backdrop");
         if(!this.modal){
-            this._element[0].onclick=(event)=>{
+            this._dialog.on("click",(event)=>{
                 let target=event.srcElement||event.target;
                 if(target.className.search(/modal/gi)>=0){
                     //关闭当前dialog
                     _this.close();
                 }
-            };
+            });
         }
         if(this.keyboard){
             //键盘esc按键关闭
@@ -107,7 +112,7 @@ class Dialog{
     }
     initPos(){
         //position设置
-        let _h=$(this._element[0]).find(".dialog").outerHeight();
+        let _h=this._dialog.children().outerHeight();
         let win_h=window.screen.availHeight;
         let half = Math.max(0, (win_h -_h) / 2),top;
         switch (this.position){
@@ -136,14 +141,14 @@ class Dialog{
         if(this.size==="full"){
             top=0;
         }
-        $(this._element[0]).find(".dialog").css({
+        this._dialog.children().css({
             "margin-top":top+"px"
         })
     }
     initMove(){
         if(this.moveable){
-            this.dragInstance=new Drag($(this._element[0]).find(".dialog")[0],{
-                container: $(this._element[0]),
+            this.dragInstance=new Drag(this._dialog.children()[0],{
+                container:this._dialog,
                 handle: '.dialog-header',
                 before: function() {
                     $(this._element[0]).find(".dialog").css('position', 'absolute');
@@ -155,12 +160,12 @@ class Dialog{
     }
     initEvent(){
         let _this=this;
-        $(this._element[0]).on("click","[data-operation]",function () {
+        this._dialog.on("click","[data-operation]",function () {
             let operation=$(this).attr("data-operation");
             if(operation==="cancel") _this.close();
             _this.callback&&_this.callback.call(_this,`operation_${operation}`);
         });
-        $(this._element[0]).on("click",".icon-close",function () {
+        this._dialog.on("click",".icon-close",function () {
             _this.close();
         });
     }
@@ -202,7 +207,7 @@ class Dialog{
         return dialogMap.get(id);
     }
     getContent(){
-        return this._element.find(".dialog-content");
+        return this._dialog.find(".dialog-content");
     }
 }
 let dialog=(options)=>{

@@ -36,7 +36,7 @@
     content: "\e6b7"
 }
 
-.icon-arrow-right {
+.icon-arrow-right:before {
     content: "\e6b8"
 }
 

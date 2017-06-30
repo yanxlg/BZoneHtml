@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 31:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _router = __webpack_require__(32);
+var _router = __webpack_require__(37);
 
 var _router2 = _interopRequireDefault(_router);
 
@@ -141,7 +141,7 @@ exports.default = Navigator;
 
 /***/ }),
 
-/***/ 32:
+/***/ 37:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -150,7 +150,8 @@ module.exports = {
 	"index": "index.html",
 	"login": "login.html",
 	"angularCompute": "angular.html",
-	"CustomerManage": "register.html"
+	"CustomerManage": "register.html",
+	"TalentCertification.html": "talentRegister.html"
 };
 
 /***/ })

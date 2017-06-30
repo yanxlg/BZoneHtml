@@ -1,12 +1,12 @@
 /**
  * Created by yanxlg on 2017/6/27 0027.
- *
+ * update 方向  默认向下，可能向上
  */
 import idGenerate from '../../cf-idGenerator.es6';
 const SelectMap=new Map();
 
 class SelectClass{
-    constructor(select){
+    constructor(select,direction){
         this.$=select;
         this.id=idGenerate.uuid();
         this.value="";
@@ -21,6 +21,18 @@ class SelectClass{
         });
         this.options=options;
         this.mounted();
+        this.direction=direction||"auto";
+        switch(this.direction){
+            case "auto":
+                this.$.find(".select-options").removeClass("up");
+                break;
+            case "up":
+                this.$.find(".select-options").addClass("up");
+                break;
+            case "down":
+                this.$.find(".select-options").removeClass("up");
+                break;
+        }
     }
     mounted(){
         let _this=this,input=this.$.find(".input-icon > .input");
@@ -86,8 +98,8 @@ class SelectClass{
     static getInstance(id){
         return SelectMap.get(id);
     }
-    static initWithElement(el){
-        return new SelectClass(el);
+    static initWithElement(el,direction){
+        return new SelectClass(el,direction);
     }
     static initialize(){
         //遍历所有的select元素

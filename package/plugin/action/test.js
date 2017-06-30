@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 53);
+/******/ 	return __webpack_require__(__webpack_require__.s = 57);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -227,64 +227,6 @@ try {
 
 /***/ }),
 
-/***/ 36:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', size = $data.size, $escape = $imports.$escape, id = $data.id, content = $data.content, height = $data.height, backdrop = $data.backdrop;
-    if (size) {
-        $$out += '\r\n    <div class="action fade ';
-        $$out += $escape(size);
-        $$out += '" data-action-id="';
-        $$out += $escape(id);
-        $$out += '">\r\n        ';
-        $$out += content;
-        $$out += '\r\n    </div>\r\n';
-    } else {
-        $$out += '\r\n<div class="action fade" style="';
-        $$out += $escape('height:' + height + 'px;');
-        $$out += '" data-action-id="';
-        $$out += $escape(id);
-        $$out += '">\r\n    ';
-        $$out += content;
-        $$out += '\r\n</div>\r\n';
-    }
-    $$out += '\r\n';
-    if (backdrop) {
-        $$out += '\r\n<div class="modal-backdrop fade" data-for="action_id_';
-        $$out += $escape(id);
-        $$out += '"></div>\r\n';
-    }
-    return $$out;
-};
-
-/***/ }),
-
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $each = $imports.$each, actionList = $data.actionList, action = $data.action, i = $data.i, $escape = $imports.$escape;
-    $$out += '<div class="action-btn-group">\r\n    <div class="action-btn-list">\r\n        ';
-    $each(actionList, function (action, i) {
-        $$out += '\r\n            <div class="action-btn" data-action-index="';
-        $$out += $escape(i);
-        $$out += '">\r\n                ';
-        $$out += $escape(action);
-        $$out += '\r\n            </div>\r\n        ';
-    });
-    $$out += '\r\n    </div>\r\n    <div class="action-btn action-cancel">\r\n        取消\r\n    </div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -324,7 +266,65 @@ exports.default = IDGenerator;
 
 /***/ }),
 
-/***/ 43:
+/***/ 40:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', size = $data.size, $escape = $imports.$escape, id = $data.id, content = $data.content, height = $data.height, backdrop = $data.backdrop;
+    if (size) {
+        $$out += '\r\n    <div class="action fade ';
+        $$out += $escape(size);
+        $$out += '" data-action-id="';
+        $$out += $escape(id);
+        $$out += '">\r\n        ';
+        $$out += content;
+        $$out += '\r\n    </div>\r\n';
+    } else {
+        $$out += '\r\n<div class="action fade" style="';
+        $$out += $escape('height:' + height + 'px;');
+        $$out += '" data-action-id="';
+        $$out += $escape(id);
+        $$out += '">\r\n    ';
+        $$out += content;
+        $$out += '\r\n</div>\r\n';
+    }
+    $$out += '\r\n';
+    if (backdrop) {
+        $$out += '\r\n<div class="modal-backdrop fade" data-for="action_id_';
+        $$out += $escape(id);
+        $$out += '"></div>\r\n';
+    }
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 41:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $each = $imports.$each, actionList = $data.actionList, action = $data.action, i = $data.i, $escape = $imports.$escape;
+    $$out += '<div class="action-btn-group">\r\n    <div class="action-btn-list">\r\n        ';
+    $each(actionList, function (action, i) {
+        $$out += '\r\n            <div class="action-btn" data-action-index="';
+        $$out += $escape(i);
+        $$out += '">\r\n                ';
+        $$out += $escape(action);
+        $$out += '\r\n            </div>\r\n        ';
+    });
+    $$out += '\r\n    </div>\r\n    <div class="action-btn action-cancel">\r\n        取消\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -344,11 +344,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _action = __webpack_require__(36);
+var _action = __webpack_require__(40);
 
 var _action2 = _interopRequireDefault(_action);
 
-var _action_btn = __webpack_require__(37);
+var _action_btn = __webpack_require__(41);
 
 var _action_btn2 = _interopRequireDefault(_action_btn);
 
@@ -356,7 +356,7 @@ var _cfIdGenerator = __webpack_require__(4);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -468,7 +468,32 @@ exports.default = action;
 
 /***/ }),
 
-/***/ 5:
+/***/ 57:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _action = __webpack_require__(48);
+
+var _action2 = _interopRequireDefault(_action);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ac = (0, _action2.default)({
+    actionList: ["测试", "测试"],
+    height: "fit"
+}).then(function (res) {}); /**
+                             * Created by Administrator on 2017/6/2 0002.
+                             */
+
+setTimeout(function () {
+    ac.show();
+}, 1000);
+
+/***/ }),
+
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -509,31 +534,6 @@ var transitionEnd = function () {
 exports.requestAnimationFrame = requestAnimationFrame;
 exports.transition = transition;
 exports.transitionEnd = transitionEnd;
-
-/***/ }),
-
-/***/ 53:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _action = __webpack_require__(43);
-
-var _action2 = _interopRequireDefault(_action);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ac = (0, _action2.default)({
-    actionList: ["测试", "测试"],
-    height: "fit"
-}).then(function (res) {}); /**
-                             * Created by Administrator on 2017/6/2 0002.
-                             */
-
-setTimeout(function () {
-    ac.show();
-}, 1000);
 
 /***/ })
 

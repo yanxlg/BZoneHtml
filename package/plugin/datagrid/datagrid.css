@@ -446,6 +446,10 @@ a,a:active,a:hover,a:link,a:visited {
     .data-grid-group .data-grid-wrap.grid-data .data-grid {
         padding-right: 0!important
     }
+
+    .grid-show-in-pc {
+        display: none
+    }
 }
 
 .btn {

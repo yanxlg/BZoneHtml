@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -269,49 +269,6 @@ exports.default = IDGenerator;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
-};
-
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
-        }
-    }
-}();
-
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/5/18 0018.
@@ -333,14 +290,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      showFooter 是否显示底部
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      customCss:自定义样式  用于控制特殊弹层
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * issues: moveable 没有控制在header中
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 使用Set管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(12);
+var _dialog = __webpack_require__(11);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -348,9 +305,9 @@ var _cfIdGenerator = __webpack_require__(4);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(6);
 
-var _cfDrag = __webpack_require__(10);
+var _cfDrag = __webpack_require__(9);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -373,7 +330,8 @@ var DIALOG_DEFAULT_OPTION = {
     moveable: true,
     content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
     showFooter: true,
-    footerBtn: false
+    footerBtn: false,
+    customCss: ""
 };
 
 var Dialog = function () {
@@ -385,7 +343,7 @@ var Dialog = function () {
         this.width = options.width || DIALOG_DEFAULT_OPTION.width;
         this.height = options.height || DIALOG_DEFAULT_OPTION.height;
         this.title = options.title || DIALOG_DEFAULT_OPTION.title;
-        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.showHeader = typeof options.showHeader !== "undefined" ? options.showHeader : DIALOG_DEFAULT_OPTION.showHeader;
         this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
         this.position = options.position || DIALOG_DEFAULT_OPTION.position;
         this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
@@ -393,8 +351,9 @@ var Dialog = function () {
         this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
         this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
         this.content = options.content || DIALOG_DEFAULT_OPTION.content;
-        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.showFooter = typeof options.showFooter !== "undefined" ? options.showFooter : DIALOG_DEFAULT_OPTION.showFooter;
         this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.customCss = options.customCss || DIALOG_DEFAULT_OPTION.customCss;
         this.id = _cfIdGenerator2.default.uuid();
         this.create().show();
         dialogMap.set(this.id, this);
@@ -417,16 +376,19 @@ var Dialog = function () {
                 showFooter: this.showFooter,
                 footerBtn: this.footerBtn,
                 moveable: this.moveable,
+                customCss: this.customCss,
                 id: this.id
             }));
+            this._dialog = this._element.filter(".modal");
+            this._modal = this._element.filter(".modal-backdrop");
             if (!this.modal) {
-                this._element[0].onclick = function (event) {
+                this._dialog.on("click", function (event) {
                     var target = event.srcElement || event.target;
                     if (target.className.search(/modal/gi) >= 0) {
                         //关闭当前dialog
                         _this.close();
                     }
-                };
+                });
             }
             if (this.keyboard) {
                 //键盘esc按键关闭
@@ -445,7 +407,7 @@ var Dialog = function () {
         key: 'initPos',
         value: function initPos() {
             //position设置
-            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var _h = this._dialog.children().outerHeight();
             var win_h = window.screen.availHeight;
             var half = Math.max(0, (win_h - _h) / 2),
                 top = void 0;
@@ -475,7 +437,7 @@ var Dialog = function () {
             if (this.size === "full") {
                 top = 0;
             }
-            $(this._element[0]).find(".dialog").css({
+            this._dialog.children().css({
                 "margin-top": top + "px"
             });
         }
@@ -483,8 +445,8 @@ var Dialog = function () {
         key: 'initMove',
         value: function initMove() {
             if (this.moveable) {
-                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
-                    container: $(this._element[0]),
+                this.dragInstance = new _cfDrag2.default(this._dialog.children()[0], {
+                    container: this._dialog,
                     handle: '.dialog-header',
                     before: function before() {
                         $(this._element[0]).find(".dialog").css('position', 'absolute');
@@ -497,12 +459,12 @@ var Dialog = function () {
         key: 'initEvent',
         value: function initEvent() {
             var _this = this;
-            $(this._element[0]).on("click", "[data-operation]", function () {
+            this._dialog.on("click", "[data-operation]", function () {
                 var operation = $(this).attr("data-operation");
                 if (operation === "cancel") _this.close();
                 _this.callback && _this.callback.call(_this, 'operation_' + operation);
             });
-            $(this._element[0]).on("click", ".icon-close", function () {
+            this._dialog.on("click", ".icon-close", function () {
                 _this.close();
             });
         }
@@ -558,7 +520,7 @@ var Dialog = function () {
     }, {
         key: 'getContent',
         value: function getContent() {
-            return this._element.find(".dialog-content");
+            return this._dialog.find(".dialog-content");
         }
     }]);
 
@@ -582,10 +544,52 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
 /* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -616,7 +620,8 @@ var Drag = function () {
 
         this.options = {
             container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move
+            move: options.move || DRAG_DEFAULT.move,
+            handle: options.handle
         };
         this.id = idIncrementer++;
         this.$ = $(element);
@@ -752,7 +757,6 @@ var Drag = function () {
 
                 $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
             };
-
             if (handle) {
                 $root.on(mouseDownEvent, handle, mouseDown);
             } else if (selector) {
@@ -776,23 +780,25 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 11 */,
-/* 12 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, customCss = $data.customCss, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
     $$out += '<div class="modal fade" data-dialog-id="';
     $$out += $escape(id);
     $$out += '">\r\n    <div class="dialog ';
     $$out += $escape(size);
+    $$out += ' ';
+    $$out += $escape(customCss);
     $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += $escape(size == 'normal' ? width ? width + 'px' : '90%' : '');
     $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += $escape(size == 'normal' ? height ? height + 'px' : 'auto' : '');
     $$out += ';">\r\n        ';
     if (showHeader) {
         $$out += '\r\n            <div class="dialog-header ';

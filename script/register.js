@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 71);
+/******/ 	return __webpack_require__(__webpack_require__.s = 75);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -269,49 +269,6 @@ exports.default = IDGenerator;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * 立即执行动画
- */
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
-    setTimeout(function () {
-        callback.call(undefined);
-    }, 6000 / 100);
-};
-var transition = function transition(callback) {
-    setTimeout(function () {
-        requestAnimationFrame(callback);
-    }, 0);
-};
-
-var transitionEnd = function () {
-    var transEndEventNames = {
-        WebkitTransition: 'webkitTransitionEnd',
-        MozTransition: 'transitionend',
-        OTransition: 'oTransitionEnd otransitionend',
-        transition: 'transitionend'
-    };
-    for (var name in transEndEventNames) {
-        if (typeof document.body.style[name] === "string") {
-            return transEndEventNames[name];
-        }
-    }
-}();
-
-exports.requestAnimationFrame = requestAnimationFrame;
-exports.transition = transition;
-exports.transitionEnd = transitionEnd;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/5/18 0018.
@@ -333,14 +290,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      showFooter 是否显示底部
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *      footerBtn  Array[{text:"",themeCss:""}]  底部按钮
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      customCss:自定义样式  用于控制特殊弹层
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       *
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * issues: moveable 没有控制在header中
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 使用Set管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _dialog = __webpack_require__(12);
+var _dialog = __webpack_require__(11);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -348,9 +305,9 @@ var _cfIdGenerator = __webpack_require__(4);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(6);
 
-var _cfDrag = __webpack_require__(10);
+var _cfDrag = __webpack_require__(9);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -373,7 +330,8 @@ var DIALOG_DEFAULT_OPTION = {
     moveable: true,
     content: "<p>这是Dialog默认内容，需要使用其他内容来替换</p>",
     showFooter: true,
-    footerBtn: false
+    footerBtn: false,
+    customCss: ""
 };
 
 var Dialog = function () {
@@ -385,7 +343,7 @@ var Dialog = function () {
         this.width = options.width || DIALOG_DEFAULT_OPTION.width;
         this.height = options.height || DIALOG_DEFAULT_OPTION.height;
         this.title = options.title || DIALOG_DEFAULT_OPTION.title;
-        this.showHeader = options.showHeader || DIALOG_DEFAULT_OPTION.showHeader;
+        this.showHeader = typeof options.showHeader !== "undefined" ? options.showHeader : DIALOG_DEFAULT_OPTION.showHeader;
         this.icon = options.icon || DIALOG_DEFAULT_OPTION.icon;
         this.position = options.position || DIALOG_DEFAULT_OPTION.position;
         this.backdrop = options.backdrop || DIALOG_DEFAULT_OPTION.backdrop;
@@ -393,8 +351,9 @@ var Dialog = function () {
         this.keyboard = options.keyboard || DIALOG_DEFAULT_OPTION.keyboard;
         this.moveable = typeof options.moveable !== "undefined" ? options.moveable : DIALOG_DEFAULT_OPTION.moveable;
         this.content = options.content || DIALOG_DEFAULT_OPTION.content;
-        this.showFooter = options.content || DIALOG_DEFAULT_OPTION.showFooter;
+        this.showFooter = typeof options.showFooter !== "undefined" ? options.showFooter : DIALOG_DEFAULT_OPTION.showFooter;
         this.footerBtn = options.footerBtn || DIALOG_DEFAULT_OPTION.footerBtn;
+        this.customCss = options.customCss || DIALOG_DEFAULT_OPTION.customCss;
         this.id = _cfIdGenerator2.default.uuid();
         this.create().show();
         dialogMap.set(this.id, this);
@@ -417,16 +376,19 @@ var Dialog = function () {
                 showFooter: this.showFooter,
                 footerBtn: this.footerBtn,
                 moveable: this.moveable,
+                customCss: this.customCss,
                 id: this.id
             }));
+            this._dialog = this._element.filter(".modal");
+            this._modal = this._element.filter(".modal-backdrop");
             if (!this.modal) {
-                this._element[0].onclick = function (event) {
+                this._dialog.on("click", function (event) {
                     var target = event.srcElement || event.target;
                     if (target.className.search(/modal/gi) >= 0) {
                         //关闭当前dialog
                         _this.close();
                     }
-                };
+                });
             }
             if (this.keyboard) {
                 //键盘esc按键关闭
@@ -445,7 +407,7 @@ var Dialog = function () {
         key: 'initPos',
         value: function initPos() {
             //position设置
-            var _h = $(this._element[0]).find(".dialog").outerHeight();
+            var _h = this._dialog.children().outerHeight();
             var win_h = window.screen.availHeight;
             var half = Math.max(0, (win_h - _h) / 2),
                 top = void 0;
@@ -475,7 +437,7 @@ var Dialog = function () {
             if (this.size === "full") {
                 top = 0;
             }
-            $(this._element[0]).find(".dialog").css({
+            this._dialog.children().css({
                 "margin-top": top + "px"
             });
         }
@@ -483,8 +445,8 @@ var Dialog = function () {
         key: 'initMove',
         value: function initMove() {
             if (this.moveable) {
-                this.dragInstance = new _cfDrag2.default($(this._element[0]).find(".dialog")[0], {
-                    container: $(this._element[0]),
+                this.dragInstance = new _cfDrag2.default(this._dialog.children()[0], {
+                    container: this._dialog,
                     handle: '.dialog-header',
                     before: function before() {
                         $(this._element[0]).find(".dialog").css('position', 'absolute');
@@ -497,12 +459,12 @@ var Dialog = function () {
         key: 'initEvent',
         value: function initEvent() {
             var _this = this;
-            $(this._element[0]).on("click", "[data-operation]", function () {
+            this._dialog.on("click", "[data-operation]", function () {
                 var operation = $(this).attr("data-operation");
                 if (operation === "cancel") _this.close();
                 _this.callback && _this.callback.call(_this, 'operation_' + operation);
             });
-            $(this._element[0]).on("click", ".icon-close", function () {
+            this._dialog.on("click", ".icon-close", function () {
                 _this.close();
             });
         }
@@ -558,7 +520,7 @@ var Dialog = function () {
     }, {
         key: 'getContent',
         value: function getContent() {
-            return this._element.find(".dialog-content");
+            return this._dialog.find(".dialog-content");
         }
     }]);
 
@@ -582,8 +544,50 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
-/* 7 */,
-/* 8 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * 立即执行动画
+ */
+var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || function (callback) {
+    setTimeout(function () {
+        callback.call(undefined);
+    }, 6000 / 100);
+};
+var transition = function transition(callback) {
+    setTimeout(function () {
+        requestAnimationFrame(callback);
+    }, 0);
+};
+
+var transitionEnd = function () {
+    var transEndEventNames = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+    };
+    for (var name in transEndEventNames) {
+        if (typeof document.body.style[name] === "string") {
+            return transEndEventNames[name];
+        }
+    }
+}();
+
+exports.requestAnimationFrame = requestAnimationFrame;
+exports.transition = transition;
+exports.transitionEnd = transitionEnd;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -882,8 +886,8 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 9 */,
-/* 10 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -914,7 +918,8 @@ var Drag = function () {
 
         this.options = {
             container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move
+            move: options.move || DRAG_DEFAULT.move,
+            handle: options.handle
         };
         this.id = idIncrementer++;
         this.$ = $(element);
@@ -1050,7 +1055,6 @@ var Drag = function () {
 
                 $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
             };
-
             if (handle) {
                 $root.on(mouseDownEvent, handle, mouseDown);
             } else if (selector) {
@@ -1074,7 +1078,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1082,7 +1086,8 @@ module.exports = {
 	"ApiType": "1",
 	"AppVersion": "1.3.5",
 	"ApiVersion": "1.3.5",
-	"webApiDomain": "http://10.40.5.30:8081",
+	"webApiDomain1": "http://10.40.5.30:8081",
+	"webApiDomain": "http://localhost:5007",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,
@@ -1091,22 +1096,24 @@ module.exports = {
 };
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
+    var $$out = '', $escape = $imports.$escape, id = $data.id, size = $data.size, customCss = $data.customCss, width = $data.width, height = $data.height, showHeader = $data.showHeader, moveable = $data.moveable, icon = $data.icon, title = $data.title, content = $data.content, showFooter = $data.showFooter, footerBtn = $data.footerBtn, $each = $imports.$each, btn = $data.btn, i = $data.i, backdrop = $data.backdrop;
     $$out += '<div class="modal fade" data-dialog-id="';
     $$out += $escape(id);
     $$out += '">\r\n    <div class="dialog ';
     $$out += $escape(size);
+    $$out += ' ';
+    $$out += $escape(customCss);
     $$out += '" style="width:';
-    $$out += $escape(width ? width + 'px' : '90%');
+    $$out += $escape(size == 'normal' ? width ? width + 'px' : '90%' : '');
     $$out += ';height:';
-    $$out += $escape(height ? height + 'px' : 'auto');
+    $$out += $escape(size == 'normal' ? height ? height + 'px' : 'auto' : '');
     $$out += ';">\r\n        ';
     if (showHeader) {
         $$out += '\r\n            <div class="dialog-header ';
@@ -1153,6 +1160,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
+/* 12 */,
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1171,9 +1179,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(7);
 
-var _static = __webpack_require__(11);
+var _static = __webpack_require__(10);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1250,8 +1258,7 @@ var USER = function () {
 exports.default = USER;
 
 /***/ }),
-/* 14 */,
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1404,6 +1411,7 @@ var ListActions = function () {
 exports.default = ListActions;
 
 /***/ }),
+/* 15 */,
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1956,9 +1964,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2442,9 +2448,9 @@ var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 21 */,
-/* 22 */,
-/* 23 */
+/* 19 */,
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2457,6 +2463,8 @@ module.exports = function ($data) {
 };
 
 /***/ }),
+/* 22 */,
+/* 23 */,
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2474,7 +2482,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _loading = __webpack_require__(23);
+var _loading = __webpack_require__(21);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2550,15 +2558,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _datagrid = __webpack_require__(33);
+var _datagrid = __webpack_require__(28);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _rows = __webpack_require__(34);
+var _rows = __webpack_require__(29);
 
 var _rows2 = _interopRequireDefault(_rows);
 
-var _gridActions = __webpack_require__(15);
+var _gridActions = __webpack_require__(14);
 
 var _gridActions2 = _interopRequireDefault(_gridActions);
 
@@ -2873,8 +2881,7 @@ var DataGrid = function () {
 exports.default = DataGrid;
 
 /***/ }),
-/* 26 */,
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2893,7 +2900,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _pager = __webpack_require__(35);
+var _pager = __webpack_require__(30);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -2995,9 +3002,7 @@ var Pager = function () {
 exports.default = Pager;
 
 /***/ }),
-/* 28 */,
-/* 29 */,
-/* 30 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3013,17 +3018,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(20);
+var _fetch = __webpack_require__(18);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _store = __webpack_require__(8);
+var _store = __webpack_require__(7);
 
-var _cfDialog = __webpack_require__(6);
+var _cfDialog = __webpack_require__(5);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(11);
+var _static = __webpack_require__(10);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -3157,9 +3162,7 @@ var fetch = function fetch(url, data, login) {
 exports.default = fetch;
 
 /***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -3216,21 +3219,21 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 34 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, fixed = $data.fixed, actions = $data.actions, action = $data.action, $index = $data.$index;
+    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, $index = $data.$index, fixed = $data.fixed, actions = $data.actions, action = $data.action;
     $each(data, function (row, index) {
         $$out += '\r\n    <div class="data-row in-calc" data-data="';
         $$out += $escape(row);
         $$out += '" data-row="';
         $$out += $escape(rowStart + index);
         $$out += '">\r\n        ';
-        $each(titles, function (title, index) {
+        $each(titles, function (title, $index) {
             $$out += '\r\n            ';
             if (title.bindData === 'actions') {
                 $$out += '\r\n                <div class="data-column grid-center ';
@@ -3244,6 +3247,10 @@ module.exports = function ($data) {
                     $$out += '</div>\r\n                    ';
                 });
                 $$out += '\r\n                </div>\r\n            ';
+            } else if (title.bindData === 'index') {
+                $$out += '\r\n                <div class="data-column grid-center grid-show-in-pc">\r\n                    <div class="data-data">';
+                $$out += $escape(rowStart + index);
+                $$out += '</div>\r\n                </div>\r\n            ';
             } else {
                 $$out += '\r\n                <div class="data-column grid-center ';
                 $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
@@ -3261,7 +3268,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 35 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -3333,7 +3340,7 @@ module.exports = function ($data) {
         } else {
             $$out += '\r\n            ';
             for (var i = 2; pageCount > i; i++) {
-                $$out += '\r\n            <li class="';
+                $$out += '\r\n                <li class="';
                 $$out += $escape(i == pageIndex ? 'active' : '');
                 $$out += '"><span data-index="';
                 $$out += $escape(i);
@@ -3343,13 +3350,17 @@ module.exports = function ($data) {
             }
             $$out += '\r\n        ';
         }
-        $$out += '\r\n        <li class="';
-        $$out += $escape(pageCount == pageIndex ? 'active' : '');
-        $$out += '"><span data-index="';
-        $$out += $escape(pageCount);
-        $$out += '">';
-        $$out += $escape(pageCount);
-        $$out += '</span></li>\r\n        <li class="next ';
+        $$out += '\r\n        ';
+        if (pageCount !== 1) {
+            $$out += '\r\n            <li class="';
+            $$out += $escape(pageCount == pageIndex ? 'active' : '');
+            $$out += '"><span data-index="';
+            $$out += $escape(pageCount);
+            $$out += '">';
+            $$out += $escape(pageCount);
+            $$out += '</span></li>\r\n        ';
+        }
+        $$out += '\r\n        <li class="next ';
         $$out += $escape(pageCount == pageIndex ? 'disabled' : '');
         $$out += '">\r\n            <span>\xBB</span>\r\n        </li>\r\n        ';
         if (!hideJump) {
@@ -3364,18 +3375,9 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */
+/* 31 */,
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3456,7 +3458,7 @@ Input.initialize();
 exports.default = Input;
 
 /***/ }),
-/* 48 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3468,7 +3470,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/27 0027.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * update 方向  默认向下，可能向上
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -3483,7 +3485,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var SelectMap = new Map();
 
 var SelectClass = function () {
-    function SelectClass(select) {
+    function SelectClass(select, direction) {
         _classCallCheck(this, SelectClass);
 
         this.$ = select;
@@ -3500,6 +3502,18 @@ var SelectClass = function () {
         });
         this.options = options;
         this.mounted();
+        this.direction = direction || "auto";
+        switch (this.direction) {
+            case "auto":
+                this.$.find(".select-options").removeClass("up");
+                break;
+            case "up":
+                this.$.find(".select-options").addClass("up");
+                break;
+            case "down":
+                this.$.find(".select-options").removeClass("up");
+                break;
+        }
     }
 
     _createClass(SelectClass, [{
@@ -3584,8 +3598,8 @@ var SelectClass = function () {
         }
     }, {
         key: "initWithElement",
-        value: function initWithElement(el) {
-            return new SelectClass(el);
+        value: function initWithElement(el, direction) {
+            return new SelectClass(el, direction);
         }
     }, {
         key: "initialize",
@@ -3606,7 +3620,10 @@ var SelectClass = function () {
 exports.default = SelectClass;
 
 /***/ }),
-/* 49 */
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3621,7 +3638,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 50 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -3638,6 +3655,17 @@ module.exports = {
 };
 
 /***/ }),
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -3658,7 +3686,11 @@ module.exports = {
 /* 68 */,
 /* 69 */,
 /* 70 */,
-/* 71 */
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3671,15 +3703,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 //自动初始化，不需要调用
 
 
-var _input = __webpack_require__(47);
+var _input = __webpack_require__(33);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _select = __webpack_require__(48);
+var _select = __webpack_require__(34);
 
 var _select2 = _interopRequireDefault(_select);
 
-var _authorize = __webpack_require__(49);
+var _authorize = __webpack_require__(38);
 
 var _authorize2 = _interopRequireDefault(_authorize);
 
@@ -3687,19 +3719,19 @@ var _datagrid = __webpack_require__(25);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _cfDialog = __webpack_require__(6);
+var _cfDialog = __webpack_require__(5);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _pager = __webpack_require__(27);
+var _pager = __webpack_require__(26);
 
 var _pager2 = _interopRequireDefault(_pager);
 
-var _registerSource = __webpack_require__(50);
+var _registerSource = __webpack_require__(39);
 
 var _registerSource2 = _interopRequireDefault(_registerSource);
 
-var _fetch = __webpack_require__(30);
+var _fetch = __webpack_require__(27);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 

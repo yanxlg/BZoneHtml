@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 60);
+/******/ 	return __webpack_require__(__webpack_require__.s = 64);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -227,7 +227,7 @@ try {
 
 /***/ }),
 
-/***/ 42:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -287,7 +287,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 46:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -320,12 +320,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _cfTransition = __webpack_require__(5);
+var _cfTransition = __webpack_require__(6);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var messageInstances = new Set();
-var message_render = __webpack_require__(42);
+var message_render = __webpack_require__(47);
 
 var Message = function () {
     function Message(options) {
@@ -445,7 +445,7 @@ exports.default = message;
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,13 +489,13 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 
-/***/ 60:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _message = __webpack_require__(46);
+var _message = __webpack_require__(52);
 
 var _message2 = _interopRequireDefault(_message);
 

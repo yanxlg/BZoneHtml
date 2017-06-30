@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 10:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99,7 +99,8 @@ var Drag = function () {
 
         this.options = {
             container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move
+            move: options.move || DRAG_DEFAULT.move,
+            handle: options.handle
         };
         this.id = idIncrementer++;
         this.$ = $(element);
@@ -235,7 +236,6 @@ var Drag = function () {
 
                 $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
             };
-
             if (handle) {
                 $root.on(mouseDownEvent, handle, mouseDown);
             } else if (selector) {

@@ -106,7 +106,7 @@ module.exports = __webpack_require__(2);
 
 /***/ }),
 
-/***/ 15:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -396,15 +396,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _datagrid = __webpack_require__(33);
+var _datagrid = __webpack_require__(28);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _rows = __webpack_require__(34);
+var _rows = __webpack_require__(29);
 
 var _rows2 = _interopRequireDefault(_rows);
 
-var _gridActions = __webpack_require__(15);
+var _gridActions = __webpack_require__(14);
 
 var _gridActions2 = _interopRequireDefault(_gridActions);
 
@@ -720,21 +720,7 @@ exports.default = DataGrid;
 
 /***/ }),
 
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
-
-// Only Node.JS has a process variable that is of [[Class]] process
-try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
-} catch(e) {}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-
-/***/ 33:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -792,21 +778,21 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 34:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, fixed = $data.fixed, actions = $data.actions, action = $data.action, $index = $data.$index;
+    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, $index = $data.$index, fixed = $data.fixed, actions = $data.actions, action = $data.action;
     $each(data, function (row, index) {
         $$out += '\r\n    <div class="data-row in-calc" data-data="';
         $$out += $escape(row);
         $$out += '" data-row="';
         $$out += $escape(rowStart + index);
         $$out += '">\r\n        ';
-        $each(titles, function (title, index) {
+        $each(titles, function (title, $index) {
             $$out += '\r\n            ';
             if (title.bindData === 'actions') {
                 $$out += '\r\n                <div class="data-column grid-center ';
@@ -820,6 +806,10 @@ module.exports = function ($data) {
                     $$out += '</div>\r\n                    ';
                 });
                 $$out += '\r\n                </div>\r\n            ';
+            } else if (title.bindData === 'index') {
+                $$out += '\r\n                <div class="data-column grid-center grid-show-in-pc">\r\n                    <div class="data-data">';
+                $$out += $escape(rowStart + index);
+                $$out += '</div>\r\n                </div>\r\n            ';
             } else {
                 $$out += '\r\n                <div class="data-column grid-center ';
                 $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
@@ -835,6 +825,20 @@ module.exports = function ($data) {
     });
     return $$out;
 };
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
+
+// Only Node.JS has a process variable that is of [[Class]] process
+try {
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
+} catch(e) {}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 

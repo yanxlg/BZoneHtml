@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -225,7 +225,8 @@ try {
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -293,8 +294,10 @@ var Slide = function () {
 exports.default = Slide;
 
 /***/ }),
-/* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -333,11 +336,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(14);
+var _navPop = __webpack_require__(15);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(7);
+var _slide = __webpack_require__(8);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -478,11 +481,9 @@ var PopMenu = function () {
 exports.default = PopMenu;
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);

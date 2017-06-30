@@ -1,0 +1,16 @@
+<div class="img-viewer-content" style="height: {{imgH?(imgH+'px'):'auto'}};">
+    <div class="dialog-close icon-close"></div>
+    {{if imgs.length>0}}
+        <div class="controller prev {{index!=0?'':'remove'}}"><i class="icon icon-arrow-right"></i></div>
+        <div class="controller next {{index!=imgs.length-1?'':'remove'}}"><i class="icon icon-arrow-right"></i></div>
+    {{/if}}
+    {{each imgs as img}}
+        <div class="viewer-img {{img.index==index?'':'remove'}}" style="background-image:url('{{img.image}}')" alt="{{img.caption}}" data-index="{{img.index}}">
+        </div>
+        <div class="caption {{img.index==index?'':'remove'}}" data-index="{{img.index}}">
+            <div class="caption-content">
+                {{img.caption}}
+            </div>
+        </div>
+    {{/each}}
+</div>
