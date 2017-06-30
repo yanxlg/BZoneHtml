@@ -89,7 +89,17 @@
     @include prefix(background-clip,border-box);
     margin:0 remToPx(0.15rem);
   }
-
+  .grid-fix-left,.grid-fix-right{
+      display: none!important;
+  }
+  .data-grid-group {
+    .data-grid-wrap.grid-data{
+      padding-right: 0!important;
+      .data-grid{
+        padding-right: 0!important;
+      }
+    }
+  }
 }
 
 

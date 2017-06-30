@@ -15,10 +15,18 @@
     font-size: remToPx(1.2rem);
     color: map_get($baseColor,white);
   }
+  z-index: 40;
 }
 @media screen and (max-width: 699px){
   .logo{
     height:remToPx(1.5rem);
+    .loading{
+      width: remToPx(0.8rem);
+      height:remToPx(0.8rem);
+    }
+    .platform-name{
+      font-size:remToPx(0.6rem);
+    }
   }
 }
 

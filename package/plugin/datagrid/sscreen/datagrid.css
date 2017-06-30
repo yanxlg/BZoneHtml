@@ -212,4 +212,16 @@ a,a:active,a:hover,a:link,a:visited {
         border-color: #236e27;
         color: #fff
     }
+
+    .grid-fix-left,.grid-fix-right {
+        display: none!important
+    }
+
+    .data-grid-group .data-grid-wrap.grid-data {
+        padding-right: 0!important
+    }
+
+    .data-grid-group .data-grid-wrap.grid-data .data-grid {
+        padding-right: 0!important
+    }
 }

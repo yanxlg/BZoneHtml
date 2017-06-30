@@ -2,13 +2,13 @@
     <div class="data-row in-calc" data-data="{{row}}" data-row="{{rowStart+index}}">
         {{each titles as title index}}
             {{if title.bindData==='actions'}}
-                <div class="data-column grid-center">
+                <div class="data-column grid-center {{fixed!=title.fixed?'grid-show-in-mobile':''}}" data-data="{{fixed}}">
                     {{each actions as action}}
                         <div class="btn btn-primary">{{action}}</div>
                     {{/each}}
                 </div>
             {{else}}
-                <div class="data-column grid-center">
+                <div class="data-column grid-center {{fixed!=title.fixed?'grid-show-in-mobile':''}}">
                     <div class="data-key">{{title.title}}</div>
                     <div class="data-data">{{title.filter?title.filter(row[title.bindData]):row[title.bindData]}}</div>
                 </div>

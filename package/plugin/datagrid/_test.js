@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 54);
+/******/ 	return __webpack_require__(__webpack_require__.s = 55);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -392,6 +392,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * fixedLeft 大小 30%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * fixedRight 大小 30%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * center 数据是否居中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 中间grid会对数据进行全部创建，用于在mobile中显示
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -425,6 +426,7 @@ var Grid = function () {
     _createClass(Grid, [{
         key: 'create',
         value: function create() {
+            console.log(this.fixed);
             var gridRender = $((0, _datagrid2.default)({
                 titles: this.titles,
                 height: this.height + "px",
@@ -480,7 +482,8 @@ var Grid = function () {
                 titles: this.titles,
                 data: data,
                 rowStart: this.rowStart,
-                actions: this.actions
+                actions: this.actions,
+                fixed: this.fixed
             })).filter(".data-row");
             this.gridRender.find(".data-row-group").empty().append(rows);
             this.rowStart += data.length;
@@ -493,11 +496,24 @@ var Grid = function () {
                 titles: this.titles,
                 data: data,
                 rowStart: this.rowStart,
-                actions: this.actions
+                actions: this.actions,
+                fixed: this.fixed
             })).filter(".data-row");
             this.gridRender.find(".data-row-group").append(rows);
             this.rowStart += data.length;
             return rows;
+        }
+    }, {
+        key: 'updateHeight',
+        value: function updateHeight(height) {
+            if (this.fixed) {
+                this.height = height - 17;
+            } else {
+                this.height = height;
+            }
+            this.gridRender.children(".grid-data").css({
+                height: this.height + "px"
+            });
         }
     }]);
 
@@ -645,7 +661,7 @@ var DataGrid = function () {
             });
             height = height || 300;
             this.leftTitles = leftTitles;
-            this.midTitles = midTitles;
+            this.midTitles = titles;
             this.rightTitles = rightTitles;
             leftTitles.length === 0 && (this.leftWidth = 0);
             rightTitles.length === 0 && (this.rightWidth = 0);
@@ -653,7 +669,7 @@ var DataGrid = function () {
             this.midGrid = new Grid(this.container, null, "100%", this.leftWidth, this.rightWidth);
             this.rightGrid = new Grid(this.container, "right", this.rightWidth, 0, 0);
             this.leftGrid.setTitles(leftTitles, height);
-            this.midGrid.setTitles(midTitles, height);
+            this.midGrid.setTitles(titles, height);
             this.rightGrid.setTitles(rightTitles, height);
             this.titles = titles;
             this.create();
@@ -677,6 +693,14 @@ var DataGrid = function () {
          * rightFixedWidth:右侧宽度
          */
 
+    }, {
+        key: 'updateHeight',
+        value: function updateHeight(height) {
+            this.leftGrid.updateHeight(height);
+            this.midGrid.updateHeight(height);
+            this.rightGrid.updateHeight(height);
+            return this;
+        }
     }], [{
         key: 'instance',
         value: function instance(params) {
@@ -717,7 +741,7 @@ var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height, index = $data.index;
+    var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height;
     $$out += '<div class="data-grid-group ';
     $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : '');
     $$out += '" style="width:';
@@ -728,13 +752,17 @@ module.exports = function ($data) {
     $$out += $escape(rightSpace);
     $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
     $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += '\r\n                    <div class="data-col ';
+        $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '" style="width: ';
         $$out += $escape(title.width);
         $$out += 'px;">\r\n                    </div>\r\n                ';
     });
     $$out += '\r\n            </div>\r\n            <div class="data-row in-calc" data-row="header">\r\n                ';
     $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
+        $$out += '\r\n                    <div class="data-grid-title ';
+        $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '">\r\n                        ';
         $$out += $escape(title.title);
         $$out += '\r\n                    </div>\r\n                ';
     });
@@ -746,13 +774,17 @@ module.exports = function ($data) {
     $$out += $escape(rightSpace);
     $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
     $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += '\r\n                    <div class="data-col ';
+        $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '" style="width: ';
         $$out += $escape(title.width);
         $$out += 'px;">\r\n                    </div>\r\n                ';
     });
     $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n                <div class="data-row data-row-hidden">\r\n                    ';
-    $each(titles, function (title, index) {
-        $$out += '\r\n                        <div class="data-column grid-center">\r\n                        </div>\r\n                    ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                        <div class="data-column grid-center ';
+        $$out += $escape(fixed !== title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '">\r\n                        </div>\r\n                    ';
     });
     $$out += '\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
     return $$out;
@@ -767,7 +799,7 @@ var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, actions = $data.actions, action = $data.action, $index = $data.$index;
+    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, fixed = $data.fixed, actions = $data.actions, action = $data.action, $index = $data.$index;
     $each(data, function (row, index) {
         $$out += '\r\n    <div class="data-row in-calc" data-data="';
         $$out += $escape(row);
@@ -777,7 +809,11 @@ module.exports = function ($data) {
         $each(titles, function (title, index) {
             $$out += '\r\n            ';
             if (title.bindData === 'actions') {
-                $$out += '\r\n                <div class="data-column grid-center">\r\n                    ';
+                $$out += '\r\n                <div class="data-column grid-center ';
+                $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+                $$out += '" data-data="';
+                $$out += $escape(fixed);
+                $$out += '">\r\n                    ';
                 $each(actions, function (action, $index) {
                     $$out += '\r\n                        <div class="btn btn-primary">';
                     $$out += $escape(action);
@@ -785,7 +821,9 @@ module.exports = function ($data) {
                 });
                 $$out += '\r\n                </div>\r\n            ';
             } else {
-                $$out += '\r\n                <div class="data-column grid-center">\r\n                    <div class="data-key">';
+                $$out += '\r\n                <div class="data-column grid-center ';
+                $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+                $$out += '">\r\n                    <div class="data-key">';
                 $$out += $escape(title.title);
                 $$out += '</div>\r\n                    <div class="data-data">';
                 $$out += $escape(title.filter ? title.filter(row[title.bindData]) : row[title.bindData]);
@@ -800,7 +838,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 54:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

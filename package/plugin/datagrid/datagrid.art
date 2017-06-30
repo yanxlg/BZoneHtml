@@ -2,14 +2,14 @@
     <div class="data-grid-wrap grid-header" style="padding-left: {{leftSpace}};padding-right: {{rightSpace}};">
         <div class="data-grid">
             <div class="data-row">
-                {{each titles as title }}
-                    <div class="data-col" style="width: {{title.width}}px;">
+                {{each titles as title}}
+                    <div class="data-col {{fixed!=title.fixed?'grid-show-in-mobile':''}}" style="width: {{title.width}}px;">
                     </div>
                 {{/each}}
             </div>
             <div class="data-row in-calc" data-row="header">
                 {{each titles as title }}
-                    <div class="data-grid-title">
+                    <div class="data-grid-title {{fixed!=title.fixed?'grid-show-in-mobile':''}}">
                         {{title.title}}
                     </div>
                 {{/each}}
@@ -20,14 +20,14 @@
         <div class="data-grid">
             <div class="data-row">
                 {{each titles as title }}
-                    <div class="data-col" style="width: {{title.width}}px;">
+                    <div class="data-col {{fixed!=title.fixed?'grid-show-in-mobile':''}}" style="width: {{title.width}}px;">
                     </div>
                 {{/each}}
             </div>
             <div class="data-row-group">
                 <div class="data-row data-row-hidden">
-                    {{each titles as title index}}
-                        <div class="data-column grid-center">
+                    {{each titles as title}}
+                        <div class="data-column grid-center {{fixed!==title.fixed?'grid-show-in-mobile':''}}">
                         </div>
                     {{/each}}
                 </div>

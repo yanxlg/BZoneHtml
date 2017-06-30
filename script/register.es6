@@ -78,18 +78,26 @@ class Register{
             width:200,
             fixed:"right"
         }];
+
+        let dataH=document.documentElement.offsetHeight-$(".page-datagrid").offset().top-140;
         this.datagrid=Datagrid.instance({
             container:$(".page-datagrid"),
             titles:titles,
-            height:500,
+            height:dataH,
             rightFixedWidth:"200px"
         }).setActions(["查看详情","编辑","删除"]).then((type,data)=>{
             alert(type);
         });
+        $(window).on("resize",function () {
+            let dataH=document.documentElement.offsetHeight-$(".page-datagrid").offset().top-140;
+            _this.datagrid.updateHeight(dataH);
+        });
+
         this.pager=new Pager($(".page-pager"),0,false).then((index)=>{
             _this.pageIndex=index;
             _this.search();
         });
+        _this.search();
     }
     static search(){
         let userName=$("#userName").val(),phone=$("#phone").val(),status=this.select.value||-1,_this=this;

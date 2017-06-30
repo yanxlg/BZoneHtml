@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 70);
+/******/ 	return __webpack_require__(__webpack_require__.s = 71);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2546,6 +2546,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * fixedLeft 大小 30%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * fixedRight 大小 30%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * center 数据是否居中
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 中间grid会对数据进行全部创建，用于在mobile中显示
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -2579,6 +2580,7 @@ var Grid = function () {
     _createClass(Grid, [{
         key: 'create',
         value: function create() {
+            console.log(this.fixed);
             var gridRender = $((0, _datagrid2.default)({
                 titles: this.titles,
                 height: this.height + "px",
@@ -2634,7 +2636,8 @@ var Grid = function () {
                 titles: this.titles,
                 data: data,
                 rowStart: this.rowStart,
-                actions: this.actions
+                actions: this.actions,
+                fixed: this.fixed
             })).filter(".data-row");
             this.gridRender.find(".data-row-group").empty().append(rows);
             this.rowStart += data.length;
@@ -2647,11 +2650,24 @@ var Grid = function () {
                 titles: this.titles,
                 data: data,
                 rowStart: this.rowStart,
-                actions: this.actions
+                actions: this.actions,
+                fixed: this.fixed
             })).filter(".data-row");
             this.gridRender.find(".data-row-group").append(rows);
             this.rowStart += data.length;
             return rows;
+        }
+    }, {
+        key: 'updateHeight',
+        value: function updateHeight(height) {
+            if (this.fixed) {
+                this.height = height - 17;
+            } else {
+                this.height = height;
+            }
+            this.gridRender.children(".grid-data").css({
+                height: this.height + "px"
+            });
         }
     }]);
 
@@ -2799,7 +2815,7 @@ var DataGrid = function () {
             });
             height = height || 300;
             this.leftTitles = leftTitles;
-            this.midTitles = midTitles;
+            this.midTitles = titles;
             this.rightTitles = rightTitles;
             leftTitles.length === 0 && (this.leftWidth = 0);
             rightTitles.length === 0 && (this.rightWidth = 0);
@@ -2807,7 +2823,7 @@ var DataGrid = function () {
             this.midGrid = new Grid(this.container, null, "100%", this.leftWidth, this.rightWidth);
             this.rightGrid = new Grid(this.container, "right", this.rightWidth, 0, 0);
             this.leftGrid.setTitles(leftTitles, height);
-            this.midGrid.setTitles(midTitles, height);
+            this.midGrid.setTitles(titles, height);
             this.rightGrid.setTitles(rightTitles, height);
             this.titles = titles;
             this.create();
@@ -2831,6 +2847,14 @@ var DataGrid = function () {
          * rightFixedWidth:右侧宽度
          */
 
+    }, {
+        key: 'updateHeight',
+        value: function updateHeight(height) {
+            this.leftGrid.updateHeight(height);
+            this.midGrid.updateHeight(height);
+            this.rightGrid.updateHeight(height);
+            return this;
+        }
     }], [{
         key: 'instance',
         value: function instance(params) {
@@ -2864,6 +2888,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/7 0007.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 分页器插件
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 显示9个
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  * mobile中显示3个 小屏幕中显示三个如果屏幕大小改变则重新实例化对象
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 添加参数控制是否显示首页 尾页
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
@@ -2876,6 +2901,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var MOBILE_COUNT = 3;
+var PC_COUNT = 9;
+
 var Pager = function () {
     function Pager(container, count, hideJump) {
         _classCallCheck(this, Pager);
@@ -2883,7 +2911,11 @@ var Pager = function () {
         this.pageIndex = 1;
         this.pageCount = 0;
         this.container = container;
-        this.count = count || 9;
+        if (document.documentElement.offsetWidth < 700) {
+            this.count = count || MOBILE_COUNT;
+        } else {
+            this.count = count || PC_COUNT;
+        }
         this.hideJump = hideJump || false;
         this.initLife();
     }
@@ -3134,7 +3166,7 @@ var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height, index = $data.index;
+    var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height;
     $$out += '<div class="data-grid-group ';
     $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : '');
     $$out += '" style="width:';
@@ -3145,13 +3177,17 @@ module.exports = function ($data) {
     $$out += $escape(rightSpace);
     $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
     $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += '\r\n                    <div class="data-col ';
+        $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '" style="width: ';
         $$out += $escape(title.width);
         $$out += 'px;">\r\n                    </div>\r\n                ';
     });
     $$out += '\r\n            </div>\r\n            <div class="data-row in-calc" data-row="header">\r\n                ';
     $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-grid-title">\r\n                        ';
+        $$out += '\r\n                    <div class="data-grid-title ';
+        $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '">\r\n                        ';
         $$out += $escape(title.title);
         $$out += '\r\n                    </div>\r\n                ';
     });
@@ -3163,13 +3199,17 @@ module.exports = function ($data) {
     $$out += $escape(rightSpace);
     $$out += ';">\r\n        <div class="data-grid">\r\n            <div class="data-row">\r\n                ';
     $each(titles, function (title, $index) {
-        $$out += '\r\n                    <div class="data-col" style="width: ';
+        $$out += '\r\n                    <div class="data-col ';
+        $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '" style="width: ';
         $$out += $escape(title.width);
         $$out += 'px;">\r\n                    </div>\r\n                ';
     });
     $$out += '\r\n            </div>\r\n            <div class="data-row-group">\r\n                <div class="data-row data-row-hidden">\r\n                    ';
-    $each(titles, function (title, index) {
-        $$out += '\r\n                        <div class="data-column grid-center">\r\n                        </div>\r\n                    ';
+    $each(titles, function (title, $index) {
+        $$out += '\r\n                        <div class="data-column grid-center ';
+        $$out += $escape(fixed !== title.fixed ? 'grid-show-in-mobile' : '');
+        $$out += '">\r\n                        </div>\r\n                    ';
     });
     $$out += '\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
     return $$out;
@@ -3183,7 +3223,7 @@ var $imports = __webpack_require__(1);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, actions = $data.actions, action = $data.action, $index = $data.$index;
+    var $$out = '', $each = $imports.$each, data = $data.data, row = $data.row, index = $data.index, $escape = $imports.$escape, rowStart = $data.rowStart, titles = $data.titles, title = $data.title, fixed = $data.fixed, actions = $data.actions, action = $data.action, $index = $data.$index;
     $each(data, function (row, index) {
         $$out += '\r\n    <div class="data-row in-calc" data-data="';
         $$out += $escape(row);
@@ -3193,7 +3233,11 @@ module.exports = function ($data) {
         $each(titles, function (title, index) {
             $$out += '\r\n            ';
             if (title.bindData === 'actions') {
-                $$out += '\r\n                <div class="data-column grid-center">\r\n                    ';
+                $$out += '\r\n                <div class="data-column grid-center ';
+                $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+                $$out += '" data-data="';
+                $$out += $escape(fixed);
+                $$out += '">\r\n                    ';
                 $each(actions, function (action, $index) {
                     $$out += '\r\n                        <div class="btn btn-primary">';
                     $$out += $escape(action);
@@ -3201,7 +3245,9 @@ module.exports = function ($data) {
                 });
                 $$out += '\r\n                </div>\r\n            ';
             } else {
-                $$out += '\r\n                <div class="data-column grid-center">\r\n                    <div class="data-key">';
+                $$out += '\r\n                <div class="data-column grid-center ';
+                $$out += $escape(fixed != title.fixed ? 'grid-show-in-mobile' : '');
+                $$out += '">\r\n                    <div class="data-key">';
                 $$out += $escape(title.title);
                 $$out += '</div>\r\n                    <div class="data-data">';
                 $$out += $escape(title.filter ? title.filter(row[title.bindData]) : row[title.bindData]);
@@ -3575,7 +3621,23 @@ module.exports = {
 };
 
 /***/ }),
-/* 50 */,
+/* 50 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"0": "分享页面",
+	"1": "后台运营",
+	"2": "Android",
+	"3": "IOS",
+	"name": "注册来源",
+	"version": "1.0.0",
+	"private": true,
+	"keywords": [
+		"registerSource"
+	]
+};
+
+/***/ }),
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -3595,7 +3657,8 @@ module.exports = {
 /* 67 */,
 /* 68 */,
 /* 69 */,
-/* 70 */
+/* 70 */,
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3632,7 +3695,7 @@ var _pager = __webpack_require__(27);
 
 var _pager2 = _interopRequireDefault(_pager);
 
-var _registerSource = __webpack_require__(71);
+var _registerSource = __webpack_require__(50);
 
 var _registerSource2 = _interopRequireDefault(_registerSource);
 
@@ -3717,18 +3780,26 @@ var Register = function () {
                 width: 200,
                 fixed: "right"
             }];
+
+            var dataH = document.documentElement.offsetHeight - $(".page-datagrid").offset().top - 140;
             this.datagrid = _datagrid2.default.instance({
                 container: $(".page-datagrid"),
                 titles: titles,
-                height: 500,
+                height: dataH,
                 rightFixedWidth: "200px"
             }).setActions(["查看详情", "编辑", "删除"]).then(function (type, data) {
                 alert(type);
             });
+            $(window).on("resize", function () {
+                var dataH = document.documentElement.offsetHeight - $(".page-datagrid").offset().top - 140;
+                _this.datagrid.updateHeight(dataH);
+            });
+
             this.pager = new _pager2.default($(".page-pager"), 0, false).then(function (index) {
                 _this.pageIndex = index;
                 _this.search();
             });
+            _this.search();
         }
     }, {
         key: 'search',
@@ -3759,23 +3830,6 @@ var Register = function () {
 }();
 
 Register.initialize();
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"0": "分享页面",
-	"1": "后台运营",
-	"2": "Android",
-	"3": "IOS",
-	"name": "注册来源",
-	"version": "1.0.0",
-	"private": true,
-	"keywords": [
-		"registerSource"
-	]
-};
 
 /***/ })
 /******/ ]);

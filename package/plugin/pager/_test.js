@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 64);
+/******/ 	return __webpack_require__(__webpack_require__.s = 65);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -227,6 +227,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/7 0007.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 分页器插件
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 显示9个
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  * mobile中显示3个 小屏幕中显示三个如果屏幕大小改变则重新实例化对象
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 添加参数控制是否显示首页 尾页
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
@@ -239,6 +240,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var MOBILE_COUNT = 3;
+var PC_COUNT = 9;
+
 var Pager = function () {
     function Pager(container, count, hideJump) {
         _classCallCheck(this, Pager);
@@ -246,7 +250,11 @@ var Pager = function () {
         this.pageIndex = 1;
         this.pageCount = 0;
         this.container = container;
-        this.count = count || 9;
+        if (document.documentElement.offsetWidth < 700) {
+            this.count = count || MOBILE_COUNT;
+        } else {
+            this.count = count || PC_COUNT;
+        }
         this.hideJump = hideJump || false;
         this.initLife();
     }
@@ -445,7 +453,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 64:
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

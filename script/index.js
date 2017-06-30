@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 68);
+/******/ 	return __webpack_require__(__webpack_require__.s = 69);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2179,7 +2179,8 @@ module.exports = {
 /* 47 */,
 /* 48 */,
 /* 49 */,
-/* 50 */
+/* 50 */,
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2194,7 +2195,6 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 51 */,
 /* 52 */,
 /* 53 */,
 /* 54 */,
@@ -2211,7 +2211,8 @@ module.exports = function ($data) {
 /* 65 */,
 /* 66 */,
 /* 67 */,
-/* 68 */
+/* 68 */,
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2234,7 +2235,7 @@ var _navmenu = __webpack_require__(26);
 
 var _navmenu2 = _interopRequireDefault(_navmenu);
 
-var _myCenter = __webpack_require__(50);
+var _myCenter = __webpack_require__(51);
 
 var _myCenter2 = _interopRequireDefault(_myCenter);
 

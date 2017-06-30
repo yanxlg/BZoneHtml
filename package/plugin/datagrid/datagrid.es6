@@ -13,6 +13,7 @@
  * fixedLeft 大小 30%
  * fixedRight 大小 30%
  * center 数据是否居中
+ * 中间grid会对数据进行全部创建，用于在mobile中显示
  */
 import dataGridTemp from './datagrid.art';
 import dataRowsTemp from './rows.art';
@@ -26,6 +27,7 @@ class Grid{
         this.rightSpace=rightSpace;
     }
     create(){
+        console.log(this.fixed);
         let gridRender=$(dataGridTemp({
             titles:this.titles,
             height:this.height+"px",
@@ -73,7 +75,8 @@ class Grid{
             titles:this.titles,
             data:data,
             rowStart:this.rowStart,
-            actions:this.actions
+            actions:this.actions,
+            fixed:this.fixed
         })).filter(".data-row");
         this.gridRender.find(".data-row-group").empty().append(rows);
         this.rowStart+=data.length;
@@ -84,11 +87,22 @@ class Grid{
             titles:this.titles,
             data:data,
             rowStart:this.rowStart,
-            actions:this.actions
+            actions:this.actions,
+            fixed:this.fixed
         })).filter(".data-row");
         this.gridRender.find(".data-row-group").append(rows);
         this.rowStart+=data.length;
         return rows;
+    }
+    updateHeight(height){
+        if(this.fixed){
+            this.height=height-17;
+        }else{
+            this.height=height;
+        }
+        this.gridRender.children(".grid-data").css({
+            height:this.height+"px"
+        })
     }
 }
 class DataGrid{
@@ -210,7 +224,7 @@ class DataGrid{
         });
         height=height||300;
         this.leftTitles=leftTitles;
-        this.midTitles=midTitles;
+        this.midTitles=titles;
         this.rightTitles=rightTitles;
         leftTitles.length===0&&(this.leftWidth=0);
         rightTitles.length===0&&(this.rightWidth=0);
@@ -218,7 +232,7 @@ class DataGrid{
         this.midGrid=new Grid(this.container,null,"100%",this.leftWidth,this.rightWidth);
         this.rightGrid=new Grid(this.container,"right",this.rightWidth,0,0);
         this.leftGrid.setTitles(leftTitles,height);
-        this.midGrid.setTitles(midTitles,height);
+        this.midGrid.setTitles(titles,height);
         this.rightGrid.setTitles(rightTitles,height);
         this.titles=titles;
         this.create();
@@ -239,6 +253,12 @@ class DataGrid{
      * leftFixedWidth:左侧宽度
      * rightFixedWidth:右侧宽度
      */
+    updateHeight(height){
+        this.leftGrid.updateHeight(height);
+        this.midGrid.updateHeight(height);
+        this.rightGrid.updateHeight(height);
+        return this;
+    }
     static instance(params){
         let container=params.container||$("body");
         let titles=params.titles;

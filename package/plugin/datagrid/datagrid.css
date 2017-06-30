@@ -275,6 +275,11 @@ a,a:active,a:hover,a:link,a:visited {
     .in-calc {
         visibility: hidden
     }
+
+    .grid-show-in-mobile {
+        width: 0!important;
+        display: none!important
+    }
 }
 
 @media screen and (max-width:999px) {
@@ -428,6 +433,18 @@ a,a:active,a:hover,a:link,a:visited {
         background-color: #2e9134;
         border-color: #236e27;
         color: #fff
+    }
+
+    .grid-fix-left,.grid-fix-right {
+        display: none!important
+    }
+
+    .data-grid-group .data-grid-wrap.grid-data {
+        padding-right: 0!important
+    }
+
+    .data-grid-group .data-grid-wrap.grid-data .data-grid {
+        padding-right: 0!important
     }
 }
 
