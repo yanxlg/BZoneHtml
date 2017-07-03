@@ -3422,8 +3422,10 @@ var Input = function () {
                     $(this).attr("onpaste", "return false;");
                 }
             }).on("keydown", "input", function (e) {
+                e = e || event;
+                var currKey = e.keyCode || e.which || e.charCode;
                 var type = $(this).attr("type"),
-                    key = e.key;
+                    key = String.fromCharCode(currKey);
                 switch (type) {
                     case "number":
                         return (/\d|Backspace|Left|Right/.test(key)

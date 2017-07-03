@@ -12,7 +12,9 @@ class Input{
                 $(this).attr("onpaste","return false;");
             }
         }).on("keydown","input",function (e) {
-            let type=$(this).attr("type"),key=e.key;
+            e=e||event;
+            let currKey=e.keyCode||e.which||e.charCode;
+            let type=$(this).attr("type"),key=String.fromCharCode(currKey);
             switch (type)
             {
                 case "number":
