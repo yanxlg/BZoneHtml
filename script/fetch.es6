@@ -32,6 +32,13 @@ let fetch=(url,data,login)=>{
         login=true;//不设置默认为true,即需要登录
     }
     let token=user.getToken();
+    if(!token){
+        let angularUser=localStorage.getItem("user");
+        if(angularUser){
+            angularUser=JSON.parse(angularUser);
+            token=angularUser.token;
+        }
+    }
     if(data){
         if(login&&!token){
             dialog({

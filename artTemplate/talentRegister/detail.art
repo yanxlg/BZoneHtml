@@ -15,7 +15,7 @@
         </div>
         <div class="item">
             <div class="item-info">
-                头像：{{if CustomerAvatar}}<div class="img" style="background-image: url('{{CustomerAvatar}}')"></div>{{else}}未上传{{/if}}
+                头像：{{if CustomerAvatar}}<img data-toggle="viewer" src="{{CustomerAvatar}}" height="60">{{else}}未上传{{/if}}
             </div>
             <div class="item-info">性别：{{Sex===1?"男":Sex===2?"女":"未填写"}}</div>
             <div class="item-info">家乡：{{CustomerHometownName}}</div>

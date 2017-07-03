@@ -1235,6 +1235,10 @@ a,a:active,a:hover,a:link,a:visited {
     z-index: 10000
 }
 
+.loading-plugin .modal {
+    z-index: 10001
+}
+
 .loading-plugin .loading-container {
     z-index: 11000
 }

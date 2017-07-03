@@ -801,7 +801,9 @@ module.exports = function ($data) {
                 $$out += $escape(fixed);
                 $$out += '">\r\n                    ';
                 $each(actions, function (action, $index) {
-                    $$out += '\r\n                        <div class="btn btn-primary">';
+                    $$out += '\r\n                        <div class="btn btn-primary ';
+                    $$out += $escape(title.filter ? title.filter(row, action) : '');
+                    $$out += '">';
                     $$out += $escape(action);
                     $$out += '</div>\r\n                    ';
                 });

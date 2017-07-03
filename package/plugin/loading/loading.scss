@@ -16,6 +16,7 @@ $modalBg:#6950ee;
     @extend .flex;
     @extend .align-center;
     @extend .justify-center;
+    z-index:10001;
   }
   .loading-container{
     @extend .flex;

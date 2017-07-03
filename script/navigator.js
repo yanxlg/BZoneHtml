@@ -151,7 +151,7 @@ module.exports = {
 	"login": "login.html",
 	"angularCompute": "angular.html",
 	"CustomerManage": "register.html",
-	"TalentCertification.html": "talentRegister.html"
+	"TalentCertification.html": "talentRegister.html#compatible"
 };
 
 /***/ })

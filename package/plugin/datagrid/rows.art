@@ -4,7 +4,7 @@
             {{if title.bindData==='actions'}}
                 <div class="data-column grid-center {{fixed!=title.fixed?'grid-show-in-mobile':''}}" data-data="{{fixed}}">
                     {{each actions as action}}
-                        <div class="btn btn-primary">{{action}}</div>
+                        <div class="btn btn-primary {{title.filter?title.filter(row,action):''}}">{{action}}</div>
                     {{/each}}
                 </div>
             {{else if title.bindData==='index'}}

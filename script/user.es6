@@ -3,6 +3,7 @@
  * user信息管理
  * key: _user
  * 加入缓存机制，页面不刷新不会重新获取
+ * 做angular兼容
  */
 import {store} from '../package/plugin/store/store.es6';
 import staticConfig from '../config/static.json';

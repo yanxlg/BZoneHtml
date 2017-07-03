@@ -5,6 +5,7 @@
 @import "../../../ui/cf-varia.scss";
 @import "../../grid-actions/grid-actions.scss";
 @import "../../../ui/cf-flex-include.scss";
+$scrollWidth:17px;
 
 @media screen and (min-width: 1000px){
   .data-grid-group{
@@ -14,6 +15,14 @@
     display: block;
     position: relative;
     .data-grid-wrap{
+    }
+    &:after{
+      display: block;
+      position: absolute;
+      border-bottom: 1px solid $borderColor;
+      width:100%;
+      bottom:$scrollWidth;
+      content: "";
     }
   }
 
@@ -74,13 +83,14 @@
       }
       .data-column,.data-grid-title{
         border-right: 1px solid $borderColor;
+        border-bottom: 1px solid $borderColor;
       }
     }
   }
   .data-header{
   }
   .grid-data{
-    .data-column,.data-grid-title{
+    .data-grid-title{
       border-top: 1px solid $borderColor;
     }
   }
@@ -108,6 +118,9 @@
     top:0;
     z-index: 20;
     background-color: map_get($baseColor,white);
+    &:after{
+      display: none;
+    }
     .data-grid-wrap.grid-header,.data-grid-wrap.grid-data{
       overflow: hidden;
     }
@@ -120,10 +133,13 @@
   }
   .grid-fix-right{
     position: absolute;
-    right:remToPx(0.85rem);
+    right:$scrollWidth;
     top:0;
     z-index: 20;
     background-color: map_get($baseColor,white);
+    &:after{
+      display: none;
+    }
     .data-grid-wrap.grid-header,.data-grid-wrap.grid-data{
       overflow: hidden;
     }

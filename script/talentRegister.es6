@@ -92,7 +92,10 @@ class Register{
             title:"操作",
             bindData:"actions",
             width:200,
-            fixed:"right"
+            fixed:"right",
+            filter:function (row,action) {
+                return (row.IdentificationState===authorize.Unauthorized&&action==="认证审核"||action!=="认证审核")?"":"disabled";
+            }
         }];
         let dataH=document.documentElement.offsetHeight-$(".page-datagrid").offset().top-140;
         this.datagrid=Datagrid.instance({
@@ -109,6 +112,8 @@ class Register{
                         title:"达人用户",
                         content:detail(data),
                         size:size
+                    }).then(function () {
+                        this.close();
                     });
                     break;
                 case "认证审核":
@@ -134,10 +139,10 @@ class Register{
                         data.PriceUnit=priceUnit;
                         switch (btn){
                             case "operation_cusBtn0":
-                                _this.pending(data,2,this);
+                                _this.pending(data,2,pendingDialog);
                                 break;
                             case "operation_cusBtn1":
-                                _this.pending(data,3,this);
+                                _this.pending(data,3,pendingDialog);
                                 break;
                             case "operation_cusBtn2":
                                 pendingDialog.close();
@@ -165,6 +170,8 @@ class Register{
             Price:data.Price,
             PriceUnit:data.PriceUnit,
             IdentificationState:status,
+            CustomerID:data.CustomerID,
+            CustomerTalentTypeID:data.CustomerTalentTypeID
         },_this=this;
         fetch("/api/BenevolenceApi/IdentificateTalentSkill",params).then(res=>{
             if(res.ok){
@@ -176,7 +183,13 @@ class Register{
                 alert(res.msg).then(btn=>{
                     if(btn==="operation_ok"){
                         if(res.overdue){
-                            window.top.location.replace("./login.html");
+                            //如果是angular则跳转到老的页面
+                            if(location.hash="compatible"){
+                                localStorage.removeItem("user");
+                                window.top.location.replace("../../../BZone/index.html#/login");
+                            }else{
+                                window.top.location.replace("./login.html");
+                            }
                         }
                     }
                 });
@@ -207,7 +220,12 @@ class Register{
                 alert(res.msg).then(btn=>{
                     if(btn==="operation_ok"){
                         if(res.overdue){
-                            window.top.location.replace("./login.html");
+                            if(location.hash="compatible"){
+                                localStorage.removeItem("user");
+                                window.top.location.replace("../../../BZone/index.html#/login");
+                            }else{
+                                window.top.location.replace("./login.html");
+                            }
                         }
                     }
                 });
@@ -218,13 +236,20 @@ class Register{
         let userName=$("#userName").val(),phone=$("#phone").val(),status=this.authStatus.value,_this=this,skillName=this.authType.value,isFirst=this.authTimes.value;
         fetch("/api/BenevolenceApi/GetCustomerTalentSkillInfo?CustomerName="+userName+"&TelNo="+phone+"&IdentificationState="+status+"&TalentName="+skillName+"&IsFirstIdentification="+isFirst+"&PageSize="+this.pageSize+"&CurrentPage="+this.pageIndex).then(res=>{
             if(res.ok){
+                console.log(res.data.List);
                 _this.datagrid.update(res.data.List);
                 _this.pager.setPageIndex(_this.pageIndex).setPageCount(res.data.TotalPages).update();
             }else{
                 alert(res.msg).then(btn=>{
                     if(btn==="operation_ok"){
                         if(res.overdue){
-                            window.top.location.replace("./login.html");
+                            if(location.hash="compatible"){
+                                localStorage.removeItem("user");
+                                window.top.location.replace("../../../BZone/index.html#/login");
+                            }else{
+                                window.top.location.replace("./login.html");
+                            }
+                            // window.top.location.replace("./login.html");
                         }
                     }
                 });

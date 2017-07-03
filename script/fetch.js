@@ -1086,8 +1086,9 @@ module.exports = {
 	"ApiType": "1",
 	"AppVersion": "1.3.5",
 	"ApiVersion": "1.3.5",
-	"webApiDomain1": "http://10.40.5.30:8081",
-	"webApiDomain": "http://localhost:5007",
+	"webApiDomainTest": "http://10.40.5.30:8081",
+	"webApiDomainLocal": "http://localhost:5007",
+	"webApiDomain": "",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,
@@ -1176,6 +1177,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * user信息管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * key: _user
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 加入缓存机制，页面不刷新不会重新获取
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 做angular兼容
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -2454,6 +2456,13 @@ var fetch = function fetch(url, data, login) {
         login = true; //不设置默认为true,即需要登录
     }
     var token = _user2.default.getToken();
+    if (!token) {
+        var angularUser = localStorage.getItem("user");
+        if (angularUser) {
+            angularUser = JSON.parse(angularUser);
+            token = angularUser.token;
+        }
+    }
     if (data) {
         if (login && !token) {
             (0, _cfDialog2.default)({

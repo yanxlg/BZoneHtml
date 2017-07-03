@@ -21,11 +21,13 @@ fis.set('project.ignore', [
     'gulpfile.js',
     '.modifyStreamContent.js',
     '**/*.es6',
-    '**/*.scss'
+    '**/*.scss',
+    'package-lock.json'
 ]);
 fis.match('::package', {
     postpackager: fis.plugin('loader', {})
 });
+
 
 //开发环境
 fis.match('**.js', {
@@ -42,13 +44,19 @@ fis.match('*', {
     useHash: false
 });
 
+fis.match('**.html', {
+    relative:true
+});
+fis.match('**.css', {
+    relative:true
+});
+fis.match('**.js', {
+    relative:true
+});
 
 
 //发布环境
 fis.media('prod')
-    .match('**.js', {
-        optimizer: fis.plugin('uglify-js'),
-    })
     .match('**.css', {
         optimizer: fis.plugin('clean-css'),
     }).match('*.png', {
@@ -56,26 +64,4 @@ fis.media('prod')
     }).match('*', {
         useHash: false
     });
-
-
-// 压缩 index.html 内联的 js
-fis.match('index.html:js', {
-    optimizer: fis.plugin('uglify-js')
-});
-
-// 压缩 index.tpl 内联的 js
-fis.match('index.tpl:js', {
-    optimizer: fis.plugin('uglify-js')
-})
-
-// 压缩 index.html 内联的 css
-fis.match('index.html:css', {
-    optimizer: fis.plugin('clean-css')
-});
-
-// 压缩 index.tpl 内联的 css
-fis.match('index.tpl:css', {
-    optimizer: fis.plugin('clean-css')
-})
-
 
