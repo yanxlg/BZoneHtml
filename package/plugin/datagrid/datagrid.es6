@@ -14,6 +14,9 @@
  * fixedRight 大小 30%
  * center 数据是否居中
  * 中间grid会对数据进行全部创建，用于在mobile中显示
+ *
+ *
+ * 浏览器滚动条宽度设置为17px
  */
 import dataGridTemp from './datagrid.art';
 import dataRowsTemp from './rows.art';
@@ -27,7 +30,6 @@ class Grid{
         this.rightSpace=rightSpace;
     }
     create(){
-        console.log(this.fixed);
         let gridRender=$(dataGridTemp({
             titles:this.titles,
             height:this.height+"px",
@@ -52,7 +54,7 @@ class Grid{
     setTitles(titles,height){
         this.titles=titles;
         if(this.fixed){
-            this.height=height-17;
+            this.height=height+17;
         }else{
             this.height=height;
         }
@@ -66,6 +68,7 @@ class Grid{
     scrollSync(){
         let _this=this;
         _this.content.on("scroll",function () {
+            console.log(_this.content[0].scrollLeft);
             _this.header[0].scrollLeft=_this.content[0].scrollLeft;
         });
     }
@@ -138,12 +141,18 @@ class DataGrid{
     calcHeader(){
         //先计算宽度
         let rightW=this.rightGrid.gridRender.width();
-        this.midGrid.gridRender.find(".data-grid").css({
+        this.midGrid.gridRender.find(".grid-data > .data-grid").css({
             "padding-right":rightW+"px"
+        });
+        this.midGrid.gridRender.find(".grid-header > .data-grid").css({
+            "padding-right":rightW+17+"px"
         });
         let header0=this.leftGrid.gridRender.find('[data-row="header"]');
         let header1=this.midGrid.gridRender.find('[data-row="header"]');
         let header2=this.rightGrid.gridRender.find('[data-row="header"]');
+        let content0=this.leftGrid.gridRender.find('.grid-data');
+        let content1=this.midGrid.gridRender.find('.grid-data');
+        let content2=this.rightGrid.gridRender.find('.grid-data');
         let leftH=header0.height();
         let midH=header1.height();
         let rightH=header2.height();
@@ -157,6 +166,15 @@ class DataGrid{
         header2.css({
             height:max+"px"
         }).removeClass("in-calc");
+        content0.css({
+            "padding-top":max+"px"
+        });
+        content1.css({
+            "padding-top":max+"px"
+        });
+        content2.css({
+            "padding-top":max+"px"
+        })
     }
     create(){
         this.leftGrid.create();

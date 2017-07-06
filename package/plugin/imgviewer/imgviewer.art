@@ -9,7 +9,7 @@
         </div>
         <div class="caption {{img.index==index?'':'remove'}}" data-index="{{img.index}}">
             <div class="caption-content">
-                {{img.caption}}
+                {{img.caption||img.image}}
             </div>
         </div>
     {{/each}}

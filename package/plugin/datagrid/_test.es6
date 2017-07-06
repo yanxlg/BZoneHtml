@@ -6,6 +6,7 @@ import Datagrid from './datagrid.es6';
 let titles=[{
     title:"left",
     bindData:"key0",
+    fixed:"left"
 },{
     title:"heade1",
     bindData:"key1",
@@ -106,9 +107,10 @@ let datagrid=Datagrid.instance({
     titles:titles,
     height:200,
     rightFixedWidth:"300px",
-    leftFixedWidth:"0px"
+    leftFixedWidth:"100px"
 }).setActions(["删除","查看","编辑"]).then((type,data)=>{
     alert(type);
 });
 datagrid.update(data);
 
+alert(window.innerWidth - document.body.clientWidth);

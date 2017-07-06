@@ -1,4 +1,4 @@
-<div class="data-grid-group {{fixed==='left'?'grid-fix-left':fixed==='right'?'grid-fix-right':''}}" style="width:{{width}}">
+<div class="data-grid-group {{fixed==='left'?'grid-fix-left':fixed==='right'?'grid-fix-right':'grid-fix-center'}}" style="width:{{width}}">
     <div class="data-grid-wrap grid-header" style="padding-left: {{leftSpace}};padding-right: {{rightSpace}};">
         <div class="data-grid">
             <div class="data-row">

@@ -2,22 +2,10 @@
  * Created by yanxianliang on 2017/5/20.
  */
 import fetchApi from '../static/fetch.es6';
-import {store} from '../package/plugin/store/store.es6';
 import dialog from '../package/plugin/dialog/cf-dialog.es6';
 import staticConfig from '../config/static.json';
 import loading from '../package/plugin/loading/loading.es6';
 import user from './user.es6';
-/*const HttpSuccessStaatus=/^2\d{2}$/;
- let checkStatus=(response)=>{
- if (HttpSuccessStaatus.test(response.status)) {
- return response;
- } else {
- let error = new Error(response.statusText);
- error.response = response;
- throw error;
- }
- };*/
-
 class THENCLASS{
     constructor(){
         return this;
@@ -51,7 +39,7 @@ let fetch=(url,data,login)=>{
             return new THENCLASS();
         }
         loading.show();
-        return fetchApi(staticConfig.webApiDomain+url,{
+        return fetchApi.call(window,staticConfig.webApiDomain+url,{
             method: 'POST',
             headers:{
                 Token:token,
@@ -92,7 +80,7 @@ let fetch=(url,data,login)=>{
     }else{
         //get 方法
         loading.show();
-        return fetchApi(staticConfig.webApiDomain+url,{
+        return fetchApi.call(window,staticConfig.webApiDomain+url,{
             method: 'GET',
             headers:{
                 token:token

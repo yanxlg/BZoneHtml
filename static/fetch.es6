@@ -459,13 +459,12 @@ import Promise from './Promise.es6';
 
             request.headers.forEach(function(value, name) {
                 xhr.setRequestHeader(name, value)
-            })
+            });
 
             xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
         })
-    }
+    };
     self.fetch.polyfill = true
-})(typeof self !== 'undefined' ? self : window);
-
-let fetch=typeof self !== 'undefined' ? self.fetch : window.fetch;
+})(window);
+let fetch=window.fetch;
 export default fetch;

@@ -148,9 +148,11 @@ a,a:active,a:hover,a:link,a:visited {
     }
 
     .data-grid-wrap.grid-header {
-        overflow-y: scroll;
+        overflow-y: hidden;
         overflow-x: hidden;
-        position: relative
+        position: absolute;
+        background-color: #fff;
+        z-index: 20
     }
 
     .data-grid {
@@ -234,11 +236,16 @@ a,a:active,a:hover,a:link,a:visited {
         word-break: break-all
     }
 
+    .grid-fix-center .grid-header {
+        left: 0;
+        right: 17px
+    }
+
     .grid-fix-left {
         position: absolute;
         left: 0;
         top: 0;
-        z-index: 20;
+        z-index: 40;
         background-color: #fff
     }
 
@@ -266,7 +273,7 @@ a,a:active,a:hover,a:link,a:visited {
         position: absolute;
         right: 17px;
         top: 0;
-        z-index: 20;
+        z-index: 40;
         background-color: #fff
     }
 

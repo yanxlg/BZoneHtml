@@ -23,10 +23,10 @@ class Register{
             key:"请选择认证状态",
             value:""
         },{
-            key:"已认证会员",
+            key:"已认证",
             value:authorize.Authenticated
         },{
-            key:"待认证会员",
+            key:"待认证",
             value:authorize.Unauthorized
         }]).then(val=>{
             // alert(val);
@@ -149,7 +149,9 @@ class Register{
                                 break;
                         }
                     });
-                    priceUnitSelect=Select.initWithElement($("#changePrice"),"up");
+                    priceUnitSelect=Select.initWithElement($("#changePrice"),"up").then(()=>{
+                        $('#changePrice input').removeClass("validate-error");
+                    });
             }
         });
         $(window).on("resize",function () {
@@ -162,29 +164,68 @@ class Register{
         });
         this.getAuthTypes(()=>{
             _this.search();
-        })
+        });
+
+        $("body").on("blur",'#price',function () {
+            if($(this).val()){
+                $(this).removeClass("validate-error");
+            }
+        });
+        $("body").on("blur",'#reason',function () {
+            if($(this).val()){
+                $(this).removeClass("validate-error");
+            }
+        });
     }
     static pending(data,status,dialog){
+        //检测price是否填写 ，单位是否选择
+        if(status===2){
+            $("#reason").removeClass("validate-error");
+            if(!data.Price){
+                $("#price").addClass("validate-error");
+                return;
+            }else{
+                $("#price").removeClass("validate-error");
+            }
+            if(!data.PriceUnit){
+                $("#changePrice input").addClass("validate-error");
+                return;
+            }else{
+                $("#changePrice input").removeClass("validate-error");
+            }
+        }else{
+            $("#price").removeClass("validate-error");
+            $("#changePrice input").removeClass("validate-error");
+            data.IdentificationMemo=$("#reason").val();
+            if(!data.IdentificationMemo){
+                $("#reason").addClass("validate-error");
+                return;
+            }
+        }
         let params={
             Customer_TalentSkillIdentificationID:data.Customer_TalentSkillIdentificationID,
             Price:data.Price,
             PriceUnit:data.PriceUnit,
             IdentificationState:status,
             CustomerID:data.CustomerID,
-            CustomerTalentTypeID:data.CustomerTalentTypeID
+            CustomerTalentTypeID:data.CustomerTalentTypeID,
+            IdentificationMemo:data.IdentificationMemo
         },_this=this;
         fetch("/api/BenevolenceApi/IdentificateTalentSkill",params).then(res=>{
             if(res.ok){
                 //刷新页面
                 dialog.close();
                 _this.pageIndex=1;
+                alert(status===2?"已通过该认证":"已拒绝该认证").then(function () {
+                    this.close();
+                });
                 _this.search();
             }else{
                 alert(res.msg).then(btn=>{
                     if(btn==="operation_ok"){
                         if(res.overdue){
                             //如果是angular则跳转到老的页面
-                            if(location.hash="compatible"){
+                            if(location.hash==="#compatible"){
                                 localStorage.removeItem("user");
                                 window.top.location.replace("../../../BZone/index.html#/login");
                             }else{
@@ -220,7 +261,7 @@ class Register{
                 alert(res.msg).then(btn=>{
                     if(btn==="operation_ok"){
                         if(res.overdue){
-                            if(location.hash="compatible"){
+                            if(location.hash==="#compatible"){
                                 localStorage.removeItem("user");
                                 window.top.location.replace("../../../BZone/index.html#/login");
                             }else{
@@ -243,7 +284,7 @@ class Register{
                 alert(res.msg).then(btn=>{
                     if(btn==="operation_ok"){
                         if(res.overdue){
-                            if(location.hash="compatible"){
+                            if(location.hash==="#compatible"){
                                 localStorage.removeItem("user");
                                 window.top.location.replace("../../../BZone/index.html#/login");
                             }else{

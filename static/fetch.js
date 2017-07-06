@@ -1125,12 +1125,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         });
     };
     self.fetch.polyfill = true;
-})(typeof self !== 'undefined' ? self : window); /**
-                                                  * Promise检测
-                                                  */
+})(window); /**
+             * Promise检测
+             */
 
-
-var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
+var fetch = window.fetch;
 exports.default = fetch;
 
 /***/ })

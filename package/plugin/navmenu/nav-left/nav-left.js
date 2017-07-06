@@ -149,7 +149,7 @@ var _navLeft = __webpack_require__(22);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -437,7 +437,7 @@ try {
 
 /***/ }),
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

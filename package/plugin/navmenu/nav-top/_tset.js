@@ -149,7 +149,7 @@ var _navPop = __webpack_require__(15);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -745,7 +745,7 @@ setTimeout(function () {
 
 /***/ }),
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

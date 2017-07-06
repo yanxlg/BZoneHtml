@@ -78,7 +78,7 @@ module.exports = {
 	"ApiVersion": "1.3.5",
 	"webApiDomainTest": "http://10.40.5.30:8081",
 	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "",
+	"webApiDomain": "http://10.40.4.154:8077",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,
@@ -107,7 +107,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(7);
+var _store = __webpack_require__(9);
 
 var _static = __webpack_require__(10);
 
@@ -187,7 +187,7 @@ exports.default = USER;
 
 /***/ }),
 
-/***/ 7:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

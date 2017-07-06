@@ -393,6 +393,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * fixedRight 大小 30%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * center 数据是否居中
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 中间grid会对数据进行全部创建，用于在mobile中显示
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 浏览器滚动条宽度设置为17px
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -426,7 +429,6 @@ var Grid = function () {
     _createClass(Grid, [{
         key: 'create',
         value: function create() {
-            console.log(this.fixed);
             var gridRender = $((0, _datagrid2.default)({
                 titles: this.titles,
                 height: this.height + "px",
@@ -453,7 +455,7 @@ var Grid = function () {
         value: function setTitles(titles, height) {
             this.titles = titles;
             if (this.fixed) {
-                this.height = height - 17;
+                this.height = height + 17;
             } else {
                 this.height = height;
             }
@@ -471,6 +473,7 @@ var Grid = function () {
         value: function scrollSync() {
             var _this = this;
             _this.content.on("scroll", function () {
+                console.log(_this.content[0].scrollLeft);
                 _this.header[0].scrollLeft = _this.content[0].scrollLeft;
             });
         }
@@ -561,12 +564,18 @@ var DataGrid = function () {
         value: function calcHeader() {
             //先计算宽度
             var rightW = this.rightGrid.gridRender.width();
-            this.midGrid.gridRender.find(".data-grid").css({
+            this.midGrid.gridRender.find(".grid-data > .data-grid").css({
                 "padding-right": rightW + "px"
+            });
+            this.midGrid.gridRender.find(".grid-header > .data-grid").css({
+                "padding-right": rightW + 17 + "px"
             });
             var header0 = this.leftGrid.gridRender.find('[data-row="header"]');
             var header1 = this.midGrid.gridRender.find('[data-row="header"]');
             var header2 = this.rightGrid.gridRender.find('[data-row="header"]');
+            var content0 = this.leftGrid.gridRender.find('.grid-data');
+            var content1 = this.midGrid.gridRender.find('.grid-data');
+            var content2 = this.rightGrid.gridRender.find('.grid-data');
             var leftH = header0.height();
             var midH = header1.height();
             var rightH = header2.height();
@@ -580,6 +589,15 @@ var DataGrid = function () {
             header2.css({
                 height: max + "px"
             }).removeClass("in-calc");
+            content0.css({
+                "padding-top": max + "px"
+            });
+            content1.css({
+                "padding-top": max + "px"
+            });
+            content2.css({
+                "padding-top": max + "px"
+            });
         }
     }, {
         key: 'create',
@@ -729,7 +747,7 @@ module.exports = function ($data) {
     $data = $data || {};
     var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height;
     $$out += '<div class="data-grid-group ';
-    $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : '');
+    $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : 'grid-fix-center');
     $$out += '" style="width:';
     $$out += $escape(width);
     $$out += '">\r\n    <div class="data-grid-wrap grid-header" style="padding-left: ';

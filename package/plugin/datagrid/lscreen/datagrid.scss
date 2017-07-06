@@ -38,9 +38,12 @@ $scrollWidth:17px;
       }
     }
     &.grid-header{
-      overflow-y: scroll;
+      overflow-y: hidden;
       overflow-x: hidden;
-      position: relative;
+      position: absolute;
+      background-color: map_get($baseColor,white);
+      z-index:20;
+
     }
   }
   .data-grid{
@@ -112,11 +115,17 @@ $scrollWidth:17px;
     text-align: center;
     word-break: break-all;
   }
+  .grid-fix-center{
+      .grid-header{
+        left:0;
+        right:$scrollWidth;
+      }
+  }
   .grid-fix-left{
     position: absolute;
     left:0;
     top:0;
-    z-index: 20;
+    z-index: 40;
     background-color: map_get($baseColor,white);
     &:after{
       display: none;
@@ -135,7 +144,7 @@ $scrollWidth:17px;
     position: absolute;
     right:$scrollWidth;
     top:0;
-    z-index: 20;
+    z-index: 40;
     background-color: map_get($baseColor,white);
     &:after{
       display: none;

@@ -307,7 +307,7 @@ var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(6);
 
-var _cfDrag = __webpack_require__(9);
+var _cfDrag = __webpack_require__(8);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -587,7 +587,199 @@ exports.transition = transition;
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 7 */
+/* 7 */,
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/27 0027.
+ * drag 拖动
+ */
+
+var DRAG_DEFAULT = {
+    container: 'body',
+    move: true
+};
+var idIncrementer = 0;
+
+var Drag = function () {
+    function Drag(element, options) {
+        _classCallCheck(this, Drag);
+
+        this.options = {
+            container: options.container || DRAG_DEFAULT.container,
+            move: options.move || DRAG_DEFAULT.move,
+            handle: options.handle
+        };
+        this.id = idIncrementer++;
+        this.$ = $(element);
+        this.init();
+    }
+
+    _createClass(Drag, [{
+        key: 'init',
+        value: function init() {
+            var _this = this;
+
+            var that = this,
+                $root = that.$,
+                BEFORE = 'before',
+                DRAG = 'drag',
+                FINISH = 'finish',
+                eventSuffix = '.' + that.id,
+                mouseDownEvent = 'mousedown' + eventSuffix,
+                mouseUpEvent = 'mouseup' + eventSuffix,
+                mouseMoveEvent = 'mousemove' + eventSuffix,
+                setting = that.options,
+                selector = setting.selector,
+                handle = setting.handle,
+                $ele = $root,
+                startPos = void 0,
+                cPos = void 0,
+                startOffset = void 0,
+                mousePos = void 0,
+                moved = void 0;
+
+            var mouseMove = function mouseMove(event) {
+                var mX = event.pageX,
+                    mY = event.pageY;
+                moved = true;
+                var dragPos = {
+                    left: mX - startOffset.x,
+                    top: mY - startOffset.y,
+                    position: "absolute",
+                    "margin-top": 0
+                };
+                $ele.removeClass('drag-ready').addClass('dragging');
+                if (setting.move) {
+                    $ele.css(dragPos);
+                }
+                setting[DRAG] && setting[DRAG]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: dragPos,
+                    offset: {
+                        x: mX - startPos.x,
+                        y: mY - startPos.y
+                    },
+                    smallOffset: {
+                        x: mX - mousePos.x,
+                        y: mY - mousePos.y
+                    }
+                });
+                mousePos.x = mX;
+                mousePos.y = mY;
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseUp = function mouseUp(event) {
+                $(document).off(eventSuffix);
+                if (!moved) {
+                    $ele.removeClass('drag-ready');
+                    return;
+                }
+                var endPos = {
+                    left: event.pageX - startOffset.x,
+                    top: event.pageY - startOffset.y
+                };
+                $ele.removeClass('drag-ready dragging');
+                if (setting.move) {
+                    $ele.css(endPos);
+                }
+                setting[FINISH] && setting[FINISH]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: endPos,
+                    offset: {
+                        x: event.pageX - startPos.x,
+                        y: event.pageY - startPos.y
+                    },
+                    smallOffset: {
+                        x: event.pageX - mousePos.x,
+                        y: event.pageY - mousePos.y
+                    }
+                });
+                event.preventDefault();
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseDown = function mouseDown(event) {
+                var $mouseDownEle = $(_this);
+                if (selector) {
+                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
+                }
+                if (setting[BEFORE]) {
+                    var isSure = setting[BEFORE]({
+                        event: event,
+                        element: $ele
+                    });
+                    if (isSure === false) return;
+                }
+
+                var $container = $(setting.container),
+                    pos = $ele.offset();
+                cPos = $container.offset();
+                startPos = {
+                    x: event.pageX,
+                    y: event.pageY
+                };
+                startOffset = {
+                    x: event.pageX - pos.left + cPos.left,
+                    y: event.pageY - pos.top + cPos.top
+                };
+                mousePos = $.extend({}, startPos);
+                moved = false;
+
+                $ele.addClass('drag-ready');
+                event.preventDefault();
+
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+
+                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
+            };
+            if (handle) {
+                $root.on(mouseDownEvent, handle, mouseDown);
+            } else if (selector) {
+                $root.on(mouseDownEvent, selector, mouseDown);
+            } else {
+                $root.on(mouseDownEvent, mouseDown);
+            }
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            var eventSuffix = '.' + this.id;
+            this.$.off(eventSuffix);
+            $(document).off(eventSuffix);
+        }
+    }]);
+
+    return Drag;
+}();
+
+exports.default = Drag;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -886,198 +1078,6 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 8 */,
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/27 0027.
- * drag 拖动
- */
-
-var DRAG_DEFAULT = {
-    container: 'body',
-    move: true
-};
-var idIncrementer = 0;
-
-var Drag = function () {
-    function Drag(element, options) {
-        _classCallCheck(this, Drag);
-
-        this.options = {
-            container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move,
-            handle: options.handle
-        };
-        this.id = idIncrementer++;
-        this.$ = $(element);
-        this.init();
-    }
-
-    _createClass(Drag, [{
-        key: 'init',
-        value: function init() {
-            var _this = this;
-
-            var that = this,
-                $root = that.$,
-                BEFORE = 'before',
-                DRAG = 'drag',
-                FINISH = 'finish',
-                eventSuffix = '.' + that.id,
-                mouseDownEvent = 'mousedown' + eventSuffix,
-                mouseUpEvent = 'mouseup' + eventSuffix,
-                mouseMoveEvent = 'mousemove' + eventSuffix,
-                setting = that.options,
-                selector = setting.selector,
-                handle = setting.handle,
-                $ele = $root,
-                startPos = void 0,
-                cPos = void 0,
-                startOffset = void 0,
-                mousePos = void 0,
-                moved = void 0;
-
-            var mouseMove = function mouseMove(event) {
-                var mX = event.pageX,
-                    mY = event.pageY;
-                moved = true;
-                var dragPos = {
-                    left: mX - startOffset.x,
-                    top: mY - startOffset.y,
-                    position: "absolute",
-                    "margin-top": 0
-                };
-                $ele.removeClass('drag-ready').addClass('dragging');
-                if (setting.move) {
-                    $ele.css(dragPos);
-                }
-                setting[DRAG] && setting[DRAG]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: dragPos,
-                    offset: {
-                        x: mX - startPos.x,
-                        y: mY - startPos.y
-                    },
-                    smallOffset: {
-                        x: mX - mousePos.x,
-                        y: mY - mousePos.y
-                    }
-                });
-                mousePos.x = mX;
-                mousePos.y = mY;
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseUp = function mouseUp(event) {
-                $(document).off(eventSuffix);
-                if (!moved) {
-                    $ele.removeClass('drag-ready');
-                    return;
-                }
-                var endPos = {
-                    left: event.pageX - startOffset.x,
-                    top: event.pageY - startOffset.y
-                };
-                $ele.removeClass('drag-ready dragging');
-                if (setting.move) {
-                    $ele.css(endPos);
-                }
-                setting[FINISH] && setting[FINISH]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: endPos,
-                    offset: {
-                        x: event.pageX - startPos.x,
-                        y: event.pageY - startPos.y
-                    },
-                    smallOffset: {
-                        x: event.pageX - mousePos.x,
-                        y: event.pageY - mousePos.y
-                    }
-                });
-                event.preventDefault();
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseDown = function mouseDown(event) {
-                var $mouseDownEle = $(_this);
-                if (selector) {
-                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
-                }
-                if (setting[BEFORE]) {
-                    var isSure = setting[BEFORE]({
-                        event: event,
-                        element: $ele
-                    });
-                    if (isSure === false) return;
-                }
-
-                var $container = $(setting.container),
-                    pos = $ele.offset();
-                cPos = $container.offset();
-                startPos = {
-                    x: event.pageX,
-                    y: event.pageY
-                };
-                startOffset = {
-                    x: event.pageX - pos.left + cPos.left,
-                    y: event.pageY - pos.top + cPos.top
-                };
-                mousePos = $.extend({}, startPos);
-                moved = false;
-
-                $ele.addClass('drag-ready');
-                event.preventDefault();
-
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-
-                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
-            };
-            if (handle) {
-                $root.on(mouseDownEvent, handle, mouseDown);
-            } else if (selector) {
-                $root.on(mouseDownEvent, selector, mouseDown);
-            } else {
-                $root.on(mouseDownEvent, mouseDown);
-            }
-        }
-    }, {
-        key: 'destroy',
-        value: function destroy() {
-            var eventSuffix = '.' + this.id;
-            this.$.off(eventSuffix);
-            $(document).off(eventSuffix);
-        }
-    }]);
-
-    return Drag;
-}();
-
-exports.default = Drag;
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
@@ -1088,7 +1088,7 @@ module.exports = {
 	"ApiVersion": "1.3.5",
 	"webApiDomainTest": "http://10.40.5.30:8081",
 	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "",
+	"webApiDomain": "http://10.40.4.154:8077",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,
@@ -1181,7 +1181,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(7);
+var _store = __webpack_require__(9);
 
 var _static = __webpack_require__(10);
 
@@ -2441,12 +2441,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         });
     };
     self.fetch.polyfill = true;
-})(typeof self !== 'undefined' ? self : window); /**
-                                                  * Promise检测
-                                                  */
+})(window); /**
+             * Promise检测
+             */
 
-
-var fetch = typeof self !== 'undefined' ? self.fetch : window.fetch;
+var fetch = window.fetch;
 exports.default = fetch;
 
 /***/ }),
@@ -2557,6 +2556,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * fixedRight 大小 30%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * center 数据是否居中
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * 中间grid会对数据进行全部创建，用于在mobile中显示
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 浏览器滚动条宽度设置为17px
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
@@ -2590,7 +2592,6 @@ var Grid = function () {
     _createClass(Grid, [{
         key: 'create',
         value: function create() {
-            console.log(this.fixed);
             var gridRender = $((0, _datagrid2.default)({
                 titles: this.titles,
                 height: this.height + "px",
@@ -2617,7 +2618,7 @@ var Grid = function () {
         value: function setTitles(titles, height) {
             this.titles = titles;
             if (this.fixed) {
-                this.height = height - 17;
+                this.height = height + 17;
             } else {
                 this.height = height;
             }
@@ -2635,6 +2636,7 @@ var Grid = function () {
         value: function scrollSync() {
             var _this = this;
             _this.content.on("scroll", function () {
+                console.log(_this.content[0].scrollLeft);
                 _this.header[0].scrollLeft = _this.content[0].scrollLeft;
             });
         }
@@ -2725,12 +2727,18 @@ var DataGrid = function () {
         value: function calcHeader() {
             //先计算宽度
             var rightW = this.rightGrid.gridRender.width();
-            this.midGrid.gridRender.find(".data-grid").css({
+            this.midGrid.gridRender.find(".grid-data > .data-grid").css({
                 "padding-right": rightW + "px"
+            });
+            this.midGrid.gridRender.find(".grid-header > .data-grid").css({
+                "padding-right": rightW + 17 + "px"
             });
             var header0 = this.leftGrid.gridRender.find('[data-row="header"]');
             var header1 = this.midGrid.gridRender.find('[data-row="header"]');
             var header2 = this.rightGrid.gridRender.find('[data-row="header"]');
+            var content0 = this.leftGrid.gridRender.find('.grid-data');
+            var content1 = this.midGrid.gridRender.find('.grid-data');
+            var content2 = this.rightGrid.gridRender.find('.grid-data');
             var leftH = header0.height();
             var midH = header1.height();
             var rightH = header2.height();
@@ -2744,6 +2752,15 @@ var DataGrid = function () {
             header2.css({
                 height: max + "px"
             }).removeClass("in-calc");
+            content0.css({
+                "padding-top": max + "px"
+            });
+            content1.css({
+                "padding-top": max + "px"
+            });
+            content2.css({
+                "padding-top": max + "px"
+            });
         }
     }, {
         key: 'create',
@@ -3024,8 +3041,6 @@ var _fetch = __webpack_require__(18);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _store = __webpack_require__(7);
-
 var _cfDialog = __webpack_require__(5);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
@@ -3045,17 +3060,6 @@ var _user2 = _interopRequireDefault(_user);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*const HttpSuccessStaatus=/^2\d{2}$/;
- let checkStatus=(response)=>{
- if (HttpSuccessStaatus.test(response.status)) {
- return response;
- } else {
- let error = new Error(response.statusText);
- error.response = response;
- throw error;
- }
- };*/
 
 var THENCLASS = function () {
     function THENCLASS() {
@@ -3098,7 +3102,7 @@ var fetch = function fetch(url, data, login) {
             return new THENCLASS();
         }
         _loading2.default.show();
-        return (0, _fetch2.default)(_static2.default.webApiDomain + url, {
+        return _fetch2.default.call(window, _static2.default.webApiDomain + url, {
             method: 'POST',
             headers: {
                 Token: token,
@@ -3139,7 +3143,7 @@ var fetch = function fetch(url, data, login) {
     } else {
         //get 方法
         _loading2.default.show();
-        return (0, _fetch2.default)(_static2.default.webApiDomain + url, {
+        return _fetch2.default.call(window, _static2.default.webApiDomain + url, {
             method: 'GET',
             headers: {
                 token: token
@@ -3180,7 +3184,7 @@ module.exports = function ($data) {
     $data = $data || {};
     var $$out = '', $escape = $imports.$escape, fixed = $data.fixed, width = $data.width, leftSpace = $data.leftSpace, rightSpace = $data.rightSpace, $each = $imports.$each, titles = $data.titles, title = $data.title, $index = $data.$index, height = $data.height;
     $$out += '<div class="data-grid-group ';
-    $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : '');
+    $$out += $escape(fixed === 'left' ? 'grid-fix-left' : fixed === 'right' ? 'grid-fix-right' : 'grid-fix-center');
     $$out += '" style="width:';
     $$out += $escape(width);
     $$out += '">\r\n    <div class="data-grid-wrap grid-header" style="padding-left: ';
@@ -3406,6 +3410,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Created by yanxlg on 2017/6/27 0027.
  * input 初始化
  * 禁用中文输入法
+ * //存在bug
+ *  email url 中e.key不兼容部分浏览器 例如uc等
  */
 
 var Input = function () {
@@ -3425,19 +3431,19 @@ var Input = function () {
                 e = e || event;
                 var currKey = e.keyCode || e.which || e.charCode;
                 var type = $(this).attr("type"),
-                    key = String.fromCharCode(currKey);
+                    key = e.key || String.fromCharCode(currKey);
                 switch (type) {
                     case "number":
-                        return (/\d|Backspace|Left|Right/.test(key)
+                        return (/\d|Backspace|Left|Right|Delete/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8
                         );
                     case "email":
                         return (/\d|Backspace|Left|Right|\.|\w|@/.test(key)
-                        );
+                        ); //存在bug
                     case "url":
                         return (/\d|Backspace|Left|Right|\.|\w|@|:|\//.test(key)
                         );
                     case "tel":
-                        return (/\d|Backspace|Left|Right/.test(key)
+                        return (/\d|Backspace|Left|Right|Delete/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8
                         );
                     default:
                         return true;

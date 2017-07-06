@@ -307,7 +307,7 @@ var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(6);
 
-var _cfDrag = __webpack_require__(9);
+var _cfDrag = __webpack_require__(8);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -588,6 +588,265 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/5 0005.
+ * slide插件
+ * 需要动态计算展开的大小
+ */
+var Slide = function () {
+    function Slide() {
+        _classCallCheck(this, Slide);
+    }
+
+    _createClass(Slide, null, [{
+        key: "slideDown",
+        value: function slideDown(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: offH + "px"
+            });
+            return offH;
+        }
+    }, {
+        key: "slide",
+        value: function slide(el, delY) {
+            //增量处理
+            var offH = el[0].offsetHeight;
+            el.css({
+                height: offH + delY + "px"
+            });
+            return offH + delY;
+        }
+    }, {
+        key: "slideUp",
+        value: function slideUp(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: 0
+            });
+            return offH;
+        }
+    }]);
+
+    return Slide;
+}();
+
+exports.default = Slide;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/27 0027.
+ * drag 拖动
+ */
+
+var DRAG_DEFAULT = {
+    container: 'body',
+    move: true
+};
+var idIncrementer = 0;
+
+var Drag = function () {
+    function Drag(element, options) {
+        _classCallCheck(this, Drag);
+
+        this.options = {
+            container: options.container || DRAG_DEFAULT.container,
+            move: options.move || DRAG_DEFAULT.move,
+            handle: options.handle
+        };
+        this.id = idIncrementer++;
+        this.$ = $(element);
+        this.init();
+    }
+
+    _createClass(Drag, [{
+        key: 'init',
+        value: function init() {
+            var _this = this;
+
+            var that = this,
+                $root = that.$,
+                BEFORE = 'before',
+                DRAG = 'drag',
+                FINISH = 'finish',
+                eventSuffix = '.' + that.id,
+                mouseDownEvent = 'mousedown' + eventSuffix,
+                mouseUpEvent = 'mouseup' + eventSuffix,
+                mouseMoveEvent = 'mousemove' + eventSuffix,
+                setting = that.options,
+                selector = setting.selector,
+                handle = setting.handle,
+                $ele = $root,
+                startPos = void 0,
+                cPos = void 0,
+                startOffset = void 0,
+                mousePos = void 0,
+                moved = void 0;
+
+            var mouseMove = function mouseMove(event) {
+                var mX = event.pageX,
+                    mY = event.pageY;
+                moved = true;
+                var dragPos = {
+                    left: mX - startOffset.x,
+                    top: mY - startOffset.y,
+                    position: "absolute",
+                    "margin-top": 0
+                };
+                $ele.removeClass('drag-ready').addClass('dragging');
+                if (setting.move) {
+                    $ele.css(dragPos);
+                }
+                setting[DRAG] && setting[DRAG]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: dragPos,
+                    offset: {
+                        x: mX - startPos.x,
+                        y: mY - startPos.y
+                    },
+                    smallOffset: {
+                        x: mX - mousePos.x,
+                        y: mY - mousePos.y
+                    }
+                });
+                mousePos.x = mX;
+                mousePos.y = mY;
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseUp = function mouseUp(event) {
+                $(document).off(eventSuffix);
+                if (!moved) {
+                    $ele.removeClass('drag-ready');
+                    return;
+                }
+                var endPos = {
+                    left: event.pageX - startOffset.x,
+                    top: event.pageY - startOffset.y
+                };
+                $ele.removeClass('drag-ready dragging');
+                if (setting.move) {
+                    $ele.css(endPos);
+                }
+                setting[FINISH] && setting[FINISH]({
+                    event: event,
+                    element: $ele,
+                    startOffset: startOffset,
+                    pos: endPos,
+                    offset: {
+                        x: event.pageX - startPos.x,
+                        y: event.pageY - startPos.y
+                    },
+                    smallOffset: {
+                        x: event.pageX - mousePos.x,
+                        y: event.pageY - mousePos.y
+                    }
+                });
+                event.preventDefault();
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+            };
+
+            var mouseDown = function mouseDown(event) {
+                var $mouseDownEle = $(_this);
+                if (selector) {
+                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
+                }
+                if (setting[BEFORE]) {
+                    var isSure = setting[BEFORE]({
+                        event: event,
+                        element: $ele
+                    });
+                    if (isSure === false) return;
+                }
+
+                var $container = $(setting.container),
+                    pos = $ele.offset();
+                cPos = $container.offset();
+                startPos = {
+                    x: event.pageX,
+                    y: event.pageY
+                };
+                startOffset = {
+                    x: event.pageX - pos.left + cPos.left,
+                    y: event.pageY - pos.top + cPos.top
+                };
+                mousePos = $.extend({}, startPos);
+                moved = false;
+
+                $ele.addClass('drag-ready');
+                event.preventDefault();
+
+                if (setting.stopPropagation) {
+                    event.stopPropagation();
+                }
+
+                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
+            };
+            if (handle) {
+                $root.on(mouseDownEvent, handle, mouseDown);
+            } else if (selector) {
+                $root.on(mouseDownEvent, selector, mouseDown);
+            } else {
+                $root.on(mouseDownEvent, mouseDown);
+            }
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            var eventSuffix = '.' + this.id;
+            this.$.off(eventSuffix);
+            $(document).off(eventSuffix);
+        }
+    }]);
+
+    return Drag;
+}();
+
+exports.default = Drag;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -886,265 +1145,6 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/6/5 0005.
- * slide插件
- * 需要动态计算展开的大小
- */
-var Slide = function () {
-    function Slide() {
-        _classCallCheck(this, Slide);
-    }
-
-    _createClass(Slide, null, [{
-        key: "slideDown",
-        value: function slideDown(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: offH + "px"
-            });
-            return offH;
-        }
-    }, {
-        key: "slide",
-        value: function slide(el, delY) {
-            //增量处理
-            var offH = el[0].offsetHeight;
-            el.css({
-                height: offH + delY + "px"
-            });
-            return offH + delY;
-        }
-    }, {
-        key: "slideUp",
-        value: function slideUp(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: 0
-            });
-            return offH;
-        }
-    }]);
-
-    return Slide;
-}();
-
-exports.default = Slide;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/27 0027.
- * drag 拖动
- */
-
-var DRAG_DEFAULT = {
-    container: 'body',
-    move: true
-};
-var idIncrementer = 0;
-
-var Drag = function () {
-    function Drag(element, options) {
-        _classCallCheck(this, Drag);
-
-        this.options = {
-            container: options.container || DRAG_DEFAULT.container,
-            move: options.move || DRAG_DEFAULT.move,
-            handle: options.handle
-        };
-        this.id = idIncrementer++;
-        this.$ = $(element);
-        this.init();
-    }
-
-    _createClass(Drag, [{
-        key: 'init',
-        value: function init() {
-            var _this = this;
-
-            var that = this,
-                $root = that.$,
-                BEFORE = 'before',
-                DRAG = 'drag',
-                FINISH = 'finish',
-                eventSuffix = '.' + that.id,
-                mouseDownEvent = 'mousedown' + eventSuffix,
-                mouseUpEvent = 'mouseup' + eventSuffix,
-                mouseMoveEvent = 'mousemove' + eventSuffix,
-                setting = that.options,
-                selector = setting.selector,
-                handle = setting.handle,
-                $ele = $root,
-                startPos = void 0,
-                cPos = void 0,
-                startOffset = void 0,
-                mousePos = void 0,
-                moved = void 0;
-
-            var mouseMove = function mouseMove(event) {
-                var mX = event.pageX,
-                    mY = event.pageY;
-                moved = true;
-                var dragPos = {
-                    left: mX - startOffset.x,
-                    top: mY - startOffset.y,
-                    position: "absolute",
-                    "margin-top": 0
-                };
-                $ele.removeClass('drag-ready').addClass('dragging');
-                if (setting.move) {
-                    $ele.css(dragPos);
-                }
-                setting[DRAG] && setting[DRAG]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: dragPos,
-                    offset: {
-                        x: mX - startPos.x,
-                        y: mY - startPos.y
-                    },
-                    smallOffset: {
-                        x: mX - mousePos.x,
-                        y: mY - mousePos.y
-                    }
-                });
-                mousePos.x = mX;
-                mousePos.y = mY;
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseUp = function mouseUp(event) {
-                $(document).off(eventSuffix);
-                if (!moved) {
-                    $ele.removeClass('drag-ready');
-                    return;
-                }
-                var endPos = {
-                    left: event.pageX - startOffset.x,
-                    top: event.pageY - startOffset.y
-                };
-                $ele.removeClass('drag-ready dragging');
-                if (setting.move) {
-                    $ele.css(endPos);
-                }
-                setting[FINISH] && setting[FINISH]({
-                    event: event,
-                    element: $ele,
-                    startOffset: startOffset,
-                    pos: endPos,
-                    offset: {
-                        x: event.pageX - startPos.x,
-                        y: event.pageY - startPos.y
-                    },
-                    smallOffset: {
-                        x: event.pageX - mousePos.x,
-                        y: event.pageY - mousePos.y
-                    }
-                });
-                event.preventDefault();
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-            };
-
-            var mouseDown = function mouseDown(event) {
-                var $mouseDownEle = $(_this);
-                if (selector) {
-                    $ele = handle ? $mouseDownEle.closest(selector) : $mouseDownEle;
-                }
-                if (setting[BEFORE]) {
-                    var isSure = setting[BEFORE]({
-                        event: event,
-                        element: $ele
-                    });
-                    if (isSure === false) return;
-                }
-
-                var $container = $(setting.container),
-                    pos = $ele.offset();
-                cPos = $container.offset();
-                startPos = {
-                    x: event.pageX,
-                    y: event.pageY
-                };
-                startOffset = {
-                    x: event.pageX - pos.left + cPos.left,
-                    y: event.pageY - pos.top + cPos.top
-                };
-                mousePos = $.extend({}, startPos);
-                moved = false;
-
-                $ele.addClass('drag-ready');
-                event.preventDefault();
-
-                if (setting.stopPropagation) {
-                    event.stopPropagation();
-                }
-
-                $(document).on(mouseMoveEvent, mouseMove).on(mouseUpEvent, mouseUp);
-            };
-            if (handle) {
-                $root.on(mouseDownEvent, handle, mouseDown);
-            } else if (selector) {
-                $root.on(mouseDownEvent, selector, mouseDown);
-            } else {
-                $root.on(mouseDownEvent, mouseDown);
-            }
-        }
-    }, {
-        key: 'destroy',
-        value: function destroy() {
-            var eventSuffix = '.' + this.id;
-            this.$.off(eventSuffix);
-            $(document).off(eventSuffix);
-        }
-    }]);
-
-    return Drag;
-}();
-
-exports.default = Drag;
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
@@ -1155,7 +1155,7 @@ module.exports = {
 	"ApiVersion": "1.3.5",
 	"webApiDomainTest": "http://10.40.5.30:8081",
 	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "",
+	"webApiDomain": "http://10.40.4.154:8077",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,
@@ -1271,7 +1271,7 @@ var _navPop = __webpack_require__(15);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -1431,7 +1431,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(7);
+var _store = __webpack_require__(9);
 
 var _static = __webpack_require__(10);
 
@@ -1624,7 +1624,7 @@ var _navLeft = __webpack_require__(22);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -2174,7 +2174,7 @@ module.exports = {
 	"login": "login.html",
 	"angularCompute": "angular.html",
 	"CustomerManage": "register.html",
-	"TalentCertification.html": "talentRegister.html#compatible"
+	"TalentCertification.html": "talentRegister.html"
 };
 
 /***/ }),

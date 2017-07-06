@@ -34,7 +34,7 @@ $selectOptionBg:#e4e8f1;
     overflow-y: auto;
     border:1px solid $borderColor;
     background-color: map_get($baseColor,white);
-    z-index: 20;
+    z-index: 400;
     li{
       cursor: default;
       padding:remToPx(0.3rem 0.2rem);

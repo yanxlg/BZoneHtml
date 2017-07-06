@@ -21,7 +21,7 @@
         <div class="item">
             <div class="item-info">形&ensp;象&ensp;照：
                 <div class="flex-1" style="display: block">
-                    <!--{{pics=TalentPictures.split(";")}}-->
+                    <!--{{pics=TalentPictures.split(",")}}-->
                     {{each pics as pic}}
                         <img data-toggle="viewer" data-group="beauty" src="{{pic}}" height="100">
                     {{/each}}
@@ -75,7 +75,7 @@
             给该技能定价：<input type="number" value="{{Price}}" class="input price-number" id="price">
             <div class="select price-unit" id="changePrice">
                 <div class="input-icon">
-                    <input type="text" readonly="readonly" class="input" value="{{PriceUnit?('元/'+PriceUnit):''}}"><i class="icon icon-arrow"></i>
+                    <input type="text" readonly="readonly" class="input" placeholder="单价" value="{{PriceUnit?('元/'+PriceUnit):''}}"><i class="icon icon-arrow"></i>
                 </div>
                 <ul class="select-options up">
                     <li value="次">元/次</li>
@@ -84,6 +84,11 @@
                     <li value="15分钟">元/15分钟</li>
                 </ul>
             </div>
+        </div>
+    </div>
+    <div class="block no-border">
+        <div class="item align-center">
+            不通过原因：<textarea class="input flex flex-1" id="reason"></textarea>
         </div>
     </div>
 </div>

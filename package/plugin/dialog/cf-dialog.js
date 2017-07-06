@@ -307,7 +307,7 @@ var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
 var _cfTransition = __webpack_require__(6);
 
-var _cfDrag = __webpack_require__(9);
+var _cfDrag = __webpack_require__(8);
 
 var _cfDrag2 = _interopRequireDefault(_cfDrag);
 
@@ -588,8 +588,7 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 /* 7 */,
-/* 8 */,
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -780,6 +779,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
+/* 9 */,
 /* 10 */,
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {

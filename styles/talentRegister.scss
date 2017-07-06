@@ -11,7 +11,6 @@
 @import "../package/plugin/pager/pager.scss";
 @import "../package/ui/cf-flex-include.scss";
 @import "../package/plugin/imgviewer/imgviewer.scss";
-
 .block{
   padding: remToPx(0.5rem) remToPx(0.3rem);
   @extend .flex-column;

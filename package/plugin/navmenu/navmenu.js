@@ -225,8 +225,7 @@ try {
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */,
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -294,6 +293,7 @@ var Slide = function () {
 exports.default = Slide;
 
 /***/ }),
+/* 8 */,
 /* 9 */,
 /* 10 */,
 /* 11 */,
@@ -340,7 +340,7 @@ var _navPop = __webpack_require__(15);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
-var _slide = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -596,7 +596,7 @@ var _navLeft = __webpack_require__(22);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(8);
+var _slide = __webpack_require__(7);
 
 var _slide2 = _interopRequireDefault(_slide);
 
