@@ -69,6 +69,10 @@ class Login{
         if(_user&&user.isCached()){
             $("#userName").val(_user.User.UserName);
             $("#password").val(_user.User.Password);
+        }else{
+            //清空账号
+            $("#userName").val("");
+            $("#password").val("");
         }
     }
     static instance(){

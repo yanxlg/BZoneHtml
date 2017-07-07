@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -780,6 +780,25 @@ exports.default = Drag;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomainTest": "http://10.40.5.30:8081",
+	"webApiDomainLocal": "http://localhost:5007",
+	"webApiDomain": "http://localhost:5007",
+	"successCode": 0,
+	"errorCode": -1,
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
+};
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1078,25 +1097,6 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomainTest": "http://10.40.5.30:8081",
-	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "http://10.40.4.154:8077",
-	"successCode": 0,
-	"errorCode": -1,
-	"overdueCode": 10040,
-	"userLocalKey": "_user",
-	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
-};
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1181,9 +1181,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(9);
+var _store = __webpack_require__(10);
 
-var _static = __webpack_require__(10);
+var _static = __webpack_require__(9);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1252,6 +1252,25 @@ var USER = function () {
             var user = this.getInfo();
             return user.cache;
         }
+    }, {
+        key: 'getPassword',
+        value: function getPassword() {
+            var user = this.getInfo();
+            return user.User.Password;
+        }
+    }, {
+        key: 'setPassword',
+        value: function setPassword(password) {
+            var user = this.getInfo();
+            user.User.Password = password;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getUserID',
+        value: function getUserID() {
+            var user = this.getInfo();
+            return user.User.UserID;
+        }
     }]);
 
     return USER;
@@ -1260,9 +1279,7 @@ var USER = function () {
 exports.default = USER;
 
 /***/ }),
-/* 14 */,
-/* 15 */,
-/* 16 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1621,10 +1638,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1814,7 +1831,8 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 18 */
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1824,7 +1842,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(16);
+var _Promise = __webpack_require__(14);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2297,90 +2315,8 @@ var fetch = window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '';
-    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in">\r\n        <div class="loading-container">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
-    return $$out;
-};
-
-/***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/19 0019.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 获取container的overflow属性，关闭后自动设置回去
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用modal进行处理
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _loading = __webpack_require__(21);
-
-var _loading2 = _interopRequireDefault(_loading);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Loading = function () {
-    function Loading() {
-        _classCallCheck(this, Loading);
-
-        this.renderEle = $((0, _loading2.default)({}));
-        return this;
-    }
-
-    _createClass(Loading, [{
-        key: "show",
-        value: function show() {
-            $("body").append(this.renderEle);
-            return this;
-        }
-    }, {
-        key: "close",
-        value: function close() {
-            this.renderEle.remove();
-            return this;
-        }
-    }], [{
-        key: "show",
-        value: function show() {
-            this.close();
-            return new Loading().show();
-        }
-    }, {
-        key: "close",
-        value: function close() {
-            $(".loading-plugin").remove();
-        }
-    }]);
-
-    return Loading;
-}();
-
-exports.default = Loading;
-
-/***/ }),
-/* 25 */,
-/* 26 */,
-/* 27 */
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2396,7 +2332,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(18);
+var _fetch = __webpack_require__(17);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
@@ -2404,11 +2340,11 @@ var _cfDialog = __webpack_require__(5);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(10);
+var _static = __webpack_require__(9);
 
 var _static2 = _interopRequireDefault(_static);
 
-var _loading = __webpack_require__(24);
+var _loading = __webpack_require__(21);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2532,6 +2468,83 @@ var fetch = function fetch(url, data, login) {
     }
 };
 exports.default = fetch;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '';
+    $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in">\r\n        <div class="loading-container">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/19 0019.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 获取container的overflow属性，关闭后自动设置回去
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 使用modal进行处理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _loading = __webpack_require__(20);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Loading = function () {
+    function Loading() {
+        _classCallCheck(this, Loading);
+
+        this.renderEle = $((0, _loading2.default)({}));
+        return this;
+    }
+
+    _createClass(Loading, [{
+        key: "show",
+        value: function show() {
+            $("body").append(this.renderEle);
+            return this;
+        }
+    }, {
+        key: "close",
+        value: function close() {
+            this.renderEle.remove();
+            return this;
+        }
+    }], [{
+        key: "show",
+        value: function show() {
+            this.close();
+            return new Loading().show();
+        }
+    }, {
+        key: "close",
+        value: function close() {
+            $(".loading-plugin").remove();
+        }
+    }]);
+
+    return Loading;
+}();
+
+exports.default = Loading;
 
 /***/ })
 /******/ ]);

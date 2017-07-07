@@ -9,11 +9,13 @@ import user from './user.es6';
 import NavMenu from '../package/plugin/navmenu/navmenu.es6';
 import myCenter from '../artTemplate/myCenter.art';
 import dialog from '../package/plugin/dialog/cf-dialog.es6';
+import changePwd from '../artTemplate/changePwd.art';
 import Navigator from './navigator.es6';
+import fetch from './fetch.es6';
 class Index{
     static checkLogin(){
         if(!user.getToken()){
-            location.replace("./login.html");
+            Navigator.toLogin();
             return -1;
         }
     }
@@ -90,8 +92,73 @@ class Index{
             alert("退出当前登录用户？").then(function (option) {
                 if(/\S+ok$/.test(option)){
                     //退出登录
+                    Navigator.toLogin();
                 }
             })
+        });
+        $("body").on("click",'[data-user-action="changePwd"]',function () {
+            //修改密码
+            dialog({
+                title:"修改密码",
+                content:changePwd({})
+            }).then(function (btn) {
+                let $$dialog=this;
+                if(/\S+ok$/.test(btn)){
+                    let old_pwd=$("#old_pwd").val();
+                    let new_pwd=$("#new_pwd").val();
+                    //验证必填
+                    if(!old_pwd){
+                        $("#old_pwd").addClass("validate-error");
+                    }
+                    if(!new_pwd){
+                        $("#new_pwd").addClass("validate-error");
+                    }
+                    if(!old_pwd||!new_pwd) return -1;
+                    if(old_pwd===new_pwd){
+                        alert("新密码不能与旧密码一致");
+                        return -1;
+                    }
+                    let localPwd=user.getPassword();
+                    if(old_pwd!==localPwd){
+                        alert("原密码输入错误，请重新输入");
+                        return -1;
+                    }
+                    fetch("/api/ManageUserInfoApi/ModifyUserInfoPassword",{
+                        NewPassword:new_pwd,
+                        OldPassword:old_pwd,
+                        UpdateUser:user.getUserID()
+                    }).then(res=>{
+                        if(res.ok){
+                            user.setPassword(new_pwd);
+                            alert("修改成功").then(function () {
+                                this.close();
+                                $$dialog.close();
+                            });
+                        }else{
+                            alert(res.msg).then(function(btn){
+                                if(btn==="operation_ok"){
+                                    if(res.overdue){
+                                        Navigator.toLogin();
+                                        return -1;
+                                    }
+                                    this.close();
+                                    $$dialog.close();
+                                }
+                            });
+                        }
+                    })
+                }
+            });
+        });
+        $("body").on("input",'#old_pwd',function () {
+            if($(this).val()){
+                $(this).removeClass("validate-error");
+            }
+        });
+        $("body").on("input",'#new_pwd',function () {
+            if($(this).val()){
+                $(this).removeClass("validate-error");
+            }
         });
     }
 }

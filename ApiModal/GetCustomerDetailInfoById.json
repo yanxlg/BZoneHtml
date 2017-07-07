@@ -1,0 +1,82 @@
+{
+  "name": "Name",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "customerDetail"
+  ],
+  "Head": {
+    "Ret": 0,
+    "Code": 10000,
+    "Token": null,
+    "Msg": "接口调用成功"
+  },
+  "Content": {
+    "HideCompanyWord": null,
+    "CustomerID": 25276,
+    "EaseCustomerID": "1dd5b14e-3cd9-4496-8437-1e50332684fe",
+    "CustomerCard": "http://10.40.5.30:8021/BZone/IndividualCenter/2017/7/192566af-9b40-4625-878e-baa7ed03a4f1_960_1280.jpeg",
+    "LocationCityCode": "110100",
+    "LocationProvinceCode": "110000",
+    "CustomerLocation": "北京",
+    "HometownCityCode": "110100",
+    "HometownProvinceCode": "110000",
+    "CustomerHomeTown": "北京",
+    "CustomerName": "杂炣",
+    "CustomerTel": "13703932012",
+    "IdentificationState": 2,
+    "CustomerAvatar": null,
+    "CustomerPosition": "dsds",
+    "CompanyName": "1111",
+    "Sex": 1,
+    "CustomerIndustry": "",
+    "AttentionIndustry": "",
+    "CustomerIntroduction": null,
+    "CreateTime": "2017-07-05T15:54:24.043",
+    "CustomerProvide": null,
+    "CustomerDemand": null,
+    "CustomerLevel": 0,
+    "JobExperienceList": [
+      {
+        "JobID": "15317",
+        "CompanyName": "111",
+        "Position": "111111",
+        "Describe": null,
+        "BeginTime": null,
+        "IdentificationState": 0,
+        "EndTime": null,
+        "IsAdded": false,
+        "IsDeleted": false,
+        "CreateTime": "2017-07-05T15:54:50.64"
+      },
+      {
+        "JobID": "15318",
+        "CompanyName": "1111",
+        "Position": "wds",
+        "Describe": null,
+        "BeginTime": null,
+        "IdentificationState": 0,
+        "EndTime": null,
+        "IsAdded": false,
+        "IsDeleted": false,
+        "CreateTime": "2017-07-07T17:20:40.697"
+      },
+      {
+        "JobID": "15319",
+        "CompanyName": "1111",
+        "Position": "dsds",
+        "Describe": null,
+        "BeginTime": null,
+        "IdentificationState": 2,
+        "EndTime": null,
+        "IsAdded": false,
+        "IsDeleted": false,
+        "CreateTime": "2017-07-07T17:20:40.697"
+      }
+    ],
+    "EduExperienceList": [],
+    "Hobbys": "",
+    "CompanyID": null,
+    "id": ""
+  }
+}

@@ -98,10 +98,26 @@ var Input = function () {
     _createClass(Input, null, [{
         key: "initialize",
         value: function initialize() {
+            //粘贴内容进行判断
+            $("body").on("paste", "input", function (e) {
+                var txt = "";
+                if (window.clipboardData && window.clipboardData.getData) {
+                    // IE
+                    txt = window.clipboardData.getData('Text');
+                } else {
+                    txt = e.originalEvent.clipboardData.getData('Text'); //e.clipboardData.getData('text/plain');
+                }
+                if (this.type === "number" || this.type === "tel") {
+                    if (!/\d+/.test(txt)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
             $("body").on("focus", "input", function () {
                 var type = $(this).attr("type");
                 if (!(!type || type === "text")) {
-                    $(this).attr("onpaste", "return false;");
+                    // $(this).attr("onpaste","window.inputPaste(this);");
                 }
             }).on("keydown", "input", function (e) {
                 e = e || event;
@@ -109,17 +125,15 @@ var Input = function () {
                 var type = $(this).attr("type"),
                     key = e.key || String.fromCharCode(currKey);
                 switch (type) {
-                    case "number":
-                        return (/\d|Backspace|Left|Right|Delete/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8
-                        );
                     case "email":
-                        return (/\d|Backspace|Left|Right|\.|\w|@/.test(key)
+                        return (/\d|Backspace|Left|Right|\.|\w|@|Control/.test(key)
                         ); //存在bug
                     case "url":
-                        return (/\d|Backspace|Left|Right|\.|\w|@|:|\//.test(key)
+                        return (/\d|Backspace|Left|Right|\.|\w|@|:|\/|Control/.test(key)
                         );
                     case "tel":
-                        return (/\d|Backspace|Left|Right|Delete/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8
+                    case "number":
+                        return (/\d|Backspace|Left|Right|Delete|Control/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8 || currKey === 17 || e.ctrlKey && currKey === 86
                         );
                     default:
                         return true;

@@ -69,125 +69,6 @@
 /******/ ({
 
 /***/ 10:
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomainTest": "http://10.40.5.30:8081",
-	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "http://10.40.4.154:8077",
-	"successCode": 0,
-	"errorCode": -1,
-	"overdueCode": 10040,
-	"userLocalKey": "_user",
-	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
-};
-
-/***/ }),
-
-/***/ 13:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 做angular兼容
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _store = __webpack_require__(9);
-
-var _static = __webpack_require__(10);
-
-var _static2 = _interopRequireDefault(_static);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var USER = function () {
-    function USER() {
-        _classCallCheck(this, USER);
-    }
-
-    _createClass(USER, null, [{
-        key: 'setToken',
-        value: function setToken(token) {
-            var user = this.getInfo();
-            user.Token = token;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'getToken',
-        value: function getToken() {
-            var user = this.getInfo();
-            return user.Token;
-        }
-    }, {
-        key: 'getInfo',
-        value: function getInfo() {
-            if (!this._user) {
-                var user = _store.store.get(_static2.default.userLocalKey);
-                if (user && user !== "undefined" && typeof user !== "undefined") {
-                    this._user = user;
-                } else {
-                    this._user = {};
-                }
-            }
-            return this._user;
-        }
-    }, {
-        key: 'setInfo',
-        value: function setInfo(user) {
-            //差量更新
-            var user_old = this.getInfo();
-            var user_new = $.extend(true, user_old, user);
-            console.log(user_new);
-            _store.store.set(_static2.default.userLocalKey, user_new);
-            this._user = user_new;
-        }
-    }, {
-        key: 'cacheLogin',
-        value: function cacheLogin() {
-            var user = this.getInfo();
-            user.cache = true;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'removeCache',
-        value: function removeCache() {
-            var user = this.getInfo();
-            user.cache = false;
-            this.setInfo(user);
-        }
-    }, {
-        key: 'isCached',
-        value: function isCached() {
-            var user = this.getInfo();
-            return user.cache;
-        }
-    }]);
-
-    return USER;
-}();
-
-exports.default = USER;
-
-/***/ }),
-
-/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -484,6 +365,144 @@ exports.store = Store;
 exports.session = Session;
 exports.encode = encode;
 exports.decode = decode;
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/20 0020.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * user信息管理
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * key: _user
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 加入缓存机制，页面不刷新不会重新获取
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 做angular兼容
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _store = __webpack_require__(10);
+
+var _static = __webpack_require__(9);
+
+var _static2 = _interopRequireDefault(_static);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var USER = function () {
+    function USER() {
+        _classCallCheck(this, USER);
+    }
+
+    _createClass(USER, null, [{
+        key: 'setToken',
+        value: function setToken(token) {
+            var user = this.getInfo();
+            user.Token = token;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getToken',
+        value: function getToken() {
+            var user = this.getInfo();
+            return user.Token;
+        }
+    }, {
+        key: 'getInfo',
+        value: function getInfo() {
+            if (!this._user) {
+                var user = _store.store.get(_static2.default.userLocalKey);
+                if (user && user !== "undefined" && typeof user !== "undefined") {
+                    this._user = user;
+                } else {
+                    this._user = {};
+                }
+            }
+            return this._user;
+        }
+    }, {
+        key: 'setInfo',
+        value: function setInfo(user) {
+            //差量更新
+            var user_old = this.getInfo();
+            var user_new = $.extend(true, user_old, user);
+            console.log(user_new);
+            _store.store.set(_static2.default.userLocalKey, user_new);
+            this._user = user_new;
+        }
+    }, {
+        key: 'cacheLogin',
+        value: function cacheLogin() {
+            var user = this.getInfo();
+            user.cache = true;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'removeCache',
+        value: function removeCache() {
+            var user = this.getInfo();
+            user.cache = false;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'isCached',
+        value: function isCached() {
+            var user = this.getInfo();
+            return user.cache;
+        }
+    }, {
+        key: 'getPassword',
+        value: function getPassword() {
+            var user = this.getInfo();
+            return user.User.Password;
+        }
+    }, {
+        key: 'setPassword',
+        value: function setPassword(password) {
+            var user = this.getInfo();
+            user.User.Password = password;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getUserID',
+        value: function getUserID() {
+            var user = this.getInfo();
+            return user.User.UserID;
+        }
+    }]);
+
+    return USER;
+}();
+
+exports.default = USER;
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomainTest": "http://10.40.5.30:8081",
+	"webApiDomainLocal": "http://localhost:5007",
+	"webApiDomain": "http://localhost:5007",
+	"successCode": 0,
+	"errorCode": -1,
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
+};
 
 /***/ })
 

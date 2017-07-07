@@ -50,5 +50,18 @@ class USER{
         let user=this.getInfo();
         return user.cache;
     }
+    static getPassword(){
+        let user=this.getInfo();
+        return user.User.Password;
+    }
+    static setPassword(password){
+        let user=this.getInfo();
+        user.User.Password=password;
+        this.setInfo(user);
+    }
+    static getUserID(){
+        let user=this.getInfo();
+        return user.User.UserID;
+    }
 }
 export default USER;

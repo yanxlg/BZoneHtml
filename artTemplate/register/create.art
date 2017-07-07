@@ -1,0 +1,20 @@
+<div class="scroll-content">
+    <div class="block">
+        <div class="item-name">
+            基本资料
+        </div>
+        <div class="item">
+            <div class="item-info">姓名：<input class="input" type="text"></div>
+            <div class="item-info">手机号：<input type="tel" class="input"></div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="item-name">
+            职务信息
+        </div>
+        <div class="item">
+            <div class="item-info">职务：<input class="input" type="text"></div>
+            <div class="item-info">公司全称：<input type="tel" class="input"></div>
+        </div>
+    </div>
+</div>

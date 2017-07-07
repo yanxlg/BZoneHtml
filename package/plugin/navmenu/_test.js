@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 65);
+/******/ 	return __webpack_require__(__webpack_require__.s = 68);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -145,7 +145,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navPop = __webpack_require__(15);
+var _navPop = __webpack_require__(18);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -291,7 +291,7 @@ exports.default = PopMenu;
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -356,150 +356,6 @@ module.exports = function ($data) {
     $$out += '\r\n    </ul>\r\n</div>\r\n';
     return $$out;
 };
-
-/***/ }),
-
-/***/ 19:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/2 0002.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航菜单
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 默认根据屏幕大小切换显示方式，大屏显示在左侧 中屏显示在顶部 小屏顶部折叠 右侧显示（支持左侧侧滑）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * options 支持参数
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * force:""  强制以某种方式显示
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 菜单循环嵌套,一个菜单项是一个object
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * menus:[{pMenu:{},menuList:[{groupName:"",menus:[]},{},{}]},{}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分组信息 group menus:{groupName:"",menus:[]}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 一组菜单：[]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 支持三层结构
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  name:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  data:obj
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  childMenus:[{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      groupName:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      menus:[{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           name:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           data:obj,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           childMenus:[]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 打开的时候收起其他的
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _navLeft = __webpack_require__(22);
-
-var _navLeft2 = _interopRequireDefault(_navLeft);
-
-var _slide = __webpack_require__(7);
-
-var _slide2 = _interopRequireDefault(_slide);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var LeftMenu = function () {
-    function LeftMenu(menus) {
-        _classCallCheck(this, LeftMenu);
-
-        this.menus = menus;
-        this.create();
-        this.initLife();
-    }
-
-    _createClass(LeftMenu, [{
-        key: 'getType',
-        value: function getType() {
-            return "LeftMenu";
-        }
-    }, {
-        key: 'create',
-        value: function create() {
-            this.menusRender = $((0, _navLeft2.default)({
-                menus: this.menus
-            }));
-            $("body").addClass("width-nav-left").append(this.menusRender);
-        }
-    }, {
-        key: 'initLife',
-        value: function initLife() {
-            var _this = this;
-            this.menusRender.on("click", ".nav-menu", function () {
-                var $this = $(this);
-                if ($this.next().hasClass("slide")) {
-                    if ($this.next().hasClass("open")) {
-                        $this.removeClass("open").next().removeClass("open");
-                        var addH = _slide2.default.slideUp($this.next());
-                        var parentSlide = $this.parents(".slide");
-                        $.each(parentSlide, function (i, slide) {
-                            $(slide).addClass("open").prev().addClass("open");
-                            _slide2.default.slide($(slide), -addH);
-                        });
-                    } else {
-                        //这样会造成父级元素高度变化
-                        //fix it
-                        //需要关闭其他父级菜单中已经打开的
-                        var others = $this.parent().siblings(); //li元素
-                        $.each(others, function (i, li) {
-                            var slide = $(li).children(".slide");
-                            if (slide.hasClass("open")) {
-                                slide.removeClass("open").prev().removeClass("open");
-                                _slide2.default.slideUp(slide);
-                                //关闭子的
-                                var childSlide = slide.find(".slide");
-                                $.each(childSlide, function (i, mSlide) {
-                                    $(mSlide).removeClass("open").prev().removeClass("open");
-                                    _slide2.default.slideUp($(mSlide));
-                                });
-                            }
-                        });
-                        $this.addClass("open").next().addClass("open");
-                        var _addH = _slide2.default.slideDown($this.next());
-                        var _parentSlide = $this.parents(".slide");
-                        $.each(_parentSlide, function (i, slide) {
-                            $(slide).addClass("open").prev().addClass("open");
-                            _slide2.default.slide($(slide), _addH);
-                        });
-                    }
-                } else {
-                    $(".nav-active").removeClass("nav-active");
-                    $(".nav-menu.active").removeClass("active");
-                    $this.addClass("nav-active");
-                    var data = $this.attr("data-data");
-                    _this.callback && _this.callback.call(_this, data);
-                }
-            });
-        }
-    }, {
-        key: 'then',
-        value: function then(callback) {
-            this.callback = callback;
-            return this;
-        }
-    }, {
-        key: 'destroy',
-        value: function destroy() {
-            this.menusRender.remove();
-            $("body").removeClass("width-nav-left");
-        }
-    }]);
-
-    return LeftMenu;
-}();
-
-exports.default = LeftMenu;
 
 /***/ }),
 
@@ -610,7 +466,151 @@ module.exports = runtime;
 
 /***/ }),
 
-/***/ 20:
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/2 0002.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航菜单
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 默认根据屏幕大小切换显示方式，大屏显示在左侧 中屏显示在顶部 小屏顶部折叠 右侧显示（支持左侧侧滑）
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * options 支持参数
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * force:""  强制以某种方式显示
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 菜单循环嵌套,一个菜单项是一个object
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * menus:[{pMenu:{},menuList:[{groupName:"",menus:[]},{},{}]},{}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分组信息 group menus:{groupName:"",menus:[]}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 一组菜单：[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 支持三层结构
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  name:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  data:obj
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  childMenus:[{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      groupName:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      menus:[{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           name:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           data:obj,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           childMenus:[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      }]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  }]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 打开的时候收起其他的
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _navLeft = __webpack_require__(24);
+
+var _navLeft2 = _interopRequireDefault(_navLeft);
+
+var _slide = __webpack_require__(7);
+
+var _slide2 = _interopRequireDefault(_slide);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LeftMenu = function () {
+    function LeftMenu(menus) {
+        _classCallCheck(this, LeftMenu);
+
+        this.menus = menus;
+        this.create();
+        this.initLife();
+    }
+
+    _createClass(LeftMenu, [{
+        key: 'getType',
+        value: function getType() {
+            return "LeftMenu";
+        }
+    }, {
+        key: 'create',
+        value: function create() {
+            this.menusRender = $((0, _navLeft2.default)({
+                menus: this.menus
+            }));
+            $("body").addClass("width-nav-left").append(this.menusRender);
+        }
+    }, {
+        key: 'initLife',
+        value: function initLife() {
+            var _this = this;
+            this.menusRender.on("click", ".nav-menu", function () {
+                var $this = $(this);
+                if ($this.next().hasClass("slide")) {
+                    if ($this.next().hasClass("open")) {
+                        $this.removeClass("open").next().removeClass("open");
+                        var addH = _slide2.default.slideUp($this.next());
+                        var parentSlide = $this.parents(".slide");
+                        $.each(parentSlide, function (i, slide) {
+                            $(slide).addClass("open").prev().addClass("open");
+                            _slide2.default.slide($(slide), -addH);
+                        });
+                    } else {
+                        //这样会造成父级元素高度变化
+                        //fix it
+                        //需要关闭其他父级菜单中已经打开的
+                        var others = $this.parent().siblings(); //li元素
+                        $.each(others, function (i, li) {
+                            var slide = $(li).children(".slide");
+                            if (slide.hasClass("open")) {
+                                slide.removeClass("open").prev().removeClass("open");
+                                _slide2.default.slideUp(slide);
+                                //关闭子的
+                                var childSlide = slide.find(".slide");
+                                $.each(childSlide, function (i, mSlide) {
+                                    $(mSlide).removeClass("open").prev().removeClass("open");
+                                    _slide2.default.slideUp($(mSlide));
+                                });
+                            }
+                        });
+                        $this.addClass("open").next().addClass("open");
+                        var _addH = _slide2.default.slideDown($this.next());
+                        var _parentSlide = $this.parents(".slide");
+                        $.each(_parentSlide, function (i, slide) {
+                            $(slide).addClass("open").prev().addClass("open");
+                            _slide2.default.slide($(slide), _addH);
+                        });
+                    }
+                } else {
+                    $(".nav-active").removeClass("nav-active");
+                    $(".nav-menu.active").removeClass("active");
+                    $this.addClass("nav-active");
+                    var data = $this.attr("data-data");
+                    _this.callback && _this.callback.call(_this, data);
+                }
+            });
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            this.menusRender.remove();
+            $("body").removeClass("width-nav-left");
+        }
+    }]);
+
+    return LeftMenu;
+}();
+
+exports.default = LeftMenu;
+
+/***/ }),
+
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -627,7 +627,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navTop = __webpack_require__(23);
+var _navTop = __webpack_require__(25);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
@@ -736,7 +736,7 @@ exports.default = TopMenu;
 
 /***/ }),
 
-/***/ 22:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -802,7 +802,7 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -894,11 +894,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(19);
+var _navLeft = __webpack_require__(22);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _navTop = __webpack_require__(20);
+var _navTop = __webpack_require__(23);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
@@ -984,7 +984,7 @@ exports.default = NavMenu;
 
 /***/ }),
 
-/***/ 65:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

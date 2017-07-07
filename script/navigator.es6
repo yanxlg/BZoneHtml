@@ -31,5 +31,8 @@ class Navigator{
     static isExist(pageName){
         return router[pageName];
     }
+    static toLogin(){
+        location.replace("./"+router.login);
+    }
 }
 export default Navigator;

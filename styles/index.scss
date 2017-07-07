@@ -4,8 +4,9 @@
 @import "../package/ui/cf-flex.scss";
 @import "../package/ui/cf-iconfont.scss";
 @import "../package/plugin/navmenu/navmenu.scss";
-@import "../package/plugin/loading/loading-icon.scss";
 @import "../package/plugin/dialog/dialog.scss";
+@import "../package/ui/input.scss";
+@import "../package/plugin/loading/loading.scss";
 .nav{
   position: relative;
   &.nav-left{

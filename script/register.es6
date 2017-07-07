@@ -9,6 +9,8 @@ import Datagrid from '../package/plugin/datagrid/datagrid.es6';
 import dialog from '../package/plugin/dialog/cf-dialog.es6';
 import Pager from '../package/plugin/pager/pager.es6';
 import registerSource from '../config/registerSource.json';
+import detail from '../artTemplate/register/detail.art';
+import create from '../artTemplate/register/create.art';
 
 import fetch from './fetch.es6';
 class Register{
@@ -86,7 +88,12 @@ class Register{
             height:dataH,
             rightFixedWidth:"200px"
         }).setActions(["查看详情","编辑","删除"]).then((type,data)=>{
-            alert(type);
+            data&&(typeof data!==undefined)&&(data=JSON.parse(data));
+            switch (type){
+                case "查看详情":
+                    this.getDetail(data.CustomerID);
+                    break;
+            }
         });
         $(window).on("resize",function () {
             let dataH=document.documentElement.offsetHeight-$(".page-datagrid").offset().top-140;
@@ -98,6 +105,34 @@ class Register{
             _this.search();
         });
         _this.search();
+    }
+    static getDetail(userId){
+        fetch("/api/ManageCustomerInfoApi/GetCustomerDetailInfoById?customerId="+userId).then(res=>{
+            if(res.ok){
+                //弹出dialog
+                let size=navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig)?"full":"";
+                dialog({
+                    title:"会员详情",
+                    content:detail(res.data),
+                    modal:false,
+                    size:size,
+                    footerBtn:[{
+                        text:"取消"
+                    }]
+                }).then(function(btn){
+                    this.close();
+                });
+            }else{
+                alert(res.msg).then(function(btn){
+                    if(btn==="operation_ok"){
+                        if(res.overdue){
+                            window.top.location.replace("./login.html");
+                        }
+                        this.close();
+                    }
+                });
+            }
+        })
     }
     static search(){
         let userName=$("#userName").val(),phone=$("#phone").val(),status=this.select.value||-1,_this=this;

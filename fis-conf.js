@@ -54,6 +54,7 @@ fis.match('**.js', {
     relative:true
 });
 
+//开发环境
 fis.media('upload').match('**.css', {
     optimizer: fis.plugin('clean-css'),
 }).match('*.png', {
@@ -68,6 +69,27 @@ fis.media('upload').match('**.css', {
         to: 'BZone/v1.0' // 注意这个是指的是测试机器的路径，而非本地机器
     })
 });
+
+
+//测试环境
+fis.media('upload').match('**.css', {
+    optimizer: fis.plugin('clean-css'),
+}).match('*.png', {
+    optimizer: fis.plugin('png-compressor'),
+}).match('*', {
+    useHash: false
+}).match('*.js', {
+    optimizer: fis.plugin('uglify-js'),
+}).match('*', {
+    deploy: fis.plugin('http-push', {
+        receiver: 'http://10.40.4.154:8077/api/Release/Replace',
+        to: 'BZone/v1.0' // 注意这个是指的是测试机器的路径，而非本地机器
+    })
+});
+
+//正式环境不自动发布
+
+
 
 //发布环境
 fis.media('prod')

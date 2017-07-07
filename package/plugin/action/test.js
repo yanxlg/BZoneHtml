@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 57);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -468,31 +468,6 @@ exports.default = action;
 
 /***/ }),
 
-/***/ 57:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _action = __webpack_require__(48);
-
-var _action2 = _interopRequireDefault(_action);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ac = (0, _action2.default)({
-    actionList: ["测试", "测试"],
-    height: "fit"
-}).then(function (res) {}); /**
-                             * Created by Administrator on 2017/6/2 0002.
-                             */
-
-setTimeout(function () {
-    ac.show();
-}, 1000);
-
-/***/ }),
-
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -534,6 +509,31 @@ var transitionEnd = function () {
 exports.requestAnimationFrame = requestAnimationFrame;
 exports.transition = transition;
 exports.transitionEnd = transitionEnd;
+
+/***/ }),
+
+/***/ 60:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _action = __webpack_require__(48);
+
+var _action2 = _interopRequireDefault(_action);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ac = (0, _action2.default)({
+    actionList: ["测试", "测试"],
+    height: "fit"
+}).then(function (res) {}); /**
+                             * Created by Administrator on 2017/6/2 0002.
+                             */
+
+setTimeout(function () {
+    ac.show();
+}, 1000);
 
 /***/ })
 

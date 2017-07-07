@@ -1,0 +1,82 @@
+<div class="scroll-content">
+    <div class="block">
+        <div class="item-name">
+            基本资料
+        </div>
+        <div class="item">
+            <div class="item-info">姓名：{{CustomerName}}</div>
+            <div class="item-info">手机号：{{CustomerTel}}</div>
+            <div class="item-info">状态：{{IdentificationState==2?'认证会员':IdentificationState==0?'注册会员':'认证失败'}}</div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                头像：{{if CustomerCard}}<img data-toggle="viewer" src="{{CustomerCard}}" height="60">{{else}}未上传{{/if}}
+            </div>
+            <div class="item-info">职务：{{CustomerPosition||"未填写"}}</div>
+            <div class="item-info">公司：{{CompanyName||"未填写"}}</div>
+        </div>
+        <div class="item">
+            <div class="item-info">性别：{{Sex===1?"男":Sex===2?"女":"未填写"}}</div>
+            <div class="item-info">所在行业：{{CustomerIndustry||"未填写"}}</div>
+            <div class="item-info">关注行业：{{AttentionIndustry||"未填写"}}</div>
+        </div>
+        <div class="item">
+            <div class="item-info">所在地：{{CustomerLocation||"未填写"}}</div>
+            <div class="item-info">家乡：{{CustomerHomeTown||"未填写"}}</div>
+            <div class="item-info">创建时间：{{CreateTime.replace("T","")}}</div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="item-name">
+            详细资料
+        </div>
+        <div class="item">
+            <div class="item-info">
+                个人简介：{{CustomerIntroduction||"未填写"}}
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                我能提供：{{CustomerProvide||"未填写"}}
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                我想得到：{{CustomerDemand||"未填写"}}
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                <div class="flex">
+                    当前任职：
+                </div>
+                <div class="flex-1 flex-column">
+                    {{each JobExperienceList as job}}
+                        <div>
+                            {{job.CompanyName}} / {{job.Position}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                <div class="flex">
+                    教育经历：
+                </div>
+                <div class="flex-1 flex-column">
+                    {{each EduExperienceList as edu}}
+                        <div>
+                            {{edu.School}}/{{edu.Education}}/{{edu.BeginTime.replace("T","")}}-{{edu.EndTime.replace("T","")}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                兴趣爱好：{{Hobbys||"未填写"}}
+            </div>
+        </div>
+    </div>
+</div>

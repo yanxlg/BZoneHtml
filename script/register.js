@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 75);
+/******/ 	return __webpack_require__(__webpack_require__.s = 78);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -780,6 +780,25 @@ exports.default = Drag;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.3.5",
+	"ApiVersion": "1.3.5",
+	"webApiDomainTest": "http://10.40.5.30:8081",
+	"webApiDomainLocal": "http://localhost:5007",
+	"webApiDomain": "http://localhost:5007",
+	"successCode": 0,
+	"errorCode": -1,
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
+};
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1078,25 +1097,6 @@ exports.encode = encode;
 exports.decode = decode;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomainTest": "http://10.40.5.30:8081",
-	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "http://10.40.4.154:8077",
-	"successCode": 0,
-	"errorCode": -1,
-	"overdueCode": 10040,
-	"userLocalKey": "_user",
-	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
-};
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1181,9 +1181,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _store = __webpack_require__(9);
+var _store = __webpack_require__(10);
 
-var _static = __webpack_require__(10);
+var _static = __webpack_require__(9);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1252,6 +1252,25 @@ var USER = function () {
             var user = this.getInfo();
             return user.cache;
         }
+    }, {
+        key: 'getPassword',
+        value: function getPassword() {
+            var user = this.getInfo();
+            return user.User.Password;
+        }
+    }, {
+        key: 'setPassword',
+        value: function setPassword(password) {
+            var user = this.getInfo();
+            user.User.Password = password;
+            this.setInfo(user);
+        }
+    }, {
+        key: 'getUserID',
+        value: function getUserID() {
+            var user = this.getInfo();
+            return user.User.UserID;
+        }
     }]);
 
     return USER;
@@ -1261,160 +1280,6 @@ exports.default = USER;
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/6/16 0016.
- * 列表操作项
- */
-var ListActions = function () {
-    function ListActions(grid) {
-        _classCallCheck(this, ListActions);
-
-        this.grid = grid;
-        var _this = this;
-        _this.update();
-        $(window).on("resize", function () {
-            _this.update();
-        });
-    }
-
-    _createClass(ListActions, [{
-        key: "bindWithGrid",
-        value: function bindWithGrid() {
-            var grid = this.grid;
-            //绑定到grid中
-            grid.on("mouseover", ".data-row", function () {
-                //获取grid的宽度
-                var areWidth = grid.width() + grid.find(".grid-data")[0].scrollLeft;
-                var action = $(this).find(".grid-actions");
-                var actionWidth = action.outerWidth();
-                action.css({
-                    left: areWidth + "px"
-                });
-                action.removeClass("hide").addClass("show").css({
-                    marginLeft: -actionWidth + "px"
-                });
-            });
-            grid.on("mouseout", ".data-row", function () {
-                var action = $(this).find(".grid-actions");
-                action.removeClass("show").addClass("hide").css({
-                    marginLeft: "0px"
-                });
-            });
-            return this;
-        }
-    }, {
-        key: "bindWithMobild",
-        value: function bindWithMobild() {
-            var grid = this.grid;
-            var startPoint = void 0,
-                movePoint = void 0;
-            grid.on("touchstart", ".data-row", function (e) {
-                var touch = e.targetTouches[0];
-                startPoint = movePoint = {
-                    x: touch.screenX,
-                    y: touch.screenY
-                };
-                if (!$(this).hasClass("touchEl")) {
-                    grid.find(".touchEl").removeClass("touchEl").attr("data-delX", 0).css({
-                        marginLeft: "0px"
-                    }).find(".grid-actions").css({
-                        marginLeft: "0px"
-                    });
-                    $(this).find(".grid-actions").css({
-                        marginLeft: "0px"
-                    });
-                    $(this).addClass("touchEl").attr("data-delX", 0);
-                } else {
-                    $(this).addClass("touchEl");
-                }
-            });
-            grid.on("touchmove", ".data-row", function (e) {
-                if (!startPoint) return;
-                var touch = e.targetTouches[0];
-                var action = $(this).find(".grid-actions"),
-                    actWidth = parseInt(action.outerWidth());
-                if ($(this).hasClass("touchEl")) {
-                    var mPoint = {
-                        x: touch.screenX,
-                        y: touch.screenY
-                    };
-                    var curr = parseInt($(this).attr("data-delX")) || 0;
-                    var delX = mPoint.x - movePoint.x + curr;
-                    delX = Math.max(-actWidth, delX);
-                    delX = Math.min(delX, 0);
-                    $(this).attr("data-delX", delX);
-                    movePoint = mPoint;
-                    action.css({
-                        marginLeft: delX + "px"
-                    });
-                    $(this).css({
-                        marginLeft: delX + "px"
-                    });
-                } else {}
-            });
-            grid.on("touchend touchcancel", ".data-row", function (e) {
-                startPoint = null;
-                var action = $(this).find(".grid-actions"),
-                    actWidth = parseInt(action.outerWidth());
-                var curr = parseInt($(this).attr("data-delX")) || 0;
-                if (Math.abs(curr) < actWidth / 2) {
-                    action.css({
-                        marginLeft: "0px"
-                    });
-                    $(this).css({
-                        marginLeft: "0px"
-                    });
-                } else {
-                    action.css({
-                        marginLeft: -actWidth + "px"
-                    });
-                    $(this).css({
-                        marginLeft: -actWidth + "px"
-                    });
-                }
-            });
-        }
-    }, {
-        key: "update",
-        value: function update() {
-            var width = document.body.offsetWidth;
-            if (parseInt(width) < 1000) {
-                //移动端
-                this.grid.off("mouseover");
-                this.grid.off("mouseout");
-                this.bindWithMobild();
-            } else {
-                //web端
-                this.grid.off("touchstart");
-                this.grid.off("touchmove");
-                this.grid.off("touchend");
-                this.grid.off("touchcancel");
-                this.bindWithGrid();
-            }
-        }
-    }]);
-
-    return ListActions;
-}();
-
-exports.default = ListActions;
-
-/***/ }),
-/* 15 */,
-/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1773,10 +1638,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1966,7 +1831,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1976,7 +1841,160 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(16);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/16 0016.
+ * 列表操作项
+ */
+var ListActions = function () {
+    function ListActions(grid) {
+        _classCallCheck(this, ListActions);
+
+        this.grid = grid;
+        var _this = this;
+        _this.update();
+        $(window).on("resize", function () {
+            _this.update();
+        });
+    }
+
+    _createClass(ListActions, [{
+        key: "bindWithGrid",
+        value: function bindWithGrid() {
+            var grid = this.grid;
+            //绑定到grid中
+            grid.on("mouseover", ".data-row", function () {
+                //获取grid的宽度
+                var areWidth = grid.width() + grid.find(".grid-data")[0].scrollLeft;
+                var action = $(this).find(".grid-actions");
+                var actionWidth = action.outerWidth();
+                action.css({
+                    left: areWidth + "px"
+                });
+                action.removeClass("hide").addClass("show").css({
+                    marginLeft: -actionWidth + "px"
+                });
+            });
+            grid.on("mouseout", ".data-row", function () {
+                var action = $(this).find(".grid-actions");
+                action.removeClass("show").addClass("hide").css({
+                    marginLeft: "0px"
+                });
+            });
+            return this;
+        }
+    }, {
+        key: "bindWithMobild",
+        value: function bindWithMobild() {
+            var grid = this.grid;
+            var startPoint = void 0,
+                movePoint = void 0;
+            grid.on("touchstart", ".data-row", function (e) {
+                var touch = e.targetTouches[0];
+                startPoint = movePoint = {
+                    x: touch.screenX,
+                    y: touch.screenY
+                };
+                if (!$(this).hasClass("touchEl")) {
+                    grid.find(".touchEl").removeClass("touchEl").attr("data-delX", 0).css({
+                        marginLeft: "0px"
+                    }).find(".grid-actions").css({
+                        marginLeft: "0px"
+                    });
+                    $(this).find(".grid-actions").css({
+                        marginLeft: "0px"
+                    });
+                    $(this).addClass("touchEl").attr("data-delX", 0);
+                } else {
+                    $(this).addClass("touchEl");
+                }
+            });
+            grid.on("touchmove", ".data-row", function (e) {
+                if (!startPoint) return;
+                var touch = e.targetTouches[0];
+                var action = $(this).find(".grid-actions"),
+                    actWidth = parseInt(action.outerWidth());
+                if ($(this).hasClass("touchEl")) {
+                    var mPoint = {
+                        x: touch.screenX,
+                        y: touch.screenY
+                    };
+                    var curr = parseInt($(this).attr("data-delX")) || 0;
+                    var delX = mPoint.x - movePoint.x + curr;
+                    delX = Math.max(-actWidth, delX);
+                    delX = Math.min(delX, 0);
+                    $(this).attr("data-delX", delX);
+                    movePoint = mPoint;
+                    action.css({
+                        marginLeft: delX + "px"
+                    });
+                    $(this).css({
+                        marginLeft: delX + "px"
+                    });
+                } else {}
+            });
+            grid.on("touchend touchcancel", ".data-row", function (e) {
+                startPoint = null;
+                var action = $(this).find(".grid-actions"),
+                    actWidth = parseInt(action.outerWidth());
+                var curr = parseInt($(this).attr("data-delX")) || 0;
+                if (Math.abs(curr) < actWidth / 2) {
+                    action.css({
+                        marginLeft: "0px"
+                    });
+                    $(this).css({
+                        marginLeft: "0px"
+                    });
+                } else {
+                    action.css({
+                        marginLeft: -actWidth + "px"
+                    });
+                    $(this).css({
+                        marginLeft: -actWidth + "px"
+                    });
+                }
+            });
+        }
+    }, {
+        key: "update",
+        value: function update() {
+            var width = document.body.offsetWidth;
+            if (parseInt(width) < 1000) {
+                //移动端
+                this.grid.off("mouseover");
+                this.grid.off("mouseout");
+                this.bindWithMobild();
+            } else {
+                //web端
+                this.grid.off("touchstart");
+                this.grid.off("touchmove");
+                this.grid.off("touchend");
+                this.grid.off("touchcancel");
+                this.bindWithGrid();
+            }
+        }
+    }]);
+
+    return ListActions;
+}();
+
+exports.default = ListActions;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _Promise = __webpack_require__(14);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2449,9 +2467,162 @@ var fetch = window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */
+/* 18 */,
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var _arguments = arguments;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxianliang on 2017/5/20.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _fetch = __webpack_require__(17);
+
+var _fetch2 = _interopRequireDefault(_fetch);
+
+var _cfDialog = __webpack_require__(5);
+
+var _cfDialog2 = _interopRequireDefault(_cfDialog);
+
+var _static = __webpack_require__(9);
+
+var _static2 = _interopRequireDefault(_static);
+
+var _loading = __webpack_require__(21);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+var _user = __webpack_require__(13);
+
+var _user2 = _interopRequireDefault(_user);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var THENCLASS = function () {
+    function THENCLASS() {
+        _classCallCheck(this, THENCLASS);
+
+        return this;
+    }
+
+    _createClass(THENCLASS, [{
+        key: 'then',
+        value: function then() {
+            return this;
+        }
+    }]);
+
+    return THENCLASS;
+}();
+
+var fetch = function fetch(url, data, login) {
+    if (_arguments.length === 2) {
+        login = true; //不设置默认为true,即需要登录
+    }
+    var token = _user2.default.getToken();
+    if (!token) {
+        var angularUser = localStorage.getItem("user");
+        if (angularUser) {
+            angularUser = JSON.parse(angularUser);
+            token = angularUser.token;
+        }
+    }
+    if (data) {
+        if (login && !token) {
+            (0, _cfDialog2.default)({
+                title: "未登录提示",
+                content: "请先登录后再执行该操作",
+                modal: false
+            }).then(function () {
+                this.close();
+            });
+            return new THENCLASS();
+        }
+        _loading2.default.show();
+        return _fetch2.default.call(window, _static2.default.webApiDomain + url, {
+            method: 'POST',
+            headers: {
+                Token: token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Content: data,
+                Head: {
+                    "AppType": _static2.default.AppType,
+                    "ApiType": _static2.default.ApiType,
+                    "AppVersion": _static2.default.AppVersion,
+                    "ApiVersion": _static2.default.ApiVersion,
+                    "Token": token
+                }
+            })
+        }).then(function (response) {
+            _loading2.default.close();
+            return response.json();
+        }).then(function (json) {
+            if (json.Head.Ret === _static2.default.errorCode) {
+                var back = {
+                    ok: false,
+                    msg: json.Head.Msg
+                };
+                if (json.Head.Code === _static2.default.overdueCode) {
+                    back.overdue = true;
+                }
+                return back;
+            }
+            if (json.Head.Ret === _static2.default.successCode) {
+                return {
+                    ok: true,
+                    data: json.Content
+                };
+            }
+            return null;
+        });
+    } else {
+        //get 方法
+        _loading2.default.show();
+        return _fetch2.default.call(window, _static2.default.webApiDomain + url, {
+            method: 'GET',
+            headers: {
+                token: token
+            }
+        }).then(function (response) {
+            _loading2.default.close();
+            return response.json();
+        }).then(function (json) {
+            if (json.Head.Ret === _static2.default.errorCode) {
+                var back = {
+                    ok: false,
+                    msg: json.Head.Msg
+                };
+                if (json.Head.Code === _static2.default.overdueCode) {
+                    back.overdue = true;
+                }
+                return back;
+            }
+            if (json.Head.Ret === _static2.default.successCode) {
+                return {
+                    ok: true,
+                    data: json.Content
+                };
+            }
+            return null;
+        });
+    }
+};
+exports.default = fetch;
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $imports = __webpack_require__(1);
@@ -2464,9 +2635,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2483,7 +2652,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _loading = __webpack_require__(21);
+var _loading = __webpack_require__(20);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2530,7 +2699,11 @@ var Loading = function () {
 exports.default = Loading;
 
 /***/ }),
-/* 25 */
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2570,7 +2743,7 @@ var _rows = __webpack_require__(29);
 
 var _rows2 = _interopRequireDefault(_rows);
 
-var _gridActions = __webpack_require__(14);
+var _gridActions = __webpack_require__(16);
 
 var _gridActions2 = _interopRequireDefault(_gridActions);
 
@@ -2900,7 +3073,7 @@ var DataGrid = function () {
 exports.default = DataGrid;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3019,160 +3192,6 @@ var Pager = function () {
 }();
 
 exports.default = Pager;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var _arguments = arguments;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxianliang on 2017/5/20.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _fetch = __webpack_require__(18);
-
-var _fetch2 = _interopRequireDefault(_fetch);
-
-var _cfDialog = __webpack_require__(5);
-
-var _cfDialog2 = _interopRequireDefault(_cfDialog);
-
-var _static = __webpack_require__(10);
-
-var _static2 = _interopRequireDefault(_static);
-
-var _loading = __webpack_require__(24);
-
-var _loading2 = _interopRequireDefault(_loading);
-
-var _user = __webpack_require__(13);
-
-var _user2 = _interopRequireDefault(_user);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var THENCLASS = function () {
-    function THENCLASS() {
-        _classCallCheck(this, THENCLASS);
-
-        return this;
-    }
-
-    _createClass(THENCLASS, [{
-        key: 'then',
-        value: function then() {
-            return this;
-        }
-    }]);
-
-    return THENCLASS;
-}();
-
-var fetch = function fetch(url, data, login) {
-    if (_arguments.length === 2) {
-        login = true; //不设置默认为true,即需要登录
-    }
-    var token = _user2.default.getToken();
-    if (!token) {
-        var angularUser = localStorage.getItem("user");
-        if (angularUser) {
-            angularUser = JSON.parse(angularUser);
-            token = angularUser.token;
-        }
-    }
-    if (data) {
-        if (login && !token) {
-            (0, _cfDialog2.default)({
-                title: "未登录提示",
-                content: "请先登录后再执行该操作",
-                modal: false
-            }).then(function () {
-                this.close();
-            });
-            return new THENCLASS();
-        }
-        _loading2.default.show();
-        return _fetch2.default.call(window, _static2.default.webApiDomain + url, {
-            method: 'POST',
-            headers: {
-                Token: token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                Content: data,
-                Head: {
-                    "AppType": _static2.default.AppType,
-                    "ApiType": _static2.default.ApiType,
-                    "AppVersion": _static2.default.AppVersion,
-                    "ApiVersion": _static2.default.ApiVersion,
-                    "Token": token
-                }
-            })
-        }).then(function (response) {
-            _loading2.default.close();
-            return response.json();
-        }).then(function (json) {
-            if (json.Head.Ret === _static2.default.errorCode) {
-                var back = {
-                    ok: false,
-                    msg: json.Head.Msg
-                };
-                if (json.Head.Code === _static2.default.overdueCode) {
-                    back.overdue = true;
-                }
-                return back;
-            }
-            if (json.Head.Ret === _static2.default.successCode) {
-                return {
-                    ok: true,
-                    data: json.Content
-                };
-            }
-            return null;
-        });
-    } else {
-        //get 方法
-        _loading2.default.show();
-        return _fetch2.default.call(window, _static2.default.webApiDomain + url, {
-            method: 'GET',
-            headers: {
-                token: token
-            }
-        }).then(function (response) {
-            _loading2.default.close();
-            return response.json();
-        }).then(function (json) {
-            if (json.Head.Ret === _static2.default.errorCode) {
-                var back = {
-                    ok: false,
-                    msg: json.Head.Msg
-                };
-                if (json.Head.Code === _static2.default.overdueCode) {
-                    back.overdue = true;
-                }
-                return back;
-            }
-            if (json.Head.Ret === _static2.default.successCode) {
-                return {
-                    ok: true,
-                    data: json.Content
-                };
-            }
-            return null;
-        });
-    }
-};
-exports.default = fetch;
 
 /***/ }),
 /* 28 */
@@ -3422,10 +3441,26 @@ var Input = function () {
     _createClass(Input, null, [{
         key: "initialize",
         value: function initialize() {
+            //粘贴内容进行判断
+            $("body").on("paste", "input", function (e) {
+                var txt = "";
+                if (window.clipboardData && window.clipboardData.getData) {
+                    // IE
+                    txt = window.clipboardData.getData('Text');
+                } else {
+                    txt = e.originalEvent.clipboardData.getData('Text'); //e.clipboardData.getData('text/plain');
+                }
+                if (this.type === "number" || this.type === "tel") {
+                    if (!/\d+/.test(txt)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
             $("body").on("focus", "input", function () {
                 var type = $(this).attr("type");
                 if (!(!type || type === "text")) {
-                    $(this).attr("onpaste", "return false;");
+                    // $(this).attr("onpaste","window.inputPaste(this);");
                 }
             }).on("keydown", "input", function (e) {
                 e = e || event;
@@ -3433,17 +3468,15 @@ var Input = function () {
                 var type = $(this).attr("type"),
                     key = e.key || String.fromCharCode(currKey);
                 switch (type) {
-                    case "number":
-                        return (/\d|Backspace|Left|Right|Delete/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8
-                        );
                     case "email":
-                        return (/\d|Backspace|Left|Right|\.|\w|@/.test(key)
+                        return (/\d|Backspace|Left|Right|\.|\w|@|Control/.test(key)
                         ); //存在bug
                     case "url":
-                        return (/\d|Backspace|Left|Right|\.|\w|@|:|\//.test(key)
+                        return (/\d|Backspace|Left|Right|\.|\w|@|:|\/|Control/.test(key)
                         );
                     case "tel":
-                        return (/\d|Backspace|Left|Right|Delete/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8
+                    case "number":
+                        return (/\d|Backspace|Left|Right|Delete|Control/.test(key) || currKey >= 96 && currKey <= 105 || currKey === 37 || currKey === 39 || currKey === 8 || currKey === 17 || e.ctrlKey && currKey === 86
                         );
                     default:
                         return true;
@@ -3689,8 +3722,90 @@ module.exports = {
 /* 52 */,
 /* 53 */,
 /* 54 */,
-/* 55 */,
-/* 56 */,
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '';
+    $$out += '<div class="scroll-content">\r\n    <div class="block">\r\n        <div class="item-name">\r\n            基本资料\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">姓名\uFF1A<input class="input" type="text"></div>\r\n            <div class="item-info">手机号\uFF1A<input type="tel" class="input"></div>\r\n        </div>\r\n    </div>\r\n    <div class="block">\r\n        <div class="item-name">\r\n            职务信息\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">职务\uFF1A<input class="input" type="text"></div>\r\n            <div class="item-info">公司全称\uFF1A<input type="tel" class="input"></div>\r\n        </div>\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, CustomerName = $data.CustomerName, CustomerTel = $data.CustomerTel, IdentificationState = $data.IdentificationState, CustomerCard = $data.CustomerCard, CustomerPosition = $data.CustomerPosition, CompanyName = $data.CompanyName, Sex = $data.Sex, CustomerIndustry = $data.CustomerIndustry, AttentionIndustry = $data.AttentionIndustry, CustomerLocation = $data.CustomerLocation, CustomerHomeTown = $data.CustomerHomeTown, CreateTime = $data.CreateTime, CustomerIntroduction = $data.CustomerIntroduction, CustomerProvide = $data.CustomerProvide, CustomerDemand = $data.CustomerDemand, $each = $imports.$each, JobExperienceList = $data.JobExperienceList, job = $data.job, $index = $data.$index, EduExperienceList = $data.EduExperienceList, edu = $data.edu, Hobbys = $data.Hobbys;
+    $$out += '<div class="scroll-content">\r\n    <div class="block">\r\n        <div class="item-name">\r\n            基本资料\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">姓名\uFF1A';
+    $$out += $escape(CustomerName);
+    $$out += '</div>\r\n            <div class="item-info">手机号\uFF1A';
+    $$out += $escape(CustomerTel);
+    $$out += '</div>\r\n            <div class="item-info">状态\uFF1A';
+    $$out += $escape(IdentificationState == 2 ? '认证会员' : IdentificationState == 0 ? '注册会员' : '认证失败');
+    $$out += '</div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                头像\uFF1A';
+    if (CustomerCard) {
+        $$out += '<img data-toggle="viewer" src="';
+        $$out += $escape(CustomerCard);
+        $$out += '" height="60">';
+    } else {
+        $$out += '未上传';
+    }
+    $$out += '\r\n            </div>\r\n            <div class="item-info">职务\uFF1A';
+    $$out += $escape(CustomerPosition || '未填写');
+    $$out += '</div>\r\n            <div class="item-info">公司\uFF1A';
+    $$out += $escape(CompanyName || '未填写');
+    $$out += '</div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">性别\uFF1A';
+    $$out += $escape(Sex === 1 ? '男' : Sex === 2 ? '女' : '未填写');
+    $$out += '</div>\r\n            <div class="item-info">所在行业\uFF1A';
+    $$out += $escape(CustomerIndustry || '未填写');
+    $$out += '</div>\r\n            <div class="item-info">关注行业\uFF1A';
+    $$out += $escape(AttentionIndustry || '未填写');
+    $$out += '</div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">所在地\uFF1A';
+    $$out += $escape(CustomerLocation || '未填写');
+    $$out += '</div>\r\n            <div class="item-info">家乡\uFF1A';
+    $$out += $escape(CustomerHomeTown || '未填写');
+    $$out += '</div>\r\n            <div class="item-info">创建时间\uFF1A';
+    $$out += $escape(CreateTime.replace('T', ''));
+    $$out += '</div>\r\n        </div>\r\n    </div>\r\n    <div class="block">\r\n        <div class="item-name">\r\n            详细资料\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                个人简介\uFF1A';
+    $$out += $escape(CustomerIntroduction || '未填写');
+    $$out += '\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                我能提供\uFF1A';
+    $$out += $escape(CustomerProvide || '未填写');
+    $$out += '\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                我想得到\uFF1A';
+    $$out += $escape(CustomerDemand || '未填写');
+    $$out += '\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="flex">\r\n                    当前任职\uFF1A\r\n                </div>\r\n                <div class="flex-1 flex-column">\r\n                    ';
+    $each(JobExperienceList, function (job, $index) {
+        $$out += '\r\n                        <div>\r\n                            ';
+        $$out += $escape(job.CompanyName);
+        $$out += ' / ';
+        $$out += $escape(job.Position);
+        $$out += '\r\n                        </div>\r\n                    ';
+    });
+    $$out += '\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="flex">\r\n                    教育经历\uFF1A\r\n                </div>\r\n                <div class="flex-1 flex-column">\r\n                    ';
+    $each(EduExperienceList, function (edu, $index) {
+        $$out += '\r\n                        <div>\r\n                            ';
+        $$out += $escape(edu.School);
+        $$out += '/';
+        $$out += $escape(edu.Education);
+        $$out += '/';
+        $$out += $escape(edu.BeginTime.replace('T', ''));
+        $$out += '-';
+        $$out += $escape(edu.EndTime.replace('T', ''));
+        $$out += '\r\n                        </div>\r\n                    ';
+    });
+    $$out += '\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                兴趣爱好\uFF1A';
+    $$out += $escape(Hobbys || '未填写');
+    $$out += '\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
 /* 57 */,
 /* 58 */,
 /* 59 */,
@@ -3709,11 +3824,16 @@ module.exports = {
 /* 72 */,
 /* 73 */,
 /* 74 */,
-/* 75 */
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/27 0027.
@@ -3734,7 +3854,7 @@ var _authorize = __webpack_require__(38);
 
 var _authorize2 = _interopRequireDefault(_authorize);
 
-var _datagrid = __webpack_require__(25);
+var _datagrid = __webpack_require__(26);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
@@ -3742,7 +3862,7 @@ var _cfDialog = __webpack_require__(5);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _pager = __webpack_require__(26);
+var _pager = __webpack_require__(27);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -3750,7 +3870,15 @@ var _registerSource = __webpack_require__(39);
 
 var _registerSource2 = _interopRequireDefault(_registerSource);
 
-var _fetch = __webpack_require__(27);
+var _detail = __webpack_require__(56);
+
+var _detail2 = _interopRequireDefault(_detail);
+
+var _create = __webpack_require__(55);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _fetch = __webpack_require__(19);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
@@ -3766,6 +3894,8 @@ var Register = function () {
     _createClass(Register, null, [{
         key: 'initialize',
         value: function initialize() {
+            var _this2 = this;
+
             //初始化下拉选择控件
             this.pageSize = 10;
             this.pageIndex = 1;
@@ -3839,7 +3969,12 @@ var Register = function () {
                 height: dataH,
                 rightFixedWidth: "200px"
             }).setActions(["查看详情", "编辑", "删除"]).then(function (type, data) {
-                alert(type);
+                data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) !== undefined && (data = JSON.parse(data));
+                switch (type) {
+                    case "查看详情":
+                        _this2.getDetail(data.CustomerID);
+                        break;
+                }
             });
             $(window).on("resize", function () {
                 var dataH = document.documentElement.offsetHeight - $(".page-datagrid").offset().top - 140;
@@ -3851,6 +3986,36 @@ var Register = function () {
                 _this.search();
             });
             _this.search();
+        }
+    }, {
+        key: 'getDetail',
+        value: function getDetail(userId) {
+            (0, _fetch2.default)("/api/ManageCustomerInfoApi/GetCustomerDetailInfoById?customerId=" + userId).then(function (res) {
+                if (res.ok) {
+                    //弹出dialog
+                    var size = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig) ? "full" : "";
+                    (0, _cfDialog2.default)({
+                        title: "会员详情",
+                        content: (0, _detail2.default)(res.data),
+                        modal: false,
+                        size: size,
+                        footerBtn: [{
+                            text: "取消"
+                        }]
+                    }).then(function (btn) {
+                        this.close();
+                    });
+                } else {
+                    alert(res.msg).then(function (btn) {
+                        if (btn === "operation_ok") {
+                            if (res.overdue) {
+                                window.top.location.replace("./login.html");
+                            }
+                            this.close();
+                        }
+                    });
+                }
+            });
         }
     }, {
         key: 'search',

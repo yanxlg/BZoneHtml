@@ -132,6 +132,11 @@ var Navigator = function () {
         value: function isExist(pageName) {
             return _router2.default[pageName];
         }
+    }, {
+        key: "toLogin",
+        value: function toLogin() {
+            location.replace("./" + _router2.default.login);
+        }
     }]);
 
     return Navigator;
