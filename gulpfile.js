@@ -30,7 +30,7 @@ gulp.task('sass', function () {
             maxImageSize: 8*1024, // bytes
             debug: true
         }))
-        .pipe(cleanCSS({compatibility: 'ie10'})) //去除@import重复代码
+        .pipe(cleanCSS({compatibility: 'ie8'})) //去除@import重复代码
         .pipe(cssbeautify())
         .pipe(AssetsRelativePath())
         .pipe(gulp.dest("./"));

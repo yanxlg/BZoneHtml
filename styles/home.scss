@@ -1,0 +1,466 @@
+@charset "utf-8";
+@import "../package/ui/cf-func.scss";
+//官网
+$fontColor:#ffd862;
+$defaultAColor:#fffffe;
+html,body{
+  margin:0;
+  padding:0;
+  font-size: 20px;
+  width:100%;
+  height:100%;
+  font-family:SimSun,sans-serif;
+}
+*{
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  @include prefix(user-select,none);
+}
+@media screen and(min-width: 501px){
+  html{
+    font-size: 32px;
+  }
+}
+@media screen and(max-width: 500px){
+  html{
+    font-size: 18px;
+  }
+}
+@media screen and(max-width: 330px){
+  html{
+    font-size: 16px;
+  }
+}
+
+.header{
+  top:1rem;
+  padding:0 0.5rem 0 0.5rem;
+  position: relative;
+  z-index:40;
+  .icon{
+    width:1.8rem;
+    height:1.8rem;
+    border:0;
+  }
+  .nav{
+    position: absolute;
+    right:0;
+    top:0.3rem;
+    height:0.8rem;
+    line-height: 0.8rem;
+    &.bg-white{
+      a{
+        color: #000;
+      }
+    }
+    a{
+      margin-right:0.4rem;
+      color: $defaultAColor;
+      font-size:16px;
+      cursor: pointer;
+      &.active{
+        color: $fontColor;
+        border-bottom: 1px solid $fontColor;
+      }
+      &:last-of-type{
+        margin-right: 0.6rem;
+      }
+    }
+  }
+}
+.ie-lt {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 99999999;
+  padding: .8rem 1rem;
+  text-align: center;
+  font-size: 1rem;
+  background-color: #ddf3f5;
+  color: #ff4949;
+  display: block
+}
+@media screen and (max-width: 500px){
+  .header{
+    .nav{
+      a{
+        font-size:12px;
+        margin-right:0;
+      }
+    }
+  }
+}
+.logo-name{
+  cursor: default;
+  font-size: 0.7rem;
+  height:1rem;
+  line-height: 1rem;
+  color: $fontColor;
+  position: relative;
+  margin-left:0.2rem;
+  top:-0.6rem;
+}
+.content{
+  position: absolute;
+  left: 0;
+  top:0;
+  width: 100%;
+  height:100%;
+  .page{
+    position: absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    &.home{
+      background: url("../images/website/bg_0.png") no-repeat center;
+      background-size: auto 100%;
+      filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/website/bg_0.png',  sizingMethod='scale');
+      .middle{
+        width:100%;
+        left:0;
+        height:15rem;
+        position: absolute;
+        top:50%;
+        margin-top: -7.5rem;
+      }
+    }
+    &.connection{
+      background: url("../images/website/bg_1.png") no-repeat center;
+      background-size: auto 100%;
+      filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/website/bg_1.png',  sizingMethod='scale');
+      .middle{
+        width:100%;
+        left:0;
+        height:20rem;
+        position: absolute;
+        top:50%;
+        margin-top: -10rem;
+      }
+    }
+    &.service{
+      .middle{
+        width:100%;
+        left:0;
+        height:20rem;
+        position: absolute;
+        top:50%;
+        margin-top: -10rem;
+      }
+    }
+    &.activity{
+      background: url("../images/website/bg_2.png") no-repeat center;
+      background-size: auto 100%;
+      filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/website/bg_2.png',  sizingMethod='scale');
+      .middle{
+        width:100%;
+        left:0;
+        height:22.4rem;
+        position: absolute;
+        top:50%;
+        margin-top: -11.2rem;
+      }
+    }
+    &.about{
+      .container{
+        top:0;
+      }
+    }
+    &.download{
+      background: url("../images/website/bg_4.png") no-repeat center;
+      background-size: 100% 100%;
+      filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/website/bg_4.png',  sizingMethod='scale');
+      .container{
+        height:70%;
+        .middle{
+          width:100%;
+          left:0;
+          height:18rem;
+          position: absolute;
+          top:50%;
+          margin-top: -9rem;
+        }
+      }
+    }
+  }
+}
+.container{
+  position: absolute;
+  top:3.5rem;
+  bottom: 3rem;
+  width:100%;
+  .icon{
+    width:2.6rem;
+    height:2.6rem;
+    border:0;
+  }
+}
+.figure{
+  text-align: center;
+  margin:0;
+  .figcaption{
+    font-size: 0.7rem;
+    color: $fontColor;
+  }
+}
+.home{
+  .figcaption{
+    margin:0.3rem 0 1rem 0;
+  }
+}
+.connection{
+  .figcaption{
+    margin:0.3rem 0 1rem 0;
+  }
+}
+.slogan{
+  font-size: 1.6rem;
+  color:#f5f5f5;
+  text-align: center;
+  margin:0.8rem 0 1.5rem 0;
+}
+.btn{
+  background-color: $fontColor;
+  color: #000;
+  height:1.9rem;
+  width:7.5rem;
+  @include prefix(border-radius,2rem);
+  border:0;
+  margin:0 auto;
+  margin-top:0.8rem;
+  font-size: 0.8rem;
+}
+.center{
+  text-align: center;
+}
+.next{
+  width:1.6rem;
+  height:1.6rem;
+  display: block;
+  position: absolute;
+  left:50%;
+  margin-left: -.8rem;
+  bottom:.8rem;
+  z-index: 200;
+  img{
+    width:1.6rem;
+    height:1.6rem;
+  }
+}
+h1{
+  color: #f5f5f5;
+  font-size: 1.4rem;
+  text-align: center;
+  margin:0;
+  font-weight: normal;
+  margin-bottom: 1rem;
+  &:after{
+    width:2rem;
+    height:5px;
+    background-color: $fontColor;
+    display: block;
+    content: "";
+    margin:0.4rem auto;
+  }
+  &.about-us{
+    position: absolute;
+    margin-top: -2.5rem;
+    width:100%;
+    height:2.5rem;
+    &:after{
+      width:6rem;
+      height:0.3rem;
+      background-color: $fontColor;
+      display: block;
+      position: absolute;
+      content: "";
+      bottom:0;
+      margin:0;
+      left:50%;
+      margin-left: -3rem;
+    }
+  }
+}
+.unvisible{
+  visibility: hidden;
+}
+.describe{
+  font-size: 0.8rem;
+  color:#f5f5f5;
+  margin:0.5rem 0 1rem 0;
+}
+.connection-content{
+  max-height:12rem;
+  max-width: 95%;
+}
+.service{
+  h1{
+    color: black;
+  }
+  .describe{
+    color: #000;
+  }
+}
+.items{
+  text-align: center;
+  .item{
+    display: inline-block;
+    width:8rem;
+    margin:0 0.5rem;
+    img{
+      width:100%;
+    }
+    span{
+      display: block;
+      font-size: 0.8rem;
+      margin:0 0 0.5rem 0;
+    }
+    &:before{
+      content: '';
+      word-break: break-all;
+    }
+  }
+}
+.activity{
+  .item{
+    width:7rem;
+    margin:0.6rem 0;
+    img{
+      width:4rem;
+    }
+    span{
+      white-space: nowrap;
+      color: #f5f5f5;
+      &:first-of-type{
+        color: $fontColor;
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+      font-size: 0.8rem;
+      margin:0.2rem 0;
+    }
+  }
+}
+.for-web{
+  height:0;
+}
+.for-mobile{
+  height:0;
+  display: none;
+}
+
+.about-bg{
+  height:31%;
+  background: url("../images/website/about.png") no-repeat center;
+  background-size: cover;
+}
+@media screen and (max-width: 500px){
+  .about-bg{
+    height:33%;
+    background: url("../images/website/about_mobile.png") no-repeat center;
+    background-size: cover;
+  }
+}
+@media screen and (min-width: 501px){
+  .about-bg{
+    height:31%;
+    background: url("../images/website/about.png") no-repeat center;
+    background-size: cover;
+  }
+}
+
+@media screen and(max-width: 840px){
+  .for-web{
+    display: none;
+  }
+  .for-mobile{
+    display: block;
+  }
+  .service{
+    .middle{
+      width:100%;
+      left:0;
+      height: 26rem!important;
+      position: absolute;
+      top:50%;
+      margin-top: -13rem!important;
+    }
+  }
+  .activity{
+    .middle{
+      height: 27.4rem!important;
+      margin-top: -13.7rem!important;
+    }
+  }
+}
+.about{
+  p{
+    margin:1rem auto;
+    width:80%;
+    max-width: 39rem;
+    font-size: 0.8rem;
+    &:first-of-type{
+      margin-top: 2rem;
+    }
+  }
+}
+.code{
+  width:6rem;
+}
+.contact-us{
+  width:80%;
+  max-width: 20rem;
+  margin:0 auto;
+  height:2rem;
+  line-height: 2rem;
+  color: #f5f5f5;
+  text-align: center;
+  border:1px solid $fontColor;
+  margin-bottom: 0.6rem;
+}
+.key{
+  font-size: 0.5rem;
+  color: #f5f5f5;
+}
+.value{
+  font-size: 0.7rem;
+  color: $fontColor;
+  margin-left:0.5rem;
+}
+footer{
+  height:20%;
+  background: url("../images/website/footer.png") no-repeat center;
+  background-size: cover;
+  position: absolute;
+  width:100%;
+  bottom:0;
+}
+address{
+  color:silver;
+  font-size: 0.7rem;
+  font-style: normal;
+  margin-top: 2rem;
+  a{
+    color: silver;
+    text-decoration: none;
+    &:active,&:focus,&:hover,&:visited{
+      color: silver;
+      text-decoration: none;
+    }
+  }
+}
+.swiper-container{
+  width:100%;
+  height: 100%;
+}
+.uhide{
+  display: none;
+}
+.hotel{
+  margin-top:1rem;
+}
+.address{
+  margin-top: 1rem;
+}
