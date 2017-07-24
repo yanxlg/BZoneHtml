@@ -2,3 +2,22 @@
 @import "./lscreen/datagrid.scss";
 @import "./sscreen/datagrid.scss";
 @import "../../ui/cf-button.scss";
+@import "../../ui/cf-func.scss";
+//grid中btn样式为内联链接样式
+.data-grid{
+  .data-column{
+    .btn{
+      padding:0 0 0.1rem 0;
+      display: inline-block;
+      background-color: transparent;
+      color: #3280fc;
+      border:none;
+      @include prefix(border-radius,0);
+      @include prefix(box-sizing,border-box);
+      border-bottom: 1px solid transparent;
+      &:hover{
+        border-bottom: 1px solid #3280fc;
+      }
+    }
+  }
+}

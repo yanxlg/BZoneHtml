@@ -44,7 +44,7 @@
   padding:remToPx(0.2rem) 0.5rem;
   background-color: map_get($baseColor,silver);
   color: map_get($baseColor,white);
-  margin-right: remToPx(0.1rem);
+  margin: remToPx(0.1rem);
 }
 .keep-all{
   word-break: keep-all;white-space: nowrap;
@@ -61,6 +61,9 @@
     @include flex-1;
     @include align-center;
   }
+  .item-info.align-start{
+    @include align-start;
+  }
   .scroll-content{
     @include flex-column;
     @include flex-1;
@@ -71,6 +74,9 @@
     @include flex;
     @include flex-1;
     @include align-center;
+  }
+  .item-info.align-start{
+    @include align-start;
   }
   .item{
     @include flex-column;

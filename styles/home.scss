@@ -23,7 +23,7 @@ html,body{
 }
 @media screen and(max-width: 500px){
   html{
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 @media screen and(max-width: 330px){
@@ -196,6 +196,13 @@ html,body{
     height:2.6rem;
     border:0;
   }
+  @media screen and(min-width: 360px){
+    .icon{
+      width:3.4rem;
+      height:3.4rem;
+      border:0;
+    }
+  }
 }
 .figure{
   text-align: center;
@@ -213,6 +220,14 @@ html,body{
 .connection{
   .figcaption{
     margin:0.3rem 0 1rem 0;
+  }
+  @media screen and(min-height: 650px){
+    h1{
+      margin-bottom: 1rem;
+    }
+    .figcaption{
+      margin:0.5rem 0 1.2rem 0;
+    }
   }
 }
 .slogan{
@@ -302,6 +317,19 @@ h1{
   .describe{
     color: #000;
   }
+  @media screen and(min-height: 650px){
+    h1{
+      margin-bottom: 1rem;
+    }
+    .figcaption{
+      margin:0.5rem 0 1.2rem 0;
+    }
+    .items{
+      .item{
+        margin:0.5rem 0;
+      }
+    }
+  }
 }
 .items{
   text-align: center;
@@ -317,12 +345,9 @@ h1{
       font-size: 0.8rem;
       margin:0 0 0.5rem 0;
     }
-    &:before{
-      content: '';
-      word-break: break-all;
-    }
   }
 }
+
 .activity{
   .item{
     width:7rem;
@@ -342,7 +367,56 @@ h1{
       margin:0.2rem 0;
     }
   }
+  @media screen and(min-height: 631px){
+    h1{
+      margin-bottom: 1rem!important;
+    }
+    .figcaption{
+      margin:0.5rem 0 1.2rem 0!important;
+    }
+    .items{
+      .item{
+        margin:0 0 1rem 0!important;
+      }
+    }
+  }
+  @media screen and(min-height: 631px) and(min-width: 501px){
+    .middle{
+      height: 24rem!important;
+      margin-top: -12rem!important;
+    }
+  }
+  @media screen and(min-height: 631px) and(max-width: 500px){
+    .middle{
+      height: 27.4rem!important;
+      margin-top: -13.7rem!important;
+    }
+  }
+
+  @media screen and(max-height: 630px){
+    h1{
+      margin-bottom: 0.5rem;
+    }
+    .figure{
+      .figcaption{
+        margin:0.3rem 0 0.5rem 0;
+      }
+    }
+    .middle{
+      height: 24rem!important;
+      margin-top: -12rem!important;
+    }
+    .items{
+      .item{
+        margin:0 0 0.2rem 0;
+        span{
+          margin:0;
+        }
+      }
+    }
+  }
 }
+
 .for-web{
   height:0;
 }
@@ -388,12 +462,23 @@ h1{
       margin-top: -13rem!important;
     }
   }
-  .activity{
+}
+@media screen and(max-width: 500px){
+  .service{
+    h1{
+      margin-bottom: 0.5rem;
+    }
+    .figure{
+      .figcaption{
+        margin:0.3rem 0 0.5rem 0;
+      }
+    }
     .middle{
-      height: 27.4rem!important;
-      margin-top: -13.7rem!important;
+      height: 24rem!important;
+      margin-top: -12rem!important;
     }
   }
+
 }
 .about{
   p{

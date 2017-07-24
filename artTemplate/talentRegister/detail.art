@@ -42,11 +42,14 @@
             认证信息
         </div>
         <div class="item">
-            <div class="item-info">
+            <div class="item-info align-start">
                 是否首次认证：{{IsFirstIdentification?"是":"否"}}
             </div>
-            <div class="item-info">
-                已认证类型：{{each IdentificateTalentName as name}}<span class="skill-name">{{name}}</span>{{/each}}
+            <div class="item-info align-start">
+                <label class="keep-all">已认证类型：</label>
+                <div class="flex-wrap">
+                    {{each IdentificateTalentName as name}}<span class="skill-name">{{name}}</span>{{/each}}
+                </div>
             </div>
         </div>
     </div>

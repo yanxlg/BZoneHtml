@@ -1892,8 +1892,10 @@ var Dialog = function () {
         key: 'close',
         value: function close() {
             var _this = this;
+            if (_this.delete) return;
             (0, _cfTransition.transition)(function () {
                 _this.callback && _this.callback.call(_this, "closeStart");
+                _this.delete = true;
                 _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
                     _this._element.remove();
                     $(window).off("keydown." + _this.id);

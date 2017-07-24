@@ -483,8 +483,10 @@ var Dialog = function () {
         key: 'close',
         value: function close() {
             var _this = this;
+            if (_this.delete) return;
             (0, _cfTransition.transition)(function () {
                 _this.callback && _this.callback.call(_this, "closeStart");
+                _this.delete = true;
                 _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
                     _this._element.remove();
                     $(window).off("keydown." + _this.id);
@@ -3878,6 +3880,10 @@ var _create = __webpack_require__(55);
 
 var _create2 = _interopRequireDefault(_create);
 
+var _edit = __webpack_require__(80);
+
+var _edit2 = _interopRequireDefault(_edit);
+
 var _fetch = __webpack_require__(19);
 
 var _fetch2 = _interopRequireDefault(_fetch);
@@ -3897,7 +3903,7 @@ var Register = function () {
             var _this2 = this;
 
             //初始化下拉选择控件
-            this.pageSize = 10;
+            this.pageSize = 20;
             this.pageIndex = 1;
             this.select = _select2.default.initWithElement($("#authStatus")).setOptions([{
                 key: "已认证会员",
@@ -3974,18 +3980,143 @@ var Register = function () {
                     case "查看详情":
                         _this2.getDetail(data.CustomerID);
                         break;
+                    case "删除":
+                        _this2.delete(data);
+                        break;
+                    case "编辑":
+                        _this2.getEdit(data.CustomerID);
+                        break;
                 }
             });
             $(window).on("resize", function () {
                 var dataH = document.documentElement.offsetHeight - $(".page-datagrid").offset().top - 140;
                 _this.datagrid.updateHeight(dataH);
             });
-
             this.pager = new _pager2.default($(".page-pager"), 0, false).then(function (index) {
                 _this.pageIndex = index;
                 _this.search();
             });
             _this.search();
+            $("body").on("click", ".icon-add", function () {
+                $(this).parents(".item-name").parent().append('<div class="item">' + '                <div class="item-info"><label class="keep-all">职务：</label><input class="input" type="text"></div>' + '                <div class="item-info"><label class="keep-all">公司：</label><input class="input" type="text"></div>' + '                <div class="align-center" style="width: 5rem">' + '                    <input type="radio" name="authCompany"><label>认证</label>' + '                    <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>' + '                </div>' + '            </div>');
+            });
+            $("body").on("click", ".icon-delete", function () {
+                $(this).parents(".item").remove();
+            });
+        }
+    }, {
+        key: 'edit',
+        value: function edit() {}
+    }, {
+        key: 'delete',
+        value: function _delete(item) {
+            var staticThis = this;
+            alert("用户删除后将无法恢复，确定要删除该数据吗？").then(function (btn) {
+                if (btn === "operation_ok") {
+                    item.IsDeleted = true;
+                    (0, _fetch2.default)("/api/ManageCustomerInfoApi/DeleteCustomerInfo", item).then(function (res) {
+                        if (res.ok) {
+                            //删除成功刷新当前分页
+                            staticThis.search();
+                            alert("删除成功");
+                        } else {
+                            alert(res.msg).then(function (btn) {
+                                if (btn === "operation_ok") {
+                                    if (res.overdue) {
+                                        window.top.location.replace("./login.html");
+                                    }
+                                    this.close();
+                                }
+                            });
+                        }
+                    });
+                    this.close();
+                }
+            });
+        }
+    }, {
+        key: 'getEdit',
+        value: function getEdit(userId) {
+            var _this3 = this;
+
+            //
+            (0, _fetch2.default)("/api/ManageCustomerInfoApi/GetCustomerDetailInfoById?customerId=" + userId).then(function (res) {
+                if (res.ok) {
+                    //弹出dialog
+                    var size = navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS|Windows Phone)/ig) ? "full" : "";
+                    (0, _cfDialog2.default)({
+                        title: "修改会员信息",
+                        content: (0, _edit2.default)(res.data),
+                        modal: false,
+                        size: size,
+                        footerBtn: [{
+                            text: "取消"
+                        }, {
+                            text: "修改",
+                            themeCss: "btn-primary"
+                        }]
+                    }).then(function (btn) {
+                        if (btn === "operation_cusBtn1") {
+                            //Todo Edit
+                        }
+                        this.close();
+                    });
+                    _this3.getProvince(function () {
+                        var options = [];
+                        $.each(_this3.provinces, function (i, province) {
+                            options.push({
+                                key: province.ProvinceName,
+                                value: province.ProvinceCode
+                            });
+                        });
+                        var ProvinceSelector = _select2.default.initWithElement($("#province")).setOptions(options).then(function (val) {
+                            _this3.getCityByProvince(val, function (cities) {
+                                var _options = [];
+                                $.each(cities, function (i, city) {
+                                    _options.push({
+                                        key: city.CityName,
+                                        value: city.CityCode
+                                    });
+                                });
+                                $("#city input").attr("placeholder", "请选择城市");
+                                var CitySelector = _select2.default.initWithElement($("#city")).setOptions(_options).then(function (val) {});
+                            });
+                        });
+                        var ProvinceSelector1 = _select2.default.initWithElement($("#homeprovince")).setOptions(options).then(function (val) {
+                            // alert(val);
+                            _this3.getCityByProvince(val, function (cities) {
+                                var _options = [];
+                                $.each(cities, function (i, city) {
+                                    _options.push({
+                                        key: city.CityName,
+                                        value: city.CityCode
+                                    });
+                                });
+                                $("#homecity input").attr("placeholder", "请选择城市");
+                                var CitySelector = _select2.default.initWithElement($("#homecity")).setOptions(_options).then(function (val) {});
+                            });
+                        });
+                    });
+                } else {
+                    alert(res.msg).then(function (btn) {
+                        if (btn === "operation_ok") {
+                            if (res.overdue) {
+                                window.top.location.replace("./login.html");
+                            }
+                            this.close();
+                        }
+                    });
+                }
+            });
+        }
+    }, {
+        key: 'updateDetail',
+        value: function updateDetail() {
+            var name = $("[data-form=\"userName\"]").val();
+            var phone = $("[data-form=\"tel\"]").val();
+            var sex = $("[name='sex']").val();
+            var auth = $("[name='auth']").val();
+            var vip = $("[name='vip']").val();
         }
     }, {
         key: 'getDetail',
@@ -4040,12 +4171,119 @@ var Register = function () {
                 }
             });
         }
+    }, {
+        key: 'getProvince',
+        value: function getProvince(callback) {
+            var _this4 = this;
+
+            //后台请求
+            if (this.provinces) return callback && callback.call(this);
+            (0, _fetch2.default)("/api/GroupActivityApi/GetProvinceList").then(function (res) {
+                if (res.ok) {
+                    _this4.provinces = res.data.List;
+                    callback && callback.call(_this4);
+                } else {
+                    alert(res.msg).then(function (btn) {
+                        if (btn === "operation_ok") {
+                            if (res.overdue) {
+                                window.top.location.replace("./login.html");
+                            }
+                            this.close();
+                        }
+                    });
+                }
+            });
+        }
+    }, {
+        key: 'getCityByProvince',
+        value: function getCityByProvince(provinceCode, callback) {
+            var _this5 = this;
+
+            (0, _fetch2.default)("/api/GroupActivityApi/GetCityList?ProvinceCode=" + provinceCode).then(function (res) {
+                if (res.ok) {
+                    callback && callback.call(_this5, res.data.List);
+                } else {
+                    alert(res.msg).then(function (btn) {
+                        if (btn === "operation_ok") {
+                            if (res.overdue) {
+                                window.top.location.replace("./login.html");
+                            }
+                            this.close();
+                        }
+                    });
+                }
+            });
+        }
     }]);
 
     return Register;
 }();
 
 Register.initialize();
+
+/***/ }),
+/* 79 */,
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(1);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, CustomerName = $data.CustomerName, CustomerTel = $data.CustomerTel, Sex = $data.Sex, IdentificationState = $data.IdentificationState, CustomerLevel = $data.CustomerLevel, HideCompanyWord = $data.HideCompanyWord, JobExperienceList = $data.JobExperienceList, $each = $imports.$each, info = $data.info, $index = $data.$index;
+    $$out += '<div class="scroll-content">\r\n    <div class="block">\r\n        <div class="item-name">\r\n            基本资料\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label class="keep-all">姓名\uFF1A</label><input data-form="userName" class="input" type="text" value="';
+    $$out += $escape(CustomerName);
+    $$out += '"></div>\r\n            <div class="item-info"><label class="keep-all">手机号\uFF1A</label><input data-form="tel" class="input" type="tel" value="';
+    $$out += $escape(CustomerTel);
+    $$out += '"></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">性别\uFF1A<input type="radio" name="sex" id="male" value="1" ';
+    if (Sex === 1) {
+        $$out += ' checked="checked"';
+    }
+    $$out += '><label for="male">男</label><input type="radio" name="sex" id="female" value="2" ';
+    if (Sex === 2) {
+        $$out += ' checked="checked"';
+    }
+    $$out += '><label for="female">女</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label style="width: 8em;">设置为认证会员\uFF1A</label><input  type="radio" name="auth" id="auth" value="2" ';
+    if (IdentificationState === 2) {
+        $$out += ' checked="checked"';
+    }
+    $$out += ' ><label for="auth">是</label><input type="radio" name="auth" id="auth0" value="0" ';
+    if (IdentificationState != 2) {
+        $$out += ' checked="checked"';
+    }
+    $$out += ' ><label for="auth0">否</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label style="width: 8em;">设置为Vip会员\uFF1A</label><input type="radio" name="vip" id="vip" value="1" ';
+    if (CustomerLevel === 1) {
+        $$out += ' checked="checked"';
+    }
+    $$out += ' ><label for="vip">是</label><input type="radio" name="vip" id="vip0" value="0" ';
+    if (CustomerLevel != 1) {
+        $$out += ' checked="checked"';
+    }
+    $$out += '><label for="vip0">否</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="form-item">\r\n                    <label style="margin-top: 0.3rem">所在地\uFF1A</label>\r\n                    <div class="select" id="province">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                    <div class="select" id="city">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="form-item">\r\n                    <label style="margin-top: 0.3rem">家&emsp;乡\uFF1A</label>\r\n                    <div class="select" id="homeprovince">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                    <div class="select" id="homecity">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label class="keep-all">公司名隐藏字段\uFF1A</label><input class="input" type="text" value="';
+    $$out += $escape(HideCompanyWord);
+    $$out += '" placeholder="隐藏字段将显示为*"></div>\r\n        </div>\r\n    </div>\r\n    <div class="block">\r\n        <div class="item-name">\r\n            职务信息<a><h3 class="icon icon-add" style="margin: 0;line-height:1.1rem;margin-left: 0.8rem;"></h3></a>\r\n        </div>\r\n        ';
+    if (JobExperienceList.length == 0) {
+        $$out += '\r\n            <div class="item">\r\n                <div class="item-info"><label class="keep-all">职务\uFF1A</label><input class="input" type="text"></div>\r\n                <div class="item-info"><label class="keep-all">公司\uFF1A</label><input class="input" type="text"></div>\r\n                <div class="align-center" style="width: 5rem">\r\n                    <input type="radio" name="authCompany"><label>认证</label>\r\n                    <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>\r\n                </div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        ';
+    $each(JobExperienceList, function (info, $index) {
+        $$out += '\r\n            ';
+        if (info.IsDeleted == false) {
+            $$out += '\r\n                <div class="item">\r\n                    <div class="item-info"><label class="keep-all">职务\uFF1A</label><input class="input" type="text" value="';
+            $$out += $escape(info.Position);
+            $$out += '"></div>\r\n                    <div class="item-info"><label class="keep-all">公司\uFF1A</label><input class="input" type="text" value="';
+            $$out += $escape(info.CompanyName);
+            $$out += '"></div>\r\n                    <div class="align-center" style="width: 5rem">\r\n                        <input type="radio" name="authCompany" ';
+            if (info.IdentificationState === 2) {
+                $$out += ' checked="checked"';
+            }
+            $$out += '><label>认证</label>\r\n                        <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>\r\n                    </div>\r\n                </div>\r\n            ';
+        }
+        $$out += '\r\n        ';
+    });
+    $$out += '\r\n    </div>\r\n</div>';
+    return $$out;
+};
 
 /***/ })
 /******/ ]);

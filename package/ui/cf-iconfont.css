@@ -51,3 +51,15 @@
 .icon-password:before {
     content: "\e669"
 }
+
+.icon-add:before {
+    content: "\e81a"
+}
+
+.icon-refresh:before {
+    content: "\e60f"
+}
+
+.icon-delete:before {
+    content: "\e65e"
+}

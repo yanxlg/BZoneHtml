@@ -180,8 +180,10 @@ class Dialog{
     }
     close(){
         let _this=this;
+        if(_this.delete) return;
         transition(()=>{
             _this.callback&&_this.callback.call(_this,"closeStart");
+            _this.delete=true;
             _this._element.removeClass("in").on(transitionEnd,function () {
                 _this._element.remove();
                 $(window).off("keydown."+_this.id);

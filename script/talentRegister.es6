@@ -17,7 +17,7 @@ import fetch from './fetch.es6';
 class Register{
     static initialize(){
         //初始化下拉选择控件
-        this.pageSize=10;
+        this.pageSize=20;
         this.pageIndex=1;
         this.authStatus=Select.initWithElement($("#authStatus")).setOptions([{
             key:"请选择认证状态",
@@ -158,7 +158,7 @@ class Register{
             let dataH=document.documentElement.offsetHeight-$(".page-datagrid").offset().top-140;
             _this.datagrid.updateHeight(dataH);
         });
-        this.pager=new Pager($(".page-pager"),0,false).then((index)=>{
+        this.pager=new Pager($(".page-pager"),0,true).then((index)=>{
             _this.pageIndex=index;
             _this.search();
         });

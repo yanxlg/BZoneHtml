@@ -1,0 +1,92 @@
+<div class="scroll-content">
+    <div class="block">
+        <div class="item-name">
+            基本资料
+        </div>
+        <div class="item">
+            <div class="item-info"><label class="keep-all">姓名：</label><input data-form="userName" class="input" type="text" value="{{CustomerName}}"></div>
+            <div class="item-info"><label class="keep-all">手机号：</label><input data-form="tel" class="input" type="tel" value="{{CustomerTel}}"></div>
+        </div>
+        <div class="item">
+            <div class="item-info">性别：<input type="radio" name="sex" id="male" value="1" <%if(Sex===1){%> checked="checked"<%}%>><label for="male">男</label><input type="radio" name="sex" id="female" value="2" <%if(Sex===2){%> checked="checked"<%}%>><label for="female">女</label></div>
+        </div>
+        <div class="item">
+            <div class="item-info"><label style="width: 8em;">设置为认证会员：</label><input  type="radio" name="auth" id="auth" value="2" <%if(IdentificationState===2){%> checked="checked"<%}%> ><label for="auth">是</label><input type="radio" name="auth" id="auth0" value="0" <%if(IdentificationState!=2){%> checked="checked"<%}%> ><label for="auth0">否</label></div>
+        </div>
+        <div class="item">
+            <div class="item-info"><label style="width: 8em;">设置为Vip会员：</label><input type="radio" name="vip" id="vip" value="1" <%if(CustomerLevel===1){%> checked="checked"<%}%> ><label for="vip">是</label><input type="radio" name="vip" id="vip0" value="0" <%if(CustomerLevel!=1){%> checked="checked"<%}%>><label for="vip0">否</label></div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                <div class="form-item">
+                    <label style="margin-top: 0.3rem">所在地：</label>
+                    <div class="select" id="province">
+                        <div class="input-icon">
+                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>
+                        </div>
+                        <ul class="select-options">
+                        </ul>
+                    </div>
+                    <div class="select" id="city">
+                        <div class="input-icon">
+                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>
+                        </div>
+                        <ul class="select-options">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info">
+                <div class="form-item">
+                    <label style="margin-top: 0.3rem">家&emsp;乡：</label>
+                    <div class="select" id="homeprovince">
+                        <div class="input-icon">
+                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>
+                        </div>
+                        <ul class="select-options">
+                        </ul>
+                    </div>
+                    <div class="select" id="homecity">
+                        <div class="input-icon">
+                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>
+                        </div>
+                        <ul class="select-options">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-info"><label class="keep-all">公司名隐藏字段：</label><input class="input" type="text" value="{{HideCompanyWord}}" placeholder="隐藏字段将显示为*"></div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="item-name">
+            职务信息<a><h3 class="icon icon-add" style="margin: 0;line-height:1.1rem;margin-left: 0.8rem;"></h3></a>
+        </div>
+        {{if JobExperienceList.length==0}}
+            <div class="item">
+                <div class="item-info"><label class="keep-all">职务：</label><input class="input" type="text"></div>
+                <div class="item-info"><label class="keep-all">公司：</label><input class="input" type="text"></div>
+                <div class="align-center" style="width: 5rem">
+                    <input type="radio" name="authCompany"><label>认证</label>
+                    <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>
+                </div>
+            </div>
+        {{/if}}
+        {{each JobExperienceList as info}}
+            {{if info.IsDeleted==false}}
+                <div class="item">
+                    <div class="item-info"><label class="keep-all">职务：</label><input class="input" type="text" value="{{info.Position}}"></div>
+                    <div class="item-info"><label class="keep-all">公司：</label><input class="input" type="text" value="{{info.CompanyName}}"></div>
+                    <div class="align-center" style="width: 5rem">
+                        <input type="radio" name="authCompany" <%if(info.IdentificationState===2){%> checked="checked"<%}%>><label>认证</label>
+                        <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
