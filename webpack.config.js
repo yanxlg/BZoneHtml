@@ -23,8 +23,6 @@ function createEntries(dir,root) {
     });
 }
 createEntries('./',"package");
-console.log(entries);
-
 module.exports = {
     entry: entries, //代表入口(总)文件，可以写多个
     output: {
