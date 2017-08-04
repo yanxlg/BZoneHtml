@@ -8,11 +8,6 @@
   ],
   "nodeVersion": "6.x",
   "scripts": {
-    "prebuild": "webpack",
-    "build": "gulp",
-    "watch": "fis3 release -w",
-    "build web": "fis3 release -d ./build/web",
-    "local": "fis3 release",
     "release": "fis3 release -wL",
     "server": "fis3 server start",
     "open": "fis3 server open",

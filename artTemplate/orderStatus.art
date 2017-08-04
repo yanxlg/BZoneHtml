@@ -1,0 +1,16 @@
+<div class="scroll-content">
+    <div class="block">
+        <div class="item">
+            <div class="item-info" style="margin-bottom: 80px">
+                <label>订单状态：</label>
+                <div class="select" id="changeStatus">
+                    <div class="input-icon">
+                        <input type="text" readonly="readonly" class="input" value="{{QueryStatus}}" placeholder="请选择订单状态"><i class="icon icon-arrow"></i>
+                    </div>
+                    <ul class="select-options">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

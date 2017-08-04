@@ -63,11 +63,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 76);
+/******/ 	return __webpack_require__(__webpack_require__.s = 81);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(2);
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 var g;
@@ -92,15 +101,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 2 */
@@ -206,7 +206,7 @@ function xmlEscape(content) {
 };
 
 module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 3 */
@@ -219,48 +219,10 @@ try {
  module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
 } catch(e) {}
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -301,7 +263,7 @@ var _dialog = __webpack_require__(11);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(4);
+var _cfIdGenerator = __webpack_require__(5);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
@@ -483,8 +445,8 @@ var Dialog = function () {
         key: 'close',
         value: function close() {
             var _this = this;
-            if (_this.delete) return;
             (0, _cfTransition.transition)(function () {
+                if (_this.delete) return;
                 _this.callback && _this.callback.call(_this, "closeStart");
                 _this.delete = true;
                 _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
@@ -546,6 +508,44 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -590,71 +590,22 @@ exports.transitionEnd = transitionEnd;
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/6/5 0005.
- * slide插件
- * 需要动态计算展开的大小
- */
-var Slide = function () {
-    function Slide() {
-        _classCallCheck(this, Slide);
-    }
-
-    _createClass(Slide, null, [{
-        key: "slideDown",
-        value: function slideDown(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: offH + "px"
-            });
-            return offH;
-        }
-    }, {
-        key: "slide",
-        value: function slide(el, delY) {
-            //增量处理
-            var offH = el[0].offsetHeight;
-            el.css({
-                height: offH + delY + "px"
-            });
-            return offH + delY;
-        }
-    }, {
-        key: "slideUp",
-        value: function slideUp(el) {
-            var child = el.children(),
-                offH = 0;
-            $.each(child, function (i, ch) {
-                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
-            });
-            el.css({
-                height: 0
-            });
-            return offH;
-        }
-    }]);
-
-    return Slide;
-}();
-
-exports.default = Slide;
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.4.2",
+	"ApiVersion": "1.4.2",
+	"webApiDomainTest": "http://10.40.5.30:8081",
+	"webApiDomainLocal": "http://localhost:5007",
+	"webApiDomain": "",
+	"successCode": 0,
+	"errorCode": -1,
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
+};
 
 /***/ }),
 /* 8 */
@@ -849,22 +800,71 @@ exports.default = Drag;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomainTest": "http://10.40.5.30:8081",
-	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "http://localhost:5007",
-	"successCode": 0,
-	"errorCode": -1,
-	"overdueCode": 10040,
-	"userLocalKey": "_user",
-	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
-};
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/5 0005.
+ * slide插件
+ * 需要动态计算展开的大小
+ */
+var Slide = function () {
+    function Slide() {
+        _classCallCheck(this, Slide);
+    }
+
+    _createClass(Slide, null, [{
+        key: "slideDown",
+        value: function slideDown(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: offH + "px"
+            });
+            return offH;
+        }
+    }, {
+        key: "slide",
+        value: function slide(el, delY) {
+            //增量处理
+            var offH = el[0].offsetHeight;
+            el.css({
+                height: offH + delY + "px"
+            });
+            return offH + delY;
+        }
+    }, {
+        key: "slideUp",
+        value: function slideUp(el) {
+            var child = el.children(),
+                offH = 0;
+            $.each(child, function (i, ch) {
+                offH += ch.offsetHeight; //可能更新 不及时，需要从css中读取
+            });
+            el.css({
+                height: 0
+            });
+            return offH;
+        }
+    }]);
+
+    return Slide;
+}();
+
+exports.default = Slide;
 
 /***/ }),
 /* 10 */
@@ -1169,7 +1169,7 @@ exports.decode = decode;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -1241,190 +1241,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/2 0002.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航菜单
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 默认根据屏幕大小切换显示方式，大屏显示在左侧 中屏显示在顶部 小屏顶部折叠 右侧显示（支持左侧侧滑）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * options 支持参数
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * left：菜单header的icon显示在左侧
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 菜单循环嵌套,一个菜单项是一个object
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * menus:[{pMenu:{},menuList:[{groupName:"",menus:[]},{},{}]},{}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分组信息 group menus:{groupName:"",menus:[]}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 一组菜单：[]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 支持三层结构
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  name:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  data:obj
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  childMenus:[{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      groupName:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      menus:[{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           name:"",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           data:obj,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           childMenus:[]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  }]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 打开的时候收起其他的
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _navPop = __webpack_require__(18);
-
-var _navPop2 = _interopRequireDefault(_navPop);
-
-var _slide = __webpack_require__(7);
-
-var _slide2 = _interopRequireDefault(_slide);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var PopMenu = function () {
-    function PopMenu(menus, left) {
-        _classCallCheck(this, PopMenu);
-
-        this.menus = menus;
-        this.left = left || false;
-        this.create();
-        this.initLife();
-    }
-
-    _createClass(PopMenu, [{
-        key: 'getType',
-        value: function getType() {
-            return "PopMenu";
-        }
-    }, {
-        key: 'create',
-        value: function create() {
-            this.menusRender = $((0, _navPop2.default)({
-                menus: this.menus,
-                left: this.left
-            }));
-            $("body").addClass("width-nav-pop").append(this.menusRender);
-        }
-    }, {
-        key: 'initLife',
-        value: function initLife() {
-            var _this = this;
-            this.menusRender.on("click", ".nav-menu", function () {
-                var $this = $(this);
-                if ($this.next().hasClass("slide")) {
-                    if ($this.next().hasClass("open")) {
-                        $this.removeClass("open").next().removeClass("open");
-                        var addH = _slide2.default.slideUp($this.next());
-                        var parentSlide = $this.parents(".slide");
-                        $.each(parentSlide, function (i, slide) {
-                            $(slide).addClass("open").prev().addClass("open");
-                            _slide2.default.slide($(slide), -addH);
-                        });
-                    } else {
-                        //这样会造成父级元素高度变化
-                        //fix it
-                        //需要关闭其他父级菜单中已经打开的
-                        var others = $this.parent().siblings(); //li元素
-                        $.each(others, function (i, li) {
-                            var slide = $(li).children(".slide");
-                            if (slide.hasClass("open")) {
-                                slide.removeClass("open").prev().removeClass("open");
-                                _slide2.default.slideUp(slide);
-                                //关闭子的
-                                var childSlide = slide.find(".slide");
-                                $.each(childSlide, function (i, mSlide) {
-                                    $(mSlide).removeClass("open").prev().removeClass("open");
-                                    _slide2.default.slideUp($(mSlide));
-                                });
-                            }
-                        });
-                        $this.addClass("open").next().addClass("open");
-                        var _addH = _slide2.default.slideDown($this.next());
-                        var _parentSlide = $this.parents(".slide");
-                        $.each(_parentSlide, function (i, slide) {
-                            $(slide).addClass("open").prev().addClass("open");
-                            _slide2.default.slide($(slide), _addH);
-                        });
-                    }
-                } else {
-                    $(".nav-active").removeClass("nav-active");
-                    $(".nav-menu.active").removeClass("active");
-                    //...添加样式
-                    $(".nav-icon-menu").addClass("nav-active");
-                    $this.addClass("nav-active");
-                    var data = $this.attr("data-data");
-                    _this.callback && _this.callback.call(_this, data);
-                    _this.close();
-                }
-            });
-            this.menusRender.on("click", ".nav-icon-menu", function () {
-                _this.show();
-            });
-            this.menusRender.on("click", ".modal-backdrop", function () {
-                _this.close();
-            });
-            $(window).on("scroll.pop", function () {
-                _this.updateBg();
-            });
-        }
-    }, {
-        key: 'updateBg',
-        value: function updateBg() {
-            if (!this.bg) {
-                var bgColor = this.menusRender.find(".nav-header").css("background-color");
-                //正则解析出三段int值
-                this.bg = bgColor.match(/\d+/g);
-            }
-            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
-            var opacity = 1 - Math.round(scrolltop / 100) / 10; //背景调整
-            this.menusRender.find(".nav-header").css({
-                "background-color": 'rgba(' + this.bg[0] + ',' + this.bg[1] + ',' + this.bg[2] + ',' + opacity + ')'
-            });
-        }
-    }, {
-        key: 'show',
-        value: function show() {
-            this.menusRender.find(".nav-pop").addClass("show");
-            this.menusRender.find(".modal-backdrop").addClass("in");
-        }
-    }, {
-        key: 'close',
-        value: function close() {
-            this.menusRender.find(".nav-pop").removeClass("show");
-            this.menusRender.find(".modal-backdrop").removeClass("in");
-        }
-    }, {
-        key: 'then',
-        value: function then(callback) {
-            this.callback = callback;
-            return this;
-        }
-    }, {
-        key: 'destroy',
-        value: function destroy() {
-            this.menusRender.remove();
-            $("body").removeClass("width-nav-pop");
-            $(window).off("scroll.pop");
-        }
-    }]);
-
-    return PopMenu;
-}();
-
-exports.default = PopMenu;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * Created by yanxlg on 2017/6/20 0020.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * user信息管理
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * key: _user
@@ -1435,7 +1251,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _store = __webpack_require__(10);
 
-var _static = __webpack_require__(9);
+var _static = __webpack_require__(7);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1531,7 +1347,7 @@ var USER = function () {
 exports.default = USER;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1890,10 +1706,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(1)))
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -2083,8 +1899,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 16 */,
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2094,7 +1909,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Promise = __webpack_require__(14);
+var _Promise = __webpack_require__(13);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2567,74 +2382,192 @@ var fetch = window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
-    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
-    $$out += $escape(left ? 'left' : '');
-    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
-    $each(menus, function (menu, $index) {
-        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
-        $$out += $escape(menu.data);
-        $$out += '">';
-        $$out += $escape(menu.name);
-        $$out += '</div>\r\n            ';
-        if (menu.childMenus && menu.childMenus.length > 0) {
-            $$out += '\r\n            <ul class="slide">\r\n                ';
-            $each(menu.childMenus, function (childMenu, $index) {
-                $$out += '\r\n                ';
-                if (childMenu.groupName) {
-                    $$out += '\r\n                <div class="nav-group">';
-                    $$out += $escape(childMenu.groupName);
-                    $$out += '</div>\r\n                ';
-                }
-                $$out += '\r\n                ';
-                $each(childMenu.menus, function (subMenu, $index) {
-                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
-                    $$out += $escape(subMenu.data);
-                    $$out += '">';
-                    $$out += $escape(subMenu.name);
-                    $$out += '</div>\r\n                    ';
-                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
-                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
-                        $each(subMenu.childMenus, function (lastMenu, $index) {
-                            $$out += '\r\n                        ';
-                            if (lastMenu.groupName) {
-                                $$out += '\r\n                        <div class="nav-group">';
-                                $$out += $escape(lastMenu.groupName);
-                                $$out += '</div>\r\n                        ';
-                            }
-                            $$out += '\r\n                        ';
-                            $each(lastMenu.menus, function (item, $index) {
-                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
-                                $$out += $escape(item.data);
-                                $$out += '">';
-                                $$out += $escape(item.name);
-                                $$out += '</div>\r\n                        </li>\r\n                        ';
-                            });
-                            $$out += '\r\n                        ';
-                        });
-                        $$out += '\r\n                    </ul>\r\n                    ';
-                    }
-                    $$out += '\r\n                </li>\r\n                ';
-                });
-                $$out += '\r\n                ';
-            });
-            $$out += '\r\n            </ul>\r\n            ';
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by yanxlg on 2017/6/2 0002.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 导航菜单
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 默认根据屏幕大小切换显示方式，大屏显示在左侧 中屏显示在顶部 小屏顶部折叠 右侧显示（支持左侧侧滑）
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * options 支持参数
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * left：菜单header的icon显示在左侧
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 菜单循环嵌套,一个菜单项是一个object
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * menus:[{pMenu:{},menuList:[{groupName:"",menus:[]},{},{}]},{}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 分组信息 group menus:{groupName:"",menus:[]}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 一组菜单：[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 支持三层结构
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  name:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  data:obj
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  childMenus:[{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      groupName:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      menus:[{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           name:"",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           data:obj,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     *           childMenus:[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *      }]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *  }]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 打开的时候收起其他的
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _navPop = __webpack_require__(20);
+
+var _navPop2 = _interopRequireDefault(_navPop);
+
+var _slide = __webpack_require__(9);
+
+var _slide2 = _interopRequireDefault(_slide);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PopMenu = function () {
+    function PopMenu(menus, left) {
+        _classCallCheck(this, PopMenu);
+
+        this.menus = menus;
+        this.left = left || false;
+        this.create();
+        this.initLife();
+    }
+
+    _createClass(PopMenu, [{
+        key: 'getType',
+        value: function getType() {
+            return "PopMenu";
         }
-        $$out += '\r\n        </li>\r\n        ';
-    });
-    $$out += '\r\n    </ul>\r\n</div>\r\n';
-    return $$out;
-};
+    }, {
+        key: 'create',
+        value: function create() {
+            this.menusRender = $((0, _navPop2.default)({
+                menus: this.menus,
+                left: this.left
+            }));
+            $("body").addClass("width-nav-pop").append(this.menusRender);
+        }
+    }, {
+        key: 'initLife',
+        value: function initLife() {
+            var _this = this;
+            this.menusRender.on("click", ".nav-menu", function () {
+                var $this = $(this);
+                if ($this.next().hasClass("slide")) {
+                    if ($this.next().hasClass("open")) {
+                        $this.removeClass("open").next().removeClass("open");
+                        var addH = _slide2.default.slideUp($this.next());
+                        var parentSlide = $this.parents(".slide");
+                        $.each(parentSlide, function (i, slide) {
+                            $(slide).addClass("open").prev().addClass("open");
+                            _slide2.default.slide($(slide), -addH);
+                        });
+                    } else {
+                        //这样会造成父级元素高度变化
+                        //fix it
+                        //需要关闭其他父级菜单中已经打开的
+                        var others = $this.parent().siblings(); //li元素
+                        $.each(others, function (i, li) {
+                            var slide = $(li).children(".slide");
+                            if (slide.hasClass("open")) {
+                                slide.removeClass("open").prev().removeClass("open");
+                                _slide2.default.slideUp(slide);
+                                //关闭子的
+                                var childSlide = slide.find(".slide");
+                                $.each(childSlide, function (i, mSlide) {
+                                    $(mSlide).removeClass("open").prev().removeClass("open");
+                                    _slide2.default.slideUp($(mSlide));
+                                });
+                            }
+                        });
+                        $this.addClass("open").next().addClass("open");
+                        var _addH = _slide2.default.slideDown($this.next());
+                        var _parentSlide = $this.parents(".slide");
+                        $.each(_parentSlide, function (i, slide) {
+                            $(slide).addClass("open").prev().addClass("open");
+                            _slide2.default.slide($(slide), _addH);
+                        });
+                    }
+                } else {
+                    $(".nav-active").removeClass("nav-active");
+                    $(".nav-menu.active").removeClass("active");
+                    //...添加样式
+                    $(".nav-icon-menu").addClass("nav-active");
+                    $this.addClass("nav-active");
+                    var data = $this.attr("data-data");
+                    _this.callback && _this.callback.call(_this, data);
+                    _this.close();
+                }
+            });
+            this.menusRender.on("click", ".nav-icon-menu", function () {
+                _this.show();
+            });
+            this.menusRender.on("click", ".modal-backdrop", function () {
+                _this.close();
+            });
+            $(window).on("scroll.pop", function () {
+                _this.updateBg();
+            });
+        }
+    }, {
+        key: 'updateBg',
+        value: function updateBg() {
+            if (!this.bg) {
+                var bgColor = this.menusRender.find(".nav-header").css("background-color");
+                //正则解析出三段int值
+                this.bg = bgColor.match(/\d+/g);
+            }
+            var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+            var opacity = 1 - Math.round(scrolltop / 100) / 10; //背景调整
+            this.menusRender.find(".nav-header").css({
+                "background-color": 'rgba(' + this.bg[0] + ',' + this.bg[1] + ',' + this.bg[2] + ',' + opacity + ')'
+            });
+        }
+    }, {
+        key: 'show',
+        value: function show() {
+            this.menusRender.find(".nav-pop").addClass("show");
+            this.menusRender.find(".modal-backdrop").addClass("in");
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            this.menusRender.find(".nav-pop").removeClass("show");
+            this.menusRender.find(".modal-backdrop").removeClass("in");
+        }
+    }, {
+        key: 'then',
+        value: function then(callback) {
+            this.callback = callback;
+            return this;
+        }
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            this.menusRender.remove();
+            $("body").removeClass("width-nav-pop");
+            $(window).off("scroll.pop");
+        }
+    }]);
+
+    return PopMenu;
+}();
+
+exports.default = PopMenu;
 
 /***/ }),
-/* 19 */
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2650,15 +2583,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(17);
+var _fetch = __webpack_require__(15);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _cfDialog = __webpack_require__(5);
+var _cfDialog = __webpack_require__(4);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(9);
+var _static = __webpack_require__(7);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -2666,7 +2599,7 @@ var _loading = __webpack_require__(21);
 
 var _loading2 = _interopRequireDefault(_loading);
 
-var _user = __webpack_require__(13);
+var _user = __webpack_require__(12);
 
 var _user2 = _interopRequireDefault(_user);
 
@@ -2788,15 +2721,82 @@ var fetch = function fetch(url, data, login) {
 exports.default = fetch;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '';
     $$out += '<div class="loading-plugin">\r\n    <div class="modal fade in">\r\n        <div class="loading-container">\r\n            <div class="loading">\r\n                <div class="loading_0"></div>\r\n                <div class="loading_1"></div>\r\n                <div class="loading_2"></div>\r\n                <div class="loading_3"></div>\r\n                <div class="loading_4"></div>\r\n                <div class="loading_5"></div>\r\n                <div class="loading_6"></div>\r\n                <div class="loading_7"></div>\r\n                <div class="loading_8"></div>\r\n                <div class="loading_9"></div>\r\n                <div class="loading_10"></div>\r\n                <div class="loading_11"></div>\r\n                <div class="loading_12"></div>\r\n                <div class="loading_13"></div>\r\n                <div class="loading_14"></div>\r\n                <div class="loading_15"></div>\r\n                <div class="loading_16"></div>\r\n                <div class="loading_17"></div>\r\n                <div class="loading_18"></div>\r\n                <div class="loading_19"></div>\r\n                <div class="loading_20"></div>\r\n                <div class="loading_21"></div>\r\n                <div class="loading_22"></div>\r\n                <div class="loading_23"></div>\r\n                <div class="loading_24"></div>\r\n            </div>\r\n            <div class="loading-package">懂老板<span class="dot-0">.</span><span class="dot-1">.</span><span class="dot-2">.</span></div>\r\n        </div>\r\n    </div>\r\n    <div class="modal-backdrop fade in"></div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(0);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, left = $data.left, $each = $imports.$each, menus = $data.menus, menu = $data.menu, $index = $data.$index, childMenu = $data.childMenu, subMenu = $data.subMenu, lastMenu = $data.lastMenu, item = $data.item;
+    $$out += '<div class="nav nav-pop">\r\n    <div class="nav-header">\r\n        <i class="nav-icon-menu ';
+    $$out += $escape(left ? 'left' : '');
+    $$out += '"></i>\r\n    </div>\r\n    <div class="modal-backdrop fade"></div>\r\n    <ul class="nav-pop">\r\n        ';
+    $each(menus, function (menu, $index) {
+        $$out += '\r\n        <li>\r\n            <div class="nav-menu" data-data="';
+        $$out += $escape(menu.data);
+        $$out += '">';
+        $$out += $escape(menu.name);
+        $$out += '</div>\r\n            ';
+        if (menu.childMenus && menu.childMenus.length > 0) {
+            $$out += '\r\n            <ul class="slide">\r\n                ';
+            $each(menu.childMenus, function (childMenu, $index) {
+                $$out += '\r\n                ';
+                if (childMenu.groupName) {
+                    $$out += '\r\n                <div class="nav-group">';
+                    $$out += $escape(childMenu.groupName);
+                    $$out += '</div>\r\n                ';
+                }
+                $$out += '\r\n                ';
+                $each(childMenu.menus, function (subMenu, $index) {
+                    $$out += '\r\n                <li>\r\n                    <div class="nav-menu" data-data="';
+                    $$out += $escape(subMenu.data);
+                    $$out += '">';
+                    $$out += $escape(subMenu.name);
+                    $$out += '</div>\r\n                    ';
+                    if (subMenu.childMenus && subMenu.childMenus.length > 0) {
+                        $$out += '\r\n                    <ul class="slide">\r\n                        ';
+                        $each(subMenu.childMenus, function (lastMenu, $index) {
+                            $$out += '\r\n                        ';
+                            if (lastMenu.groupName) {
+                                $$out += '\r\n                        <div class="nav-group">';
+                                $$out += $escape(lastMenu.groupName);
+                                $$out += '</div>\r\n                        ';
+                            }
+                            $$out += '\r\n                        ';
+                            $each(lastMenu.menus, function (item, $index) {
+                                $$out += '\r\n                        <li>\r\n                            <div class="nav-menu" data-data="';
+                                $$out += $escape(item.data);
+                                $$out += '">';
+                                $$out += $escape(item.name);
+                                $$out += '</div>\r\n                        </li>\r\n                        ';
+                            });
+                            $$out += '\r\n                        ';
+                        });
+                        $$out += '\r\n                    </ul>\r\n                    ';
+                    }
+                    $$out += '\r\n                </li>\r\n                ';
+                });
+                $$out += '\r\n                ';
+            });
+            $$out += '\r\n            </ul>\r\n            ';
+        }
+        $$out += '\r\n        </li>\r\n        ';
+    });
+    $$out += '\r\n    </ul>\r\n</div>\r\n';
     return $$out;
 };
 
@@ -2818,7 +2818,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _loading = __webpack_require__(20);
+var _loading = __webpack_require__(19);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2865,7 +2865,9 @@ var Loading = function () {
 exports.default = Loading;
 
 /***/ }),
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2904,11 +2906,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(24);
+var _navLeft = __webpack_require__(28);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _slide = __webpack_require__(7);
+var _slide = __webpack_require__(9);
 
 var _slide2 = _interopRequireDefault(_slide);
 
@@ -3008,7 +3010,7 @@ var LeftMenu = function () {
 exports.default = LeftMenu;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3025,11 +3027,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navTop = __webpack_require__(25);
+var _navTop = __webpack_require__(29);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
-var _navPop = __webpack_require__(12);
+var _navPop = __webpack_require__(16);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -3133,10 +3135,12 @@ var TopMenu = function () {
 exports.default = TopMenu;
 
 /***/ }),
-/* 24 */
+/* 26 */,
+/* 27 */,
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3198,10 +3202,10 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3259,12 +3263,10 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3280,15 +3282,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _navLeft = __webpack_require__(22);
+var _navLeft = __webpack_require__(24);
 
 var _navLeft2 = _interopRequireDefault(_navLeft);
 
-var _navTop = __webpack_require__(23);
+var _navTop = __webpack_require__(25);
 
 var _navTop2 = _interopRequireDefault(_navTop);
 
-var _navPop = __webpack_require__(12);
+var _navPop = __webpack_require__(16);
 
 var _navPop2 = _interopRequireDefault(_navPop);
 
@@ -3369,8 +3371,6 @@ var NavMenu = function () {
 exports.default = NavMenu;
 
 /***/ }),
-/* 32 */,
-/* 33 */,
 /* 34 */,
 /* 35 */,
 /* 36 */
@@ -3482,7 +3482,7 @@ module.exports = {
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3495,7 +3495,7 @@ module.exports = function ($data) {
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3528,7 +3528,12 @@ module.exports = function ($data) {
 /* 73 */,
 /* 74 */,
 /* 75 */,
-/* 76 */
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3543,11 +3548,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _user = __webpack_require__(13);
+var _user = __webpack_require__(12);
 
 var _user2 = _interopRequireDefault(_user);
 
-var _navmenu = __webpack_require__(31);
+var _navmenu = __webpack_require__(33);
 
 var _navmenu2 = _interopRequireDefault(_navmenu);
 
@@ -3555,7 +3560,7 @@ var _myCenter = __webpack_require__(54);
 
 var _myCenter2 = _interopRequireDefault(_myCenter);
 
-var _cfDialog = __webpack_require__(5);
+var _cfDialog = __webpack_require__(4);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
@@ -3567,7 +3572,7 @@ var _navigator = __webpack_require__(36);
 
 var _navigator2 = _interopRequireDefault(_navigator);
 
-var _fetch = __webpack_require__(19);
+var _fetch = __webpack_require__(18);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 

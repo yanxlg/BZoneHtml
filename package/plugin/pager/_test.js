@@ -63,12 +63,22 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 72);
+/******/ 	return __webpack_require__(__webpack_require__.s = 76);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(2);
+
+/***/ }),
+
+/***/ 1:
 /***/ (function(module, exports) {
 
 var g;
@@ -93,16 +103,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-
-/***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(2);
 
 /***/ }),
 
@@ -209,11 +209,11 @@ function xmlEscape(content) {
 };
 
 module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 
-/***/ 27:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -345,14 +345,14 @@ try {
  module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
 } catch(e) {}
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 
 /***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -457,13 +457,13 @@ module.exports = function ($data) {
 
 /***/ }),
 
-/***/ 72:
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _pager = __webpack_require__(27);
+var _pager = __webpack_require__(23);
 
 var _pager2 = _interopRequireDefault(_pager);
 

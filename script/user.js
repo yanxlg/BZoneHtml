@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -368,7 +368,7 @@ exports.decode = decode;
 
 /***/ }),
 
-/***/ 13:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -389,7 +389,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _store = __webpack_require__(10);
 
-var _static = __webpack_require__(9);
+var _static = __webpack_require__(7);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -486,17 +486,17 @@ exports.default = USER;
 
 /***/ }),
 
-/***/ 9:
+/***/ 7:
 /***/ (function(module, exports) {
 
 module.exports = {
 	"AppType": 4,
 	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
+	"AppVersion": "1.4.2",
+	"ApiVersion": "1.4.2",
 	"webApiDomainTest": "http://10.40.5.30:8081",
 	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "http://localhost:5007",
+	"webApiDomain": "",
 	"successCode": 0,
 	"errorCode": -1,
 	"overdueCode": 10040,

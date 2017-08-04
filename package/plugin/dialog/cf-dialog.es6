@@ -180,8 +180,8 @@ class Dialog{
     }
     close(){
         let _this=this;
-        if(_this.delete) return;
         transition(()=>{
+            if(_this.delete) return;
             _this.callback&&_this.callback.call(_this,"closeStart");
             _this.delete=true;
             _this._element.removeClass("in").on(transitionEnd,function () {

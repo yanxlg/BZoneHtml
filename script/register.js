@@ -63,11 +63,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 78);
+/******/ 	return __webpack_require__(__webpack_require__.s = 83);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(2);
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 var g;
@@ -92,15 +101,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 2 */
@@ -206,7 +206,7 @@ function xmlEscape(content) {
 };
 
 module.exports = runtime;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 3 */
@@ -219,48 +219,10 @@ try {
  module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
 } catch(e) {}
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/5/26 0026.
- * id 生成序列
- */
-var lastUuidAmend = 0;
-
-var IDGenerator = function () {
-    function IDGenerator() {
-        _classCallCheck(this, IDGenerator);
-    }
-
-    _createClass(IDGenerator, null, [{
-        key: "uuid",
-        value: function uuid() {
-            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
-        }
-    }]);
-
-    return IDGenerator;
-}();
-
-exports.default = IDGenerator;
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -301,7 +263,7 @@ var _dialog = __webpack_require__(11);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _cfIdGenerator = __webpack_require__(4);
+var _cfIdGenerator = __webpack_require__(5);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
@@ -483,8 +445,8 @@ var Dialog = function () {
         key: 'close',
         value: function close() {
             var _this = this;
-            if (_this.delete) return;
             (0, _cfTransition.transition)(function () {
+                if (_this.delete) return;
                 _this.callback && _this.callback.call(_this, "closeStart");
                 _this.delete = true;
                 _this._element.removeClass("in").on(_cfTransition.transitionEnd, function () {
@@ -546,6 +508,44 @@ window.alert = function (msg, title) {
 exports.default = dialog;
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/5/26 0026.
+ * id 生成序列
+ */
+var lastUuidAmend = 0;
+
+var IDGenerator = function () {
+    function IDGenerator() {
+        _classCallCheck(this, IDGenerator);
+    }
+
+    _createClass(IDGenerator, null, [{
+        key: "uuid",
+        value: function uuid() {
+            return new Date().getTime() * 1000 + lastUuidAmend++ % 1000;
+        }
+    }]);
+
+    return IDGenerator;
+}();
+
+exports.default = IDGenerator;
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -589,7 +589,25 @@ exports.transition = transition;
 exports.transitionEnd = transitionEnd;
 
 /***/ }),
-/* 7 */,
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"AppType": 4,
+	"ApiType": "1",
+	"AppVersion": "1.4.2",
+	"ApiVersion": "1.4.2",
+	"webApiDomainTest": "http://10.40.5.30:8081",
+	"webApiDomainLocal": "http://localhost:5007",
+	"webApiDomain": "",
+	"successCode": 0,
+	"errorCode": -1,
+	"overdueCode": 10040,
+	"userLocalKey": "_user",
+	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
+};
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -781,25 +799,7 @@ var Drag = function () {
 exports.default = Drag;
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"AppType": 4,
-	"ApiType": "1",
-	"AppVersion": "1.3.5",
-	"ApiVersion": "1.3.5",
-	"webApiDomainTest": "http://10.40.5.30:8081",
-	"webApiDomainLocal": "http://localhost:5007",
-	"webApiDomain": "http://localhost:5007",
-	"successCode": 0,
-	"errorCode": -1,
-	"overdueCode": 10040,
-	"userLocalKey": "_user",
-	"angularWeb": "http://10.40.5.30:8081/BZone/index.html"
-};
-
-/***/ }),
+/* 9 */,
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1102,7 +1102,7 @@ exports.decode = decode;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -1163,8 +1163,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 12 */,
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1185,7 +1184,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _store = __webpack_require__(10);
 
-var _static = __webpack_require__(9);
+var _static = __webpack_require__(7);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -1281,7 +1280,7 @@ var USER = function () {
 exports.default = USER;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1640,10 +1639,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 }(typeof self !== 'undefined' ? self : window);
 var Promise = typeof self !== 'undefined' ? self.Promise : window.Promise;
 exports.default = Promise;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(1)))
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1833,7 +1832,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1843,160 +1842,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Created by yanxlg on 2017/6/16 0016.
- * 列表操作项
- */
-var ListActions = function () {
-    function ListActions(grid) {
-        _classCallCheck(this, ListActions);
-
-        this.grid = grid;
-        var _this = this;
-        _this.update();
-        $(window).on("resize", function () {
-            _this.update();
-        });
-    }
-
-    _createClass(ListActions, [{
-        key: "bindWithGrid",
-        value: function bindWithGrid() {
-            var grid = this.grid;
-            //绑定到grid中
-            grid.on("mouseover", ".data-row", function () {
-                //获取grid的宽度
-                var areWidth = grid.width() + grid.find(".grid-data")[0].scrollLeft;
-                var action = $(this).find(".grid-actions");
-                var actionWidth = action.outerWidth();
-                action.css({
-                    left: areWidth + "px"
-                });
-                action.removeClass("hide").addClass("show").css({
-                    marginLeft: -actionWidth + "px"
-                });
-            });
-            grid.on("mouseout", ".data-row", function () {
-                var action = $(this).find(".grid-actions");
-                action.removeClass("show").addClass("hide").css({
-                    marginLeft: "0px"
-                });
-            });
-            return this;
-        }
-    }, {
-        key: "bindWithMobild",
-        value: function bindWithMobild() {
-            var grid = this.grid;
-            var startPoint = void 0,
-                movePoint = void 0;
-            grid.on("touchstart", ".data-row", function (e) {
-                var touch = e.targetTouches[0];
-                startPoint = movePoint = {
-                    x: touch.screenX,
-                    y: touch.screenY
-                };
-                if (!$(this).hasClass("touchEl")) {
-                    grid.find(".touchEl").removeClass("touchEl").attr("data-delX", 0).css({
-                        marginLeft: "0px"
-                    }).find(".grid-actions").css({
-                        marginLeft: "0px"
-                    });
-                    $(this).find(".grid-actions").css({
-                        marginLeft: "0px"
-                    });
-                    $(this).addClass("touchEl").attr("data-delX", 0);
-                } else {
-                    $(this).addClass("touchEl");
-                }
-            });
-            grid.on("touchmove", ".data-row", function (e) {
-                if (!startPoint) return;
-                var touch = e.targetTouches[0];
-                var action = $(this).find(".grid-actions"),
-                    actWidth = parseInt(action.outerWidth());
-                if ($(this).hasClass("touchEl")) {
-                    var mPoint = {
-                        x: touch.screenX,
-                        y: touch.screenY
-                    };
-                    var curr = parseInt($(this).attr("data-delX")) || 0;
-                    var delX = mPoint.x - movePoint.x + curr;
-                    delX = Math.max(-actWidth, delX);
-                    delX = Math.min(delX, 0);
-                    $(this).attr("data-delX", delX);
-                    movePoint = mPoint;
-                    action.css({
-                        marginLeft: delX + "px"
-                    });
-                    $(this).css({
-                        marginLeft: delX + "px"
-                    });
-                } else {}
-            });
-            grid.on("touchend touchcancel", ".data-row", function (e) {
-                startPoint = null;
-                var action = $(this).find(".grid-actions"),
-                    actWidth = parseInt(action.outerWidth());
-                var curr = parseInt($(this).attr("data-delX")) || 0;
-                if (Math.abs(curr) < actWidth / 2) {
-                    action.css({
-                        marginLeft: "0px"
-                    });
-                    $(this).css({
-                        marginLeft: "0px"
-                    });
-                } else {
-                    action.css({
-                        marginLeft: -actWidth + "px"
-                    });
-                    $(this).css({
-                        marginLeft: -actWidth + "px"
-                    });
-                }
-            });
-        }
-    }, {
-        key: "update",
-        value: function update() {
-            var width = document.body.offsetWidth;
-            if (parseInt(width) < 1000) {
-                //移动端
-                this.grid.off("mouseover");
-                this.grid.off("mouseout");
-                this.bindWithMobild();
-            } else {
-                //web端
-                this.grid.off("touchstart");
-                this.grid.off("touchmove");
-                this.grid.off("touchend");
-                this.grid.off("touchcancel");
-                this.bindWithGrid();
-            }
-        }
-    }]);
-
-    return ListActions;
-}();
-
-exports.default = ListActions;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _Promise = __webpack_require__(14);
+var _Promise = __webpack_require__(13);
 
 var _Promise2 = _interopRequireDefault(_Promise);
 
@@ -2469,8 +2315,161 @@ var fetch = window.fetch;
 exports.default = fetch;
 
 /***/ }),
-/* 18 */,
-/* 19 */
+/* 16 */,
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Created by yanxlg on 2017/6/16 0016.
+ * 列表操作项
+ */
+var ListActions = function () {
+    function ListActions(grid) {
+        _classCallCheck(this, ListActions);
+
+        this.grid = grid;
+        var _this = this;
+        _this.update();
+        $(window).on("resize", function () {
+            _this.update();
+        });
+    }
+
+    _createClass(ListActions, [{
+        key: "bindWithGrid",
+        value: function bindWithGrid() {
+            var grid = this.grid;
+            //绑定到grid中
+            grid.on("mouseover", ".data-row", function () {
+                //获取grid的宽度
+                var areWidth = grid.width() + grid.find(".grid-data")[0].scrollLeft;
+                var action = $(this).find(".grid-actions");
+                var actionWidth = action.outerWidth();
+                action.css({
+                    left: areWidth + "px"
+                });
+                action.removeClass("hide").addClass("show").css({
+                    marginLeft: -actionWidth + "px"
+                });
+            });
+            grid.on("mouseout", ".data-row", function () {
+                var action = $(this).find(".grid-actions");
+                action.removeClass("show").addClass("hide").css({
+                    marginLeft: "0px"
+                });
+            });
+            return this;
+        }
+    }, {
+        key: "bindWithMobild",
+        value: function bindWithMobild() {
+            var grid = this.grid;
+            var startPoint = void 0,
+                movePoint = void 0;
+            grid.on("touchstart", ".data-row", function (e) {
+                var touch = e.targetTouches[0];
+                startPoint = movePoint = {
+                    x: touch.screenX,
+                    y: touch.screenY
+                };
+                if (!$(this).hasClass("touchEl")) {
+                    grid.find(".touchEl").removeClass("touchEl").attr("data-delX", 0).css({
+                        marginLeft: "0px"
+                    }).find(".grid-actions").css({
+                        marginLeft: "0px"
+                    });
+                    $(this).find(".grid-actions").css({
+                        marginLeft: "0px"
+                    });
+                    $(this).addClass("touchEl").attr("data-delX", 0);
+                } else {
+                    $(this).addClass("touchEl");
+                }
+            });
+            grid.on("touchmove", ".data-row", function (e) {
+                if (!startPoint) return;
+                var touch = e.targetTouches[0];
+                var action = $(this).find(".grid-actions"),
+                    actWidth = parseInt(action.outerWidth());
+                if ($(this).hasClass("touchEl")) {
+                    var mPoint = {
+                        x: touch.screenX,
+                        y: touch.screenY
+                    };
+                    var curr = parseInt($(this).attr("data-delX")) || 0;
+                    var delX = mPoint.x - movePoint.x + curr;
+                    delX = Math.max(-actWidth, delX);
+                    delX = Math.min(delX, 0);
+                    $(this).attr("data-delX", delX);
+                    movePoint = mPoint;
+                    action.css({
+                        marginLeft: delX + "px"
+                    });
+                    $(this).css({
+                        marginLeft: delX + "px"
+                    });
+                } else {}
+            });
+            grid.on("touchend touchcancel", ".data-row", function (e) {
+                startPoint = null;
+                var action = $(this).find(".grid-actions"),
+                    actWidth = parseInt(action.outerWidth());
+                var curr = parseInt($(this).attr("data-delX")) || 0;
+                if (Math.abs(curr) < actWidth / 2) {
+                    action.css({
+                        marginLeft: "0px"
+                    });
+                    $(this).css({
+                        marginLeft: "0px"
+                    });
+                } else {
+                    action.css({
+                        marginLeft: -actWidth + "px"
+                    });
+                    $(this).css({
+                        marginLeft: -actWidth + "px"
+                    });
+                }
+            });
+        }
+    }, {
+        key: "update",
+        value: function update() {
+            var width = document.body.offsetWidth;
+            if (parseInt(width) < 1000) {
+                //移动端
+                this.grid.off("mouseover");
+                this.grid.off("mouseout");
+                this.bindWithMobild();
+            } else {
+                //web端
+                this.grid.off("touchstart");
+                this.grid.off("touchmove");
+                this.grid.off("touchend");
+                this.grid.off("touchcancel");
+                this.bindWithGrid();
+            }
+        }
+    }]);
+
+    return ListActions;
+}();
+
+exports.default = ListActions;
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2486,15 +2485,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _fetch = __webpack_require__(17);
+var _fetch = __webpack_require__(15);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
-var _cfDialog = __webpack_require__(5);
+var _cfDialog = __webpack_require__(4);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _static = __webpack_require__(9);
+var _static = __webpack_require__(7);
 
 var _static2 = _interopRequireDefault(_static);
 
@@ -2502,7 +2501,7 @@ var _loading = __webpack_require__(21);
 
 var _loading2 = _interopRequireDefault(_loading);
 
-var _user = __webpack_require__(13);
+var _user = __webpack_require__(12);
 
 var _user2 = _interopRequireDefault(_user);
 
@@ -2624,10 +2623,10 @@ var fetch = function fetch(url, data, login) {
 exports.default = fetch;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -2637,6 +2636,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
+/* 20 */,
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2654,7 +2654,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _loading = __webpack_require__(20);
+var _loading = __webpack_require__(19);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -2701,11 +2701,7 @@ var Loading = function () {
 exports.default = Loading;
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2737,15 +2733,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _datagrid = __webpack_require__(28);
+var _datagrid = __webpack_require__(26);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _rows = __webpack_require__(29);
+var _rows = __webpack_require__(27);
 
 var _rows2 = _interopRequireDefault(_rows);
 
-var _gridActions = __webpack_require__(16);
+var _gridActions = __webpack_require__(17);
 
 var _gridActions2 = _interopRequireDefault(_gridActions);
 
@@ -3075,7 +3071,7 @@ var DataGrid = function () {
 exports.default = DataGrid;
 
 /***/ }),
-/* 27 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3196,10 +3192,12 @@ var Pager = function () {
 exports.default = Pager;
 
 /***/ }),
-/* 28 */
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3253,10 +3251,10 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3304,10 +3302,12 @@ module.exports = function ($data) {
 };
 
 /***/ }),
+/* 28 */,
+/* 29 */,
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3411,9 +3411,7 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3512,7 +3510,7 @@ Input.initialize();
 exports.default = Input;
 
 /***/ }),
-/* 34 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3528,7 +3526,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _cfIdGenerator = __webpack_require__(4);
+var _cfIdGenerator = __webpack_require__(5);
 
 var _cfIdGenerator2 = _interopRequireDefault(_cfIdGenerator);
 
@@ -3674,6 +3672,8 @@ var SelectClass = function () {
 exports.default = SelectClass;
 
 /***/ }),
+/* 33 */,
+/* 34 */,
 /* 35 */,
 /* 36 */,
 /* 37 */,
@@ -3724,10 +3724,11 @@ module.exports = {
 /* 52 */,
 /* 53 */,
 /* 54 */,
-/* 55 */
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3737,10 +3738,10 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $imports = __webpack_require__(1);
+var $imports = __webpack_require__(0);
 module.exports = function ($data) {
     'use strict';
     $data = $data || {};
@@ -3808,8 +3809,69 @@ module.exports = function ($data) {
 };
 
 /***/ }),
-/* 57 */,
-/* 58 */,
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $imports = __webpack_require__(0);
+module.exports = function ($data) {
+    'use strict';
+    $data = $data || {};
+    var $$out = '', $escape = $imports.$escape, CustomerName = $data.CustomerName, CustomerTel = $data.CustomerTel, Sex = $data.Sex, IdentificationState = $data.IdentificationState, CustomerLevel = $data.CustomerLevel, HideCompanyWord = $data.HideCompanyWord, JobExperienceList = $data.JobExperienceList, $each = $imports.$each, info = $data.info, $index = $data.$index;
+    $$out += '<div class="scroll-content">\r\n    <div class="block">\r\n        <div class="item-name">\r\n            基本资料\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label class="keep-all">姓名\uFF1A</label><input data-form="userName" class="input" type="text" value="';
+    $$out += $escape(CustomerName);
+    $$out += '"></div>\r\n            <div class="item-info"><label class="keep-all">手机号\uFF1A</label><input data-form="tel" class="input" type="tel" value="';
+    $$out += $escape(CustomerTel);
+    $$out += '"></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">性别\uFF1A<input type="radio" name="sex" id="male" value="1" ';
+    if (Sex === 1) {
+        $$out += ' checked="checked"';
+    }
+    $$out += '><label for="male">男</label><input type="radio" name="sex" id="female" value="2" ';
+    if (Sex === 2) {
+        $$out += ' checked="checked"';
+    }
+    $$out += '><label for="female">女</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label style="width: 8em;">设置为认证会员\uFF1A</label><input  type="radio" name="auth" id="auth" value="2" ';
+    if (IdentificationState === 2) {
+        $$out += ' checked="checked"';
+    }
+    $$out += ' ><label for="auth">是</label><input type="radio" name="auth" id="auth0" value="0" ';
+    if (IdentificationState != 2) {
+        $$out += ' checked="checked"';
+    }
+    $$out += ' ><label for="auth0">否</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label style="width: 8em;">设置为Vip会员\uFF1A</label><input type="radio" name="vip" id="vip" value="1" ';
+    if (CustomerLevel === 1) {
+        $$out += ' checked="checked"';
+    }
+    $$out += ' ><label for="vip">是</label><input type="radio" name="vip" id="vip0" value="0" ';
+    if (CustomerLevel != 1) {
+        $$out += ' checked="checked"';
+    }
+    $$out += '><label for="vip0">否</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="form-item">\r\n                    <label style="margin-top: 0.3rem">所在地\uFF1A</label>\r\n                    <div class="select" id="province">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                    <div class="select" id="city">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="form-item">\r\n                    <label style="margin-top: 0.3rem">家&emsp;乡\uFF1A</label>\r\n                    <div class="select" id="homeprovince">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                    <div class="select" id="homecity">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label class="keep-all">公司名隐藏字段\uFF1A</label><input class="input" type="text" value="';
+    $$out += $escape(HideCompanyWord);
+    $$out += '" placeholder="隐藏字段将显示为*"></div>\r\n        </div>\r\n    </div>\r\n    <div class="block">\r\n        <div class="item-name">\r\n            职务信息<a><h3 class="icon icon-add" style="margin: 0;line-height:1.1rem;margin-left: 0.8rem;"></h3></a>\r\n        </div>\r\n        ';
+    if (JobExperienceList.length == 0) {
+        $$out += '\r\n            <div class="item">\r\n                <div class="item-info"><label class="keep-all">职务\uFF1A</label><input class="input" type="text"></div>\r\n                <div class="item-info"><label class="keep-all">公司\uFF1A</label><input class="input" type="text"></div>\r\n                <div class="align-center" style="width: 5rem">\r\n                    <input type="radio" name="authCompany"><label>认证</label>\r\n                    <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>\r\n                </div>\r\n            </div>\r\n        ';
+    }
+    $$out += '\r\n        ';
+    $each(JobExperienceList, function (info, $index) {
+        $$out += '\r\n            ';
+        if (info.IsDeleted == false) {
+            $$out += '\r\n                <div class="item">\r\n                    <div class="item-info"><label class="keep-all">职务\uFF1A</label><input class="input" type="text" value="';
+            $$out += $escape(info.Position);
+            $$out += '"></div>\r\n                    <div class="item-info"><label class="keep-all">公司\uFF1A</label><input class="input" type="text" value="';
+            $$out += $escape(info.CompanyName);
+            $$out += '"></div>\r\n                    <div class="align-center" style="width: 5rem">\r\n                        <input type="radio" name="authCompany" ';
+            if (info.IdentificationState === 2) {
+                $$out += ' checked="checked"';
+            }
+            $$out += '><label>认证</label>\r\n                        <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>\r\n                    </div>\r\n                </div>\r\n            ';
+        }
+        $$out += '\r\n        ';
+    });
+    $$out += '\r\n    </div>\r\n</div>';
+    return $$out;
+};
+
+/***/ }),
 /* 59 */,
 /* 60 */,
 /* 61 */,
@@ -3829,7 +3891,12 @@ module.exports = function ($data) {
 /* 75 */,
 /* 76 */,
 /* 77 */,
-/* 78 */
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3844,11 +3911,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 //自动初始化，不需要调用
 
 
-var _input = __webpack_require__(33);
+var _input = __webpack_require__(31);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _select = __webpack_require__(34);
+var _select = __webpack_require__(32);
 
 var _select2 = _interopRequireDefault(_select);
 
@@ -3856,15 +3923,15 @@ var _authorize = __webpack_require__(38);
 
 var _authorize2 = _interopRequireDefault(_authorize);
 
-var _datagrid = __webpack_require__(26);
+var _datagrid = __webpack_require__(22);
 
 var _datagrid2 = _interopRequireDefault(_datagrid);
 
-var _cfDialog = __webpack_require__(5);
+var _cfDialog = __webpack_require__(4);
 
 var _cfDialog2 = _interopRequireDefault(_cfDialog);
 
-var _pager = __webpack_require__(27);
+var _pager = __webpack_require__(23);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -3872,19 +3939,19 @@ var _registerSource = __webpack_require__(39);
 
 var _registerSource2 = _interopRequireDefault(_registerSource);
 
-var _detail = __webpack_require__(56);
+var _detail = __webpack_require__(57);
 
 var _detail2 = _interopRequireDefault(_detail);
 
-var _create = __webpack_require__(55);
+var _create = __webpack_require__(56);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _edit = __webpack_require__(80);
+var _edit = __webpack_require__(58);
 
 var _edit2 = _interopRequireDefault(_edit);
 
-var _fetch = __webpack_require__(19);
+var _fetch = __webpack_require__(18);
 
 var _fetch2 = _interopRequireDefault(_fetch);
 
@@ -4220,70 +4287,6 @@ var Register = function () {
 }();
 
 Register.initialize();
-
-/***/ }),
-/* 79 */,
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $imports = __webpack_require__(1);
-module.exports = function ($data) {
-    'use strict';
-    $data = $data || {};
-    var $$out = '', $escape = $imports.$escape, CustomerName = $data.CustomerName, CustomerTel = $data.CustomerTel, Sex = $data.Sex, IdentificationState = $data.IdentificationState, CustomerLevel = $data.CustomerLevel, HideCompanyWord = $data.HideCompanyWord, JobExperienceList = $data.JobExperienceList, $each = $imports.$each, info = $data.info, $index = $data.$index;
-    $$out += '<div class="scroll-content">\r\n    <div class="block">\r\n        <div class="item-name">\r\n            基本资料\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label class="keep-all">姓名\uFF1A</label><input data-form="userName" class="input" type="text" value="';
-    $$out += $escape(CustomerName);
-    $$out += '"></div>\r\n            <div class="item-info"><label class="keep-all">手机号\uFF1A</label><input data-form="tel" class="input" type="tel" value="';
-    $$out += $escape(CustomerTel);
-    $$out += '"></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">性别\uFF1A<input type="radio" name="sex" id="male" value="1" ';
-    if (Sex === 1) {
-        $$out += ' checked="checked"';
-    }
-    $$out += '><label for="male">男</label><input type="radio" name="sex" id="female" value="2" ';
-    if (Sex === 2) {
-        $$out += ' checked="checked"';
-    }
-    $$out += '><label for="female">女</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label style="width: 8em;">设置为认证会员\uFF1A</label><input  type="radio" name="auth" id="auth" value="2" ';
-    if (IdentificationState === 2) {
-        $$out += ' checked="checked"';
-    }
-    $$out += ' ><label for="auth">是</label><input type="radio" name="auth" id="auth0" value="0" ';
-    if (IdentificationState != 2) {
-        $$out += ' checked="checked"';
-    }
-    $$out += ' ><label for="auth0">否</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label style="width: 8em;">设置为Vip会员\uFF1A</label><input type="radio" name="vip" id="vip" value="1" ';
-    if (CustomerLevel === 1) {
-        $$out += ' checked="checked"';
-    }
-    $$out += ' ><label for="vip">是</label><input type="radio" name="vip" id="vip0" value="0" ';
-    if (CustomerLevel != 1) {
-        $$out += ' checked="checked"';
-    }
-    $$out += '><label for="vip0">否</label></div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="form-item">\r\n                    <label style="margin-top: 0.3rem">所在地\uFF1A</label>\r\n                    <div class="select" id="province">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                    <div class="select" id="city">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info">\r\n                <div class="form-item">\r\n                    <label style="margin-top: 0.3rem">家&emsp;乡\uFF1A</label>\r\n                    <div class="select" id="homeprovince">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                    <div class="select" id="homecity">\r\n                        <div class="input-icon">\r\n                            <input type="text" readonly="readonly" class="input" value="" placeholder="请先选择省会"><i class="icon icon-arrow"></i>\r\n                        </div>\r\n                        <ul class="select-options">\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class="item">\r\n            <div class="item-info"><label class="keep-all">公司名隐藏字段\uFF1A</label><input class="input" type="text" value="';
-    $$out += $escape(HideCompanyWord);
-    $$out += '" placeholder="隐藏字段将显示为*"></div>\r\n        </div>\r\n    </div>\r\n    <div class="block">\r\n        <div class="item-name">\r\n            职务信息<a><h3 class="icon icon-add" style="margin: 0;line-height:1.1rem;margin-left: 0.8rem;"></h3></a>\r\n        </div>\r\n        ';
-    if (JobExperienceList.length == 0) {
-        $$out += '\r\n            <div class="item">\r\n                <div class="item-info"><label class="keep-all">职务\uFF1A</label><input class="input" type="text"></div>\r\n                <div class="item-info"><label class="keep-all">公司\uFF1A</label><input class="input" type="text"></div>\r\n                <div class="align-center" style="width: 5rem">\r\n                    <input type="radio" name="authCompany"><label>认证</label>\r\n                    <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>\r\n                </div>\r\n            </div>\r\n        ';
-    }
-    $$out += '\r\n        ';
-    $each(JobExperienceList, function (info, $index) {
-        $$out += '\r\n            ';
-        if (info.IsDeleted == false) {
-            $$out += '\r\n                <div class="item">\r\n                    <div class="item-info"><label class="keep-all">职务\uFF1A</label><input class="input" type="text" value="';
-            $$out += $escape(info.Position);
-            $$out += '"></div>\r\n                    <div class="item-info"><label class="keep-all">公司\uFF1A</label><input class="input" type="text" value="';
-            $$out += $escape(info.CompanyName);
-            $$out += '"></div>\r\n                    <div class="align-center" style="width: 5rem">\r\n                        <input type="radio" name="authCompany" ';
-            if (info.IdentificationState === 2) {
-                $$out += ' checked="checked"';
-            }
-            $$out += '><label>认证</label>\r\n                        <i class="icon icon-delete font-color-danger" style="margin:0.2rem 0 0 0.8rem;cursor: pointer"></i>\r\n                    </div>\r\n                </div>\r\n            ';
-        }
-        $$out += '\r\n        ';
-    });
-    $$out += '\r\n    </div>\r\n</div>';
-    return $$out;
-};
 
 /***/ })
 /******/ ]);

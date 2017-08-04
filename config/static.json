@@ -5,7 +5,7 @@
   "ApiVersion":"1.4.2",
   "webApiDomainTest":"http://10.40.5.30:8081",
   "webApiDomainLocal":"http://localhost:5007",
-  "webApiDomain":"http://localhost:5007",
+  "webApiDomain":"",
   "successCode":0,
   "errorCode":-1,
   "overdueCode":10040,
